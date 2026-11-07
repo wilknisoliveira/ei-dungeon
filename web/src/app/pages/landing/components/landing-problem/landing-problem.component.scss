@@ -1,0 +1,77 @@
+.problem {
+    background-color: var(--mat-sys-surface-container-low);
+}
+
+.pain-list {
+    list-style: none;
+    margin: clamp(2rem, 5vw, 3rem) 0 0 0;
+    padding: 0;
+
+    display: grid;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .pain-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.pain {
+    display: flex;
+    gap: 0.9rem;
+    padding: 1.35rem;
+    border-radius: var(--mat-sys-corner-large);
+    background-color: var(--mat-sys-surface-container);
+    border: solid 1px
+        color-mix(in srgb, var(--mat-sys-outline) 24%, transparent);
+
+    mat-icon {
+        flex: none;
+        color: var(--mat-sys-tertiary);
+    }
+}
+
+/* Guarded so a tap on a phone does not leave the card stuck in its hover state. */
+@media (hover: hover) {
+    .pain {
+        transition:
+            border-color 220ms ease-out,
+            box-shadow 220ms ease-out,
+            transform 220ms ease-out;
+    }
+
+    .pain:hover {
+        transform: translateY(-4px);
+        border-color: color-mix(
+            in srgb,
+            var(--mat-sys-primary) 50%,
+            transparent
+        );
+        box-shadow:
+            0 0 26px color-mix(in srgb, var(--mat-sys-primary) 18%, transparent),
+            0 10px 22px
+                color-mix(in srgb, var(--mat-sys-shadow) 35%, transparent);
+    }
+
+    .pain mat-icon {
+        transition: color 220ms ease-out;
+    }
+
+    .pain:hover mat-icon {
+        color: var(--mat-sys-primary);
+    }
+}
+
+.pain-title {
+    font: var(--mat-sys-title-medium);
+    color: var(--mat-sys-on-surface);
+    margin: 0 0 0.35rem 0;
+}
+
+.pain-body {
+    font: var(--mat-sys-body-medium);
+    color: var(--mat-sys-on-surface-variant);
+    margin: 0;
+}

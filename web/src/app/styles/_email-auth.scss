@@ -1,0 +1,124 @@
+// Shared source for the three email-auth pages. Each component includes the mixin
+// so Angular keeps its existing component-scoped styling.
+@mixin layout {
+    :host {
+        display: block;
+    }
+
+    .email-auth {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100dvh;
+    }
+
+    .email-auth__container {
+        position: relative;
+        z-index: 1;
+        width: min(100% - 2rem, 38rem);
+        margin-block: 2rem;
+    }
+
+    .email-auth__panel {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: clamp(1.25rem, 5vw, 3rem);
+        color: var(--mat-sys-on-surface);
+        background: var(--mat-sys-surface-container);
+        border: 1px solid color-mix(in srgb, var(--mat-sys-outline) 30%, transparent);
+        border-radius: 1rem;
+        box-shadow:
+            0 0 20px color-mix(in srgb, var(--mat-sys-primary) 15%, transparent),
+            0 4px 8px color-mix(in srgb, var(--mat-sys-shadow) 30%, transparent);
+    }
+
+    .email-auth__header-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.5rem;
+    }
+
+    .email-auth__wordmark {
+        font: var(--mat-sys-label-small);
+        letter-spacing: 0.1em;
+        color: var(--mat-sys-tertiary);
+    }
+
+    .email-auth__title {
+        margin: 0;
+        font: var(--mat-sys-headline-medium);
+    }
+
+    .email-auth__text {
+        margin: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .email-auth__description,
+    .email-auth__hint {
+        line-height: 1.5;
+        color: var(--mat-sys-on-surface-variant);
+    }
+
+    .email-auth__hint {
+        font: var(--mat-sys-body-small);
+    }
+
+    .email-auth__fields {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    .email-auth__field {
+        width: 100%;
+    }
+
+    .email-auth__input {
+        font-size: 1rem;
+    }
+
+    .email-auth__action {
+        min-height: 44px;
+        height: auto;
+        white-space: normal;
+    }
+
+    .email-auth__link {
+        color: var(--mat-sys-tertiary);
+    }
+
+    .email-auth__feedback {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        line-height: 1.5;
+
+        &:empty {
+            display: none;
+        }
+    }
+
+    .email-auth__error {
+        color: var(--mat-sys-error);
+    }
+
+    .email-auth__input,
+    .email-auth__action {
+        &:focus-visible {
+            outline: 2px solid var(--mat-sys-primary);
+            outline-offset: 3px;
+        }
+    }
+}
+
+@mixin code-input {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.3em;
+}

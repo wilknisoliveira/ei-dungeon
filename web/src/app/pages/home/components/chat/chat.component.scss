@@ -1,0 +1,235 @@
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.game-ready {
+    height: 90dvh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 0.5rem;
+    margin: 1rem;
+
+    p {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        color: var(--mat-sys-on-surface);
+    }
+
+    button {
+        border-radius: 1rem;
+        transition:
+            box-shadow 0.15s ease,
+            transform 0.15s ease;
+        font-family: "Averia Serif Libre", serif;
+
+        &:hover {
+            box-shadow: 0 0 12px var(--mat-sys-primary);
+            transform: translateY(-1px);
+        }
+    }
+}
+
+.game-playing {
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .game-toolbar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.5rem 1rem;
+        border-bottom: none;
+        z-index: 1;
+
+        button[mat-icon-button] {
+            mat-icon {
+                color: var(--mat-sys-secondary);
+            }
+        }
+    }
+
+    .messages {
+        flex: 1;
+        overflow-y: auto;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .messages-content {
+            position: relative;
+
+            .loading-more {
+                display: flex;
+                justify-content: center;
+                padding: 0.5rem 0;
+            }
+
+            width: 80%;
+            padding: 1rem 0;
+
+            .messages-list {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+
+                .message {
+                    height: auto;
+                    margin: 0.75rem 0;
+                    animation: fade-in-up 0.3s ease-out backwards;
+
+                    .span-container {
+                        display: flex;
+                        flex-direction: column;
+
+                        span:first-child {
+                            font-family: "Averia Serif Libre", serif;
+                            font-weight: 600;
+                            margin-bottom: 0.25rem;
+                            color: var(--mat-sys-on-surface-variant);
+                        }
+
+                        span:last-child {
+                            font-size: 0.875rem;
+                            white-space: pre-wrap;
+                            overflow-wrap: break-word;
+                            padding: 0.75rem 1rem;
+                            border-radius: 1rem;
+                            color: var(--mat-sys-on-surface);
+                            transition:
+                                transform 0.2s ease,
+                                box-shadow 0.2s ease;
+
+                            &:hover {
+                                transform: scale(1.01);
+                                box-shadow: 0 4px 14px
+                                    color-mix(
+                                        in srgb,
+                                        var(--mat-sys-primary) 25%,
+                                        transparent
+                                    );
+                            }
+                        }
+                    }
+                }
+
+                .user {
+                    display: flex;
+                    justify-content: flex-end;
+
+                    .span-container {
+                        align-items: flex-end;
+                        max-width: 90%;
+
+                        span:last-child {
+                            background-color: var(
+                                --mat-sys-secondary-container
+                            );
+                            border-bottom-right-radius: 0.25rem;
+                        }
+                    }
+                }
+
+                .other-player {
+                    display: flex;
+                    justify-content: flex-start;
+
+                    .span-container {
+                        align-items: flex-start;
+                        max-width: 90%;
+
+                        span:last-child {
+                            background-color: var(--mat-sys-surface-container);
+                            border-bottom-left-radius: 0.25rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .input {
+        display: flex;
+        justify-content: center;
+        margin: 1rem 0;
+        flex-shrink: 0;
+
+        .input-area {
+            width: 80%;
+
+            background-color: var(--mat-sys-surface-container-low);
+            border-radius: 1rem;
+            border: 1px solid var(--mat-sys-primary);
+            box-shadow: 0 2px 8px
+                color-mix(in srgb, var(--mat-sys-primary) 10%, transparent);
+            transition:
+                box-shadow 0.2s ease,
+                border-color 0.2s ease,
+                transform 0.15s ease;
+
+            &:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 14px
+                    color-mix(in srgb, var(--mat-sys-primary) 20%, transparent);
+            }
+
+            &:focus-within {
+                border-color: var(--mat-sys-primary);
+                box-shadow: 0 0 8px var(--mat-sys-primary);
+                transform: none;
+            }
+
+            form {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                width: 100%;
+
+                textarea {
+                    color: var(--mat-sys-on-surface);
+                    flex-grow: 1;
+                    background-color: transparent;
+                    border: none;
+                    margin: 10px 8px 10px 16px;
+                    outline: none;
+                    resize: none;
+                    overflow: hidden;
+                    font-family: inherit;
+                    font-size: 0.95rem;
+                    line-height: 1.5;
+                    max-height: 40vh;
+                }
+
+                button[mat-icon-button] {
+                    margin: 8px 4px;
+                    transition: transform 0.15s ease;
+
+                    &:hover:not([disabled]) {
+                        transform: scale(1.1);
+                    }
+
+                    &[disabled] {
+                        opacity: 0.4;
+                    }
+                }
+
+                .loading {
+                    margin: 8px 20px;
+                }
+            }
+        }
+    }
+}

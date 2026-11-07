@@ -1,0 +1,19 @@
+<section class="landing-section faq">
+    <div class="landing-shell faq-shell">
+        <p class="landing-eyebrow" i18n="@@landingFaqEyebrow">
+            Before you sign up
+        </p>
+        <h2 class="landing-heading" i18n="@@landingFaqHeading">
+            The questions everyone asks.
+        </h2>
+
+        <mat-accordion class="faq-list" multi>
+            <mat-expansion-panel *ngFor="let entry of entries">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>{{ entry.question }}</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p class="faq-answer">{{ entry.answer }}</p>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</section>

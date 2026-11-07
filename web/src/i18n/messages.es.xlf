@@ -1,0 +1,899 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" target-language="es" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="landingSeoTitle" datatype="html">
+        <source>EI-DUNGEON | Your AI Game Master</source>
+        <target>EI-DUNGEON | Tu Máster con IA</target>
+      </trans-unit>
+      <trans-unit id="landingSeoDescription" datatype="html">
+        <source>Play tabletop adventures with an AI Game Master that is ready whenever you are.</source>
+        <target>Juega aventuras de rol de mesa con un Máster de IA listo cuando tú lo estés.</target>
+      </trans-unit>
+      <trans-unit id="landingSeoImageAlt" datatype="html">
+        <source>EI-DUNGEON logo over a fantasy dungeon landscape</source>
+        <target>Logotipo de EI-DUNGEON sobre un paisaje de mazmorra fantástica</target>
+      </trans-unit>
+      <trans-unit id="landingFooterLinksLabel" datatype="html">
+        <source>Account and project links</source>
+        <target>Enlaces de cuenta y proyecto</target>
+      </trans-unit>
+      <trans-unit id="landingLocaleLinksLabel" datatype="html">
+        <source>Choose a language version</source>
+        <target>Elige una versión de idioma</target>
+      </trans-unit>
+      <trans-unit id="landingHeaderActionsLabel" datatype="html">
+        <source>Account navigation</source>
+        <target>Navegación de la cuenta</target>
+      </trans-unit>
+      <trans-unit id="appWordmark" datatype="html">
+        <source>EI-DUNGEON</source>
+        <target>EI-DUNGEON</target>
+      </trans-unit>
+      <trans-unit id="loginDescription" datatype="html">
+        <source>Log in to your account</source>
+        <target>Inicia sesión en tu cuenta</target>
+      </trans-unit>
+      <trans-unit id="usernameLabel" datatype="html">
+        <source>Username</source>
+        <target>Nombre de usuario</target>
+      </trans-unit>
+      <trans-unit id="passwordLabel" datatype="html">
+        <source>Enter your password</source>
+        <target>Ingresa tu contraseña</target>
+      </trans-unit>
+      <trans-unit id="loginButton" datatype="html">
+        <source> Login </source>
+        <target> Iniciar sesión </target>
+      </trans-unit>
+      <trans-unit id="noAccountPrompt" datatype="html">
+        <source>Don't have an account?</source>
+        <target>¿No tienes una cuenta?</target>
+      </trans-unit>
+      <trans-unit id="signUpLink" datatype="html">
+        <source>Sign Up Now</source>
+        <target>Regístrate ahora</target>
+      </trans-unit>
+      <trans-unit id="newRoleButton" datatype="html">
+        <source>New Session</source>
+        <target>Nueva Sesión</target>
+      </trans-unit>
+      <trans-unit id="showMoreButton" datatype="html">
+        <source> Show more </source>
+        <target> Mostrar más </target>
+      </trans-unit>
+      <trans-unit id="settingsMenuItem" datatype="html">
+        <source>Settings</source>
+        <target>Configuración</target>
+      </trans-unit>
+      <trans-unit id="logoutMenuItem" datatype="html">
+        <source>Logout</source>
+        <target>Cerrar sesión</target>
+      </trans-unit>
+      <trans-unit id="settingsSubtitle" datatype="html">
+        <source>Settings</source>
+        <target>Configuración</target>
+      </trans-unit>
+      <trans-unit id="homeSubtitle" datatype="html">
+        <source>Campaigns</source>
+        <target>Campañas</target>
+      </trans-unit>
+      <trans-unit id="accountMenuItem" datatype="html">
+        <source>Account</source>
+        <target>Cuenta</target>
+      </trans-unit>
+      <trans-unit id="securityMenuItem" datatype="html">
+        <source>Security</source>
+        <target>Seguridad</target>
+      </trans-unit>
+      <trans-unit id="settingsTitle" datatype="html">
+        <source>Settings</source>
+        <target>Configuración</target>
+      </trans-unit>
+      <trans-unit id="accountHeading" datatype="html">
+        <source>Account</source>
+        <target>Cuenta</target>
+      </trans-unit>
+      <trans-unit id="fullNameLabel" datatype="html">
+        <source>Full Name</source>
+        <target>Nombre completo</target>
+      </trans-unit>
+      <trans-unit id="emailLabel" datatype="html">
+        <source>Email</source>
+        <target>Correo electrónico</target>
+      </trans-unit>
+      <trans-unit id="roleLabel" datatype="html">
+        <source>Role</source>
+        <target>Rol</target>
+      </trans-unit>
+      <trans-unit id="dangerZoneHeading" datatype="html">
+        <source>Danger Zone</source>
+        <target>Zona de peligro</target>
+      </trans-unit>
+      <trans-unit id="deleteAccountWarning" datatype="html">
+        <source>Permanently delete your account and all associated data. This action cannot be undone.</source>
+        <target>Eliminar permanentemente tu cuenta y todos los datos asociados. Esta acción no se puede deshacer.</target>
+      </trans-unit>
+      <trans-unit id="deleteAccountButton" datatype="html">
+        <source> Delete Account </source>
+        <target> Eliminar cuenta </target>
+      </trans-unit>
+      <trans-unit id="changePasswordHeading" datatype="html">
+        <source>Change Password</source>
+        <target>Cambiar contraseña</target>
+      </trans-unit>
+      <trans-unit id="currentPasswordLabel" datatype="html">
+        <source>Current Password</source>
+        <target>Contraseña actual</target>
+      </trans-unit>
+      <trans-unit id="currentPasswordRequiredError" datatype="html">
+        <source> Current password is required </source>
+        <target> La contraseña actual es obligatoria </target>
+      </trans-unit>
+      <trans-unit id="passwordMinLengthError" datatype="html">
+        <source> Minimum 4 characters </source>
+        <target> Mínimo 4 caracteres </target>
+      </trans-unit>
+      <trans-unit id="newPasswordLabel" datatype="html">
+        <source>New Password</source>
+        <target>Nueva contraseña</target>
+      </trans-unit>
+      <trans-unit id="newPasswordRequiredError" datatype="html">
+        <source> New password is required </source>
+        <target> La nueva contraseña es obligatoria </target>
+      </trans-unit>
+      <trans-unit id="changePasswordButton" datatype="html">
+        <source> Change Password </source>
+        <target> Cambiar contraseña </target>
+      </trans-unit>
+      <trans-unit id="signupDescription" datatype="html">
+        <source>Sign Up</source>
+        <target>Registrarse</target>
+      </trans-unit>
+      <trans-unit id="signupUsernameLabel" datatype="html">
+        <source>Username</source>
+        <target>Nombre de usuario</target>
+      </trans-unit>
+      <trans-unit id="usernameRequiredError" datatype="html">
+        <source> Username is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
+        <target> El nombre de usuario es <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>obligatorio<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="usernameMinLengthError" datatype="html">
+        <source> Minimum 4 characters </source>
+        <target> Mínimo 4 caracteres </target>
+      </trans-unit>
+      <trans-unit id="usernameMaxLengthError" datatype="html">
+        <source> Maximum 20 characters </source>
+        <target> Máximo 20 caracteres </target>
+      </trans-unit>
+      <trans-unit id="usernameTakenError" datatype="html">
+        <source> Username is already taken </source>
+        <target> El nombre de usuario ya está en uso </target>
+      </trans-unit>
+      <trans-unit id="checkingAvailability" datatype="html">
+        <source> Checking availability... </source>
+        <target> Verificando disponibilidad... </target>
+      </trans-unit>
+      <trans-unit id="fullnameLabel" datatype="html">
+        <source>Fullname</source>
+        <target>Nombre completo</target>
+      </trans-unit>
+      <trans-unit id="fullnameRequiredError" datatype="html">
+        <source> Fullname is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
+        <target> El nombre completo es <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>obligatorio<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="fullnameMinLengthError" datatype="html">
+        <source> Minimum 4 characters </source>
+        <target> Mínimo 4 caracteres </target>
+      </trans-unit>
+      <trans-unit id="fullnameMaxLengthError" datatype="html">
+        <source> Maximum 50 characters </source>
+        <target> Máximo 50 caracteres </target>
+      </trans-unit>
+      <trans-unit id="emailInvalidError" datatype="html">
+        <source>Please enter a valid email address</source>
+        <target>Por favor, ingresa una dirección de correo electrónico válida</target>
+      </trans-unit>
+      <trans-unit id="emailRequiredError" datatype="html">
+        <source> Email is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
+        <target> El correo electrónico es <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>obligatorio<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="emailTakenError" datatype="html">
+        <source> Email is already registered </source>
+        <target> El correo electrónico ya está registrado </target>
+      </trans-unit>
+      <trans-unit id="signupPasswordLabel" datatype="html">
+        <source>Enter your password</source>
+        <target>Ingresa tu contraseña</target>
+      </trans-unit>
+      <trans-unit id="passwordRequiredError" datatype="html">
+        <source> Password is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
+        <target> La contraseña es <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>obligatoria<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="passwordMaxLengthError" datatype="html">
+        <source> Maximum 50 characters </source>
+        <target> Máximo 50 caracteres </target>
+      </trans-unit>
+      <trans-unit id="signupButton" datatype="html">
+        <source> Sign Up </source>
+        <target> Registrarse </target>
+      </trans-unit>
+      <trans-unit id="alreadyHaveAccountPrompt" datatype="html">
+        <source>Do you already have an account?</source>
+        <target>¿Ya tienes una cuenta?</target>
+      </trans-unit>
+      <trans-unit id="signInLink" datatype="html">
+        <source>Sign In Now</source>
+        <target>Iniciar sesión ahora</target>
+      </trans-unit>
+      <trans-unit id="chatGameReady" datatype="html">
+        <source>Your new game is ready!</source>
+        <target>¡Tu nuevo juego está listo!</target>
+      </trans-unit>
+      <trans-unit id="chatStartButton" datatype="html">
+        <source> Start </source>
+        <target> Iniciar </target>
+      </trans-unit>
+      <trans-unit id="7910849620457936504" datatype="html">
+        <source>Game Master</source>
+        <target>Director de Juego</target>
+      </trans-unit>
+      <trans-unit id="3084566329643999642" datatype="html">
+        <source>What do you do?</source>
+        <target>¿Qué haces?</target>
+      </trans-unit>
+      <trans-unit id="6900473553536680806" datatype="html">
+        <source>This game has been finished, create a new one to start a new adventure!</source>
+        <target>Este juego ha terminado, ¡crea uno nuevo para comenzar una nueva aventura!</target>
+      </trans-unit>
+      <trans-unit id="3338122603397139235" datatype="html">
+        <source>Something went wrong while attempting to get the play list.</source>
+        <target>Algo salió mal al intentar obtener la lista de jugadas.</target>
+      </trans-unit>
+      <trans-unit id="7683705529753923369" datatype="html">
+        <source>Player</source>
+        <target>Jugador</target>
+      </trans-unit>
+      <trans-unit id="6081488370267137537" datatype="html">
+        <source>The gods have not answered your call. Speak again, brave adventurer!</source>
+        <target>Los dioses no han respondido a tu llamada. ¡Habla de nuevo, valiente aventurero!</target>
+      </trans-unit>
+      <trans-unit id="883225603593837541" datatype="html">
+        <source>Something went wrong. Please try again.</source>
+        <target>Algo salió mal. Por favor, intenta de nuevo.</target>
+      </trans-unit>
+      <trans-unit id="firstStepsHeading" datatype="html">
+        <source>First steps</source>
+        <target>Primeros pasos</target>
+      </trans-unit>
+      <trans-unit id="firstStepsSubtitle" datatype="html">
+        <source>Create a new game!</source>
+        <target>¡Crea un nuevo juego!</target>
+      </trans-unit>
+      <trans-unit id="gameNameLabel" datatype="html">
+        <source>Game name</source>
+        <target>Nombre del juego</target>
+      </trans-unit>
+      <trans-unit id="characterNameLabel" datatype="html">
+        <source>Character name</source>
+        <target>Nombre del personaje</target>
+      </trans-unit>
+      <trans-unit id="characterDescriptionLabel" datatype="html">
+        <source>Character description</source>
+        <target>Descripción del personaje</target>
+      </trans-unit>
+      <trans-unit id="raceLabel" datatype="html">
+        <source>Race</source>
+        <target>Raza</target>
+      </trans-unit>
+      <trans-unit id="skillsHeading" datatype="html">
+        <source>Skills</source>
+        <target>Habilidades</target>
+      </trans-unit>
+      <trans-unit id="racialBonusTooltip" datatype="html">
+        <source>Racial Bonus</source>
+        <target>Bono Racial</target>
+      </trans-unit>
+      <trans-unit id="pointsToDistribute" datatype="html">
+        <source>Points to distribute:</source>
+        <target>Puntos para distribuir:</target>
+      </trans-unit>
+      <trans-unit id="exceededMaxPoints" datatype="html">
+        <source>You have exceeded the maximum skill points</source>
+        <target>Has excedido el máximo de puntos de habilidad</target>
+      </trans-unit>
+      <trans-unit id="startGameButton" datatype="html">
+        <source> Start game </source>
+        <target> Iniciar juego </target>
+      </trans-unit>
+      <trans-unit id="7800061171704298797" datatype="html">
+        <source>Human</source>
+        <target>Humano</target>
+      </trans-unit>
+      <trans-unit id="4895190846964146304" datatype="html">
+        <source>Elf</source>
+        <target>Elfo</target>
+      </trans-unit>
+      <trans-unit id="6487984047699114430" datatype="html">
+        <source>Dwarf</source>
+        <target>Enano</target>
+      </trans-unit>
+      <trans-unit id="1148914934735638586" datatype="html">
+        <source>Half Elf</source>
+        <target>Semielfo</target>
+      </trans-unit>
+      <trans-unit id="6003309338635897937" datatype="html">
+        <source>Halfling</source>
+        <target>Halfling</target>
+      </trans-unit>
+      <trans-unit id="5931157710888126589" datatype="html">
+        <source>Tiefling</source>
+        <target>Tiefling</target>
+      </trans-unit>
+      <trans-unit id="6984581431061216462" datatype="html">
+        <source>Dragonborn</source>
+        <target>Dracónido</target>
+      </trans-unit>
+      <trans-unit id="1956337344618882908" datatype="html">
+        <source>Half Orc</source>
+        <target>Medio orco</target>
+      </trans-unit>
+      <trans-unit id="4019184240939181903" datatype="html">
+        <source>Gnome</source>
+        <target>Gnomo</target>
+      </trans-unit>
+      <trans-unit id="6632040223751981101" datatype="html">
+        <source>Strength</source>
+        <target>Fuerza</target>
+      </trans-unit>
+      <trans-unit id="5465529649433457628" datatype="html">
+        <source>Dexterity</source>
+        <target>Destreza</target>
+      </trans-unit>
+      <trans-unit id="8489670130200267808" datatype="html">
+        <source>Intelligence</source>
+        <target>Inteligencia</target>
+      </trans-unit>
+      <trans-unit id="1632323077493059273" datatype="html">
+        <source>Constitution</source>
+        <target>Constitución</target>
+      </trans-unit>
+      <trans-unit id="6828638344650593860" datatype="html">
+        <source>Charisma</source>
+        <target>Carisma</target>
+      </trans-unit>
+      <trans-unit id="6753176961354636644" datatype="html">
+        <source>Wisdom</source>
+        <target>Sabiduría</target>
+      </trans-unit>
+      <trans-unit id="2549518094568275321" datatype="html">
+        <source>Game &apos;<x id="PH" equiv-text="newGame.name"/>&apos; created!</source>
+        <target>¡Juego &apos;<x id="PH" equiv-text="newGame.name"/>&apos; creado!</target>
+      </trans-unit>
+      <trans-unit id="3688639030371133915" datatype="html">
+        <source>Something went wrong while attempting to create the game. Verify with the admin if you have the permissions.</source>
+        <target>Algo salió mal al intentar crear el juego. Verifica con el administrador si tienes los permisos.</target>
+      </trans-unit>
+      <trans-unit id="7752330587380687192" datatype="html">
+        <source>Something went wrong while attempting to get the game list.</source>
+        <target>Algo salió mal al intentar obtener la lista de juegos.</target>
+      </trans-unit>
+      <trans-unit id="269149994023386814" datatype="html">
+        <source>Game deleted successfully.</source>
+        <target>Juego eliminado exitosamente.</target>
+      </trans-unit>
+      <trans-unit id="5244014636631739754" datatype="html">
+        <source>Something went wrong while attempting to delete the game.</source>
+        <target>Algo salió mal al intentar eliminar el juego.</target>
+      </trans-unit>
+      <trans-unit id="1620894741817105195" datatype="html">
+        <source>Are you sure you want to delete the game &apos;<x id="PH" equiv-text="gameName"/>&apos;?</source>
+        <target>¿Estás seguro de que deseas eliminar el juego &apos;<x id="PH" equiv-text="gameName"/>&apos;?</target>
+      </trans-unit>
+      <trans-unit id="confirmDialogYes" datatype="html">
+        <source>Yes</source>
+        <target>Sí</target>
+      </trans-unit>
+      <trans-unit id="confirmDialogCancel" datatype="html">
+        <source>Cancel</source>
+        <target>Cancelar</target>
+      </trans-unit>
+      <trans-unit id="chatLanguageLabel" datatype="html">
+        <source>Language</source>
+        <target>Idioma</target>
+      </trans-unit>
+      <trans-unit id="gameLanguageLabel" datatype="html">
+        <source>Game language</source>
+        <target>Idioma del juego</target>
+      </trans-unit>
+      <trans-unit id="gameLanguageTooltip" datatype="html">
+        <source>Language used by the Game Master for narration and dialogue</source>
+        <target>Idioma utilizado por el Director de Juego para narración y diálogo</target>
+      </trans-unit>
+      <trans-unit id="gameLanguageHint" datatype="html">
+        <source>Language used by the Game Master for narration and dialogue</source>
+        <target>Idioma utilizado por el Director de Juego para narración y diálogo</target>
+      </trans-unit>
+      <trans-unit id="renameMenuItem" datatype="html">
+        <source>Rename</source>
+        <target>Renombrar</target>
+      </trans-unit>
+      <trans-unit id="deleteMenuItem" datatype="html">
+        <source>Delete</source>
+        <target>Eliminar</target>
+      </trans-unit>
+      <trans-unit id="153799456510623899" datatype="html">
+        <source>Portuguese</source>
+        <target>Portugués</target>
+      </trans-unit>
+      <trans-unit id="5866254605255506989" datatype="html">
+        <source>English</source>
+        <target>Inglés</target>
+      </trans-unit>
+      <trans-unit id="334139479101771120" datatype="html">
+        <source>Game language updated.</source>
+        <target>Idioma del juego actualizado.</target>
+      </trans-unit>
+      <trans-unit id="394543175828208356" datatype="html">
+        <source>Something went wrong while attempting to update the game language.</source>
+        <target>Algo salió mal al intentar actualizar el idioma del juego.</target>
+      </trans-unit>
+      <trans-unit id="1026218475958861845" datatype="html">
+        <source>Game renamed successfully.</source>
+        <target>Juego renombrado exitosamente.</target>
+      </trans-unit>
+      <trans-unit id="9132426788094363683" datatype="html">
+        <source>Something went wrong while attempting to rename the game.</source>
+        <target>Algo salió mal al intentar renombrar el juego.</target>
+      </trans-unit>
+      <trans-unit id="5190825892106392539" datatype="html">
+        <source>Spanish</source>
+        <target>Español</target>
+      </trans-unit>
+      <trans-unit id="6472107528361453618" datatype="html">
+        <source>Are you sure you want to delete your account? This action is irreversible and all your data will be permanently lost.</source>
+        <target>¿Estás seguro de que deseas eliminar tu cuenta? Esta acción es irreversible y todos tus datos se perderán permanentemente.</target>
+      </trans-unit>
+      <trans-unit id="gameOptionsTooltip" datatype="html">
+        <source>Game options</source>
+        <target>Opciones del juego</target>
+      </trans-unit>
+      <trans-unit id="landingSignIn" datatype="html">
+        <source>Sign in</source>
+        <target>Iniciar sesión</target>
+      </trans-unit>
+      <trans-unit id="landingLogoCompletedAlt" datatype="html">
+        <source>EI-DUNGEON — an A.I. driven RPG simulator</source>
+        <target>EI-DUNGEON — un simulador de rol impulsado por I.A.</target>
+      </trans-unit>
+      <trans-unit id="landingHeroHeadline" datatype="html">
+        <source> Your AI Game Master never cancels. </source>
+        <target>Tu Máster de IA nunca cancela.</target>
+      </trans-unit>
+      <trans-unit id="landingHeroSub" datatype="html">
+        <source> A solo role-playing game run by AI. Build a character, step into the dark, and play whenever you want — no group to gather, no night to agree on, no one to talk into running it. </source>
+        <target>Un juego de rol en solitario dirigido por I.A. Crea un personaje, adéntrate en la oscuridad y juega cuando quieras: sin grupo que reunir, sin noche que acordar, sin nadie a quien convencer para dirigir.</target>
+      </trans-unit>
+      <trans-unit id="landingHeroCta" datatype="html">
+        <source>Create your character</source>
+        <target>Crea tu personaje</target>
+      </trans-unit>
+      <trans-unit id="landingHeroSecondary" datatype="html">
+        <source>I already have an account</source>
+        <target>Ya tengo una cuenta</target>
+      </trans-unit>
+      <trans-unit id="landingHeroNote" datatype="html">
+        <source> Free to start · Play in Portuguese, English or Spanish </source>
+        <target>Gratis para empezar · Juega en portugués, inglés o español</target>
+      </trans-unit>
+      <trans-unit id="landingProblemEyebrow" datatype="html">
+        <source> The real obstacle </source>
+        <target>El verdadero obstáculo</target>
+      </trans-unit>
+      <trans-unit id="landingProblemHeading" datatype="html">
+        <source> The hardest part of a role-playing game isn&apos;t the dragon. </source>
+        <target>Lo más difícil de un juego de rol no es el dragón.</target>
+      </trans-unit>
+      <trans-unit id="landingProblemLede" datatype="html">
+        <source> It&apos;s everything that has to happen before anyone rolls a die. </source>
+        <target>Es todo lo que tiene que pasar antes de que alguien tire un dado.</target>
+      </trans-unit>
+      <trans-unit id="landingPainScheduleTitle" datatype="html">
+        <source>Four people, one calendar</source>
+        <target>Cuatro personas, un calendario</target>
+      </trans-unit>
+      <trans-unit id="landingPainScheduleBody" datatype="html">
+        <source>Finding a night everyone is free takes longer than the session itself.</source>
+        <target>Encontrar una noche en la que todos estén libres lleva más tiempo que la propia partida.</target>
+      </trans-unit>
+      <trans-unit id="landingPainMasterTitle" datatype="html">
+        <source>Somebody has to run it</source>
+        <target>Alguien tiene que dirigir</target>
+      </trans-unit>
+      <trans-unit id="landingPainMasterBody" datatype="html">
+        <source>And that somebody spends the week preparing while everyone else just shows up.</source>
+        <target>Y esa persona se pasa la semana preparando mientras el resto solo se presenta.</target>
+      </trans-unit>
+      <trans-unit id="landingPainDeadTitle" datatype="html">
+        <source>The campaign that died at session three</source>
+        <target>La campaña que murió en la tercera sesión</target>
+      </trans-unit>
+      <trans-unit id="landingPainDeadBody" datatype="html">
+        <source>Not from a total party kill. From a group chat that slowly went quiet.</source>
+        <target>No por una masacre del grupo. Por un chat que poco a poco se quedó en silencio.</target>
+      </trans-unit>
+      <trans-unit id="landingHowEyebrow" datatype="html">
+        <source>The way out</source>
+        <target>La salida</target>
+      </trans-unit>
+      <trans-unit id="landingHowHeading" datatype="html">
+        <source> None of that is required here. </source>
+        <target>Nada de eso hace falta aquí.</target>
+      </trans-unit>
+      <trans-unit id="landingStepCharacterTitle" datatype="html">
+        <source>Build your character</source>
+        <target>Crea tu personaje</target>
+      </trans-unit>
+      <trans-unit id="landingStepCharacterBody" datatype="html">
+        <source>Choose a race, spend thirty points across six attributes, and write who they are. Nine races, each with its own bonuses.</source>
+        <target>Elige una raza, reparte treinta puntos entre seis atributos y escribe quién es. Nueve razas, cada una con sus propias bonificaciones.</target>
+      </trans-unit>
+      <trans-unit id="landingStepMasterTitle" datatype="html">
+        <source>The Game Master sets the scene</source>
+        <target>El Máster abre la escena</target>
+      </trans-unit>
+      <trans-unit id="landingStepMasterBody" datatype="html">
+        <source>An AI narrator opens the world in the language you picked, and reacts to what you actually do — not to a script.</source>
+        <target>Un narrador de I.A. presenta el mundo en el idioma que elegiste y reacciona a lo que haces de verdad, no a un guion.</target>
+      </trans-unit>
+      <trans-unit id="landingStepPlayTitle" datatype="html">
+        <source>Play by chat</source>
+        <target>Juega por chat</target>
+      </trans-unit>
+      <trans-unit id="landingStepPlayBody" datatype="html">
+        <source>Type what your character does. The world answers. Stop in the middle of a scene and pick it up tomorrow.</source>
+        <target>Escribe lo que hace tu personaje. El mundo responde. Párate en mitad de una escena y retómala mañana.</target>
+      </trans-unit>
+      <trans-unit id="landingFeaturesEyebrow" datatype="html">
+        <source> What&apos;s inside </source>
+        <target>Qué incluye</target>
+      </trans-unit>
+      <trans-unit id="landingFeaturesHeading" datatype="html">
+        <source> A character sheet with consequences. </source>
+        <target>Una hoja de personaje con consecuencias.</target>
+      </trans-unit>
+      <trans-unit id="landingFeaturesLede" datatype="html">
+        <source> Not a chat window with a fantasy skin. The numbers you pick shape what the world lets you do. </source>
+        <target>No es una ventana de chat con estética de fantasía. Los números que eliges determinan lo que el mundo te deja hacer.</target>
+      </trans-unit>
+      <trans-unit id="landingFeatureRacesTitle" datatype="html">
+        <source>Nine races, real trade-offs</source>
+        <target>Nueve razas, decisiones reales</target>
+      </trans-unit>
+      <trans-unit id="landingFeatureRacesBody" datatype="html">
+        <source>Human, Elf, Dwarf, Half-Elf, Halfling, Tiefling, Dragonborn, Half-Orc and Gnome. Each one carries its own attribute bonuses.</source>
+        <target>Humano, Elfo, Enano, Semielfo, Halfling, Tiefling, Dracónido, Medio orco y Gnomo. Cada uno lleva sus propias bonificaciones de atributo.</target>
+      </trans-unit>
+      <trans-unit id="landingFeaturePointsTitle" datatype="html">
+        <source>Thirty points, your call</source>
+        <target>Treinta puntos, tú decides</target>
+      </trans-unit>
+      <trans-unit id="landingFeaturePointsBody" datatype="html">
+        <source>Six attributes, a floor of 8 and a ceiling of 18. Build the hero you want, then live with the character you made.</source>
+        <target>Seis atributos, un mínimo de 8 y un máximo de 18. Construye el héroe que quieras y luego convive con el personaje que creaste.</target>
+      </trans-unit>
+      <trans-unit id="landingFeatureLanguageTitle" datatype="html">
+        <source>Narrated in your language</source>
+        <target>Narrado en tu idioma</target>
+      </trans-unit>
+      <trans-unit id="landingFeatureLanguageBody" datatype="html">
+        <source>The Game Master tells the story in Portuguese, English or Spanish. You set it per game, so it does not have to match the interface.</source>
+        <target>El Máster cuenta la historia en portugués, inglés o español. Lo defines por partida, así que no tiene por qué coincidir con el idioma de la interfaz.</target>
+      </trans-unit>
+      <trans-unit id="landingFeatureSaveTitle" datatype="html">
+        <source>Your campaign keeps its place</source>
+        <target>Tu campaña guarda su sitio</target>
+      </trans-unit>
+      <trans-unit id="landingFeatureSaveBody" datatype="html">
+        <source>Every game is saved to your account. Close the tab mid-sentence and the scene is still waiting when you come back.</source>
+        <target>Cada partida se guarda en tu cuenta. Cierra la pestaña a mitad de una frase y la escena seguirá esperándote.</target>
+      </trans-unit>
+      <trans-unit id="landingDevBadge" datatype="html">
+        <source>In development</source>
+        <target>En desarrollo</target>
+      </trans-unit>
+      <trans-unit id="landingDevHeading" datatype="html">
+        <source> Built in the open, and still being built. </source>
+        <target>Hecho a la vista de todos, y todavía en construcción.</target>
+      </trans-unit>
+      <trans-unit id="landingDevBody" datatype="html">
+        <source> EI-DUNGEON is an active project, not a finished product. Features land regularly and things will change under you. If you would rather see how it works than take our word for it, both repositories are public. </source>
+        <target>EI-DUNGEON es un proyecto activo, no un producto terminado. Las novedades llegan con frecuencia y las cosas cambiarán sobre la marcha. Si prefieres ver cómo funciona en lugar de creernos, los dos repositorios son públicos.</target>
+      </trans-unit>
+      <trans-unit id="landingDevWebRepo" datatype="html">
+        <source>Web repository</source>
+        <target>Repositorio web</target>
+      </trans-unit>
+      <trans-unit id="landingDevApiRepo" datatype="html">
+        <source>API repository</source>
+        <target>Repositorio de la API</target>
+      </trans-unit>
+      <trans-unit id="landingFaqEyebrow" datatype="html">
+        <source> Before you sign up </source>
+        <target>Antes de registrarte</target>
+      </trans-unit>
+      <trans-unit id="landingFaqHeading" datatype="html">
+        <source> The questions everyone asks. </source>
+        <target>Las preguntas que hace todo el mundo.</target>
+      </trans-unit>
+      <trans-unit id="landingFaqSoloQ" datatype="html">
+        <source>Do I need other players?</source>
+        <target>¿Necesito otros jugadores?</target>
+      </trans-unit>
+      <trans-unit id="landingFaqSoloA" datatype="html">
+        <source>No. EI-DUNGEON is built for solo play. The AI Game Master runs the world, the characters in it, and everything that happens to you.</source>
+        <target>No. EI-DUNGEON está pensado para jugar en solitario. El Máster de I.A. dirige el mundo, a los personajes que lo habitan y todo lo que te ocurre.</target>
+      </trans-unit>
+      <trans-unit id="landingFaqRulesQ" datatype="html">
+        <source>Do I need to know role-playing rules?</source>
+        <target>¿Necesito conocer las reglas de rol?</target>
+      </trans-unit>
+      <trans-unit id="landingFaqRulesA" datatype="html">
+        <source>No. Character creation walks you through race, attributes and description one step at a time. If you have never rolled a die in your life, you can still play.</source>
+        <target>No. La creación de personaje te guía por raza, atributos y descripción, paso a paso. Si nunca has tirado un dado, puedes jugar igual.</target>
+      </trans-unit>
+      <trans-unit id="landingFaqPriceQ" datatype="html">
+        <source>What does it cost?</source>
+        <target>¿Cuánto cuesta?</target>
+      </trans-unit>
+      <trans-unit id="landingFaqPriceA" datatype="html">
+        <source>It is free to start. A paid tier is planned for later, but nothing is behind a paywall today.</source>
+        <target>Es gratis para empezar. Hay un plan de pago previsto para más adelante, pero hoy no hay nada detrás de un muro de pago.</target>
+      </trans-unit>
+      <trans-unit id="landingFaqLanguageQ" datatype="html">
+        <source>What language is the story told in?</source>
+        <target>¿En qué idioma se cuenta la historia?</target>
+      </trans-unit>
+      <trans-unit id="landingFaqLanguageA" datatype="html">
+        <source>Portuguese, English or Spanish. You choose it per game, so the language of the narration does not have to match the language of the interface.</source>
+        <target>Portugués, inglés o español. Lo eliges por partida, así que el idioma de la narración no tiene por qué coincidir con el de la interfaz.</target>
+      </trans-unit>
+      <trans-unit id="landingFaqSaveQ" datatype="html">
+        <source>Do my games get saved?</source>
+        <target>¿Se guardan mis partidas?</target>
+      </trans-unit>
+      <trans-unit id="landingFaqSaveA" datatype="html">
+        <source>Yes. Every game and every exchange is stored on your account. Come back a month later and the scene is where you left it.</source>
+        <target>Sí. Cada partida y cada intercambio quedan guardados en tu cuenta. Vuelve un mes después y la escena estará donde la dejaste.</target>
+      </trans-unit>
+      <trans-unit id="landingFaqPrivacyQ" datatype="html">
+        <source>Who can see my games?</source>
+        <target>¿Quién puede ver mis partidas?</target>
+      </trans-unit>
+      <trans-unit id="landingFaqPrivacyA" datatype="html">
+        <source>Your games are tied to your account and reached by signing in. They are not published anywhere and they are not shared with other players.</source>
+        <target>Tus partidas están vinculadas a tu cuenta y se acceden iniciando sesión. No se publican en ningún sitio ni se comparten con otros jugadores.</target>
+      </trans-unit>
+      <trans-unit id="landingCtaHeading" datatype="html">
+        <source> The dungeon doesn&apos;t need a calendar invite. </source>
+        <target>La mazmorra no necesita una invitación de calendario.</target>
+      </trans-unit>
+      <trans-unit id="landingCtaBody" datatype="html">
+        <source> Make a character and be in your first scene in a couple of minutes. </source>
+        <target>Crea un personaje y métete en tu primera escena en un par de minutos.</target>
+      </trans-unit>
+      <trans-unit id="landingCtaButton" datatype="html">
+        <source>Create your character</source>
+        <target>Crea tu personaje</target>
+      </trans-unit>
+      <trans-unit id="landingCtaLoginLink" datatype="html">
+        <source>Already playing? Sign in</source>
+        <target>¿Ya juegas? Inicia sesión</target>
+      </trans-unit>
+      <trans-unit id="landingFooterTagline" datatype="html">
+        <source>An A.I. driven RPG simulator</source>
+        <target>Un simulador de rol impulsado por I.A.</target>
+      </trans-unit>
+      <trans-unit id="landingFooterSignup" datatype="html">
+        <source>Sign up</source>
+        <target>Registrarse</target>
+      </trans-unit>
+      <trans-unit id="landingFooterLogin" datatype="html">
+        <source>Sign in</source>
+        <target>Iniciar sesión</target>
+      </trans-unit>
+      <trans-unit id="landingHowLede" datatype="html">
+        <source> Three steps, and you&apos;re in your first scene. </source>
+        <target>Tres pasos y estás en tu primera escena.</target>
+      </trans-unit>
+      <trans-unit id="landingGoToGames" datatype="html">
+        <source>Go to my games</source>
+        <target>Ir a mis partidas</target>
+      </trans-unit>
+      <trans-unit id="landingContinueAdventure" datatype="html">
+        <source>Continue your adventure</source>
+        <target>Continúa tu aventura</target>
+      </trans-unit>
+      <trans-unit id="landingCtaBodyLoggedIn" datatype="html">
+        <source> Your world is where you left it. </source>
+        <target>Tu mundo está donde lo dejaste.</target>
+      </trans-unit>
+      <trans-unit id="landingComingSoon" datatype="html">
+        <source> Coming soon </source>
+        <target>Próximamente</target>
+      </trans-unit>
+      <trans-unit id="sessionExpired" datatype="html">
+        <source>Session expired. Please log in again.</source>
+        <target>Tu sesión ha caducado. Inicia sesión de nuevo.</target>
+      </trans-unit>
+      <trans-unit id="forgotPasswordLink" datatype="html">
+        <source>Forgot password?</source>
+        <target>¿Olvidaste tu contraseña?</target>
+      </trans-unit>
+      <trans-unit id="loginInvalidCredentials" datatype="html">
+        <source>Invalid username or password.</source>
+        <target>Nombre de usuario o contraseña incorrectos.</target>
+      </trans-unit>
+      <trans-unit id="emailAuthThrottled" datatype="html">
+        <source>Too many requests. Please wait before trying again.</source>
+        <target>Demasiadas solicitudes. Espera antes de volver a intentarlo.</target>
+      </trans-unit>
+      <trans-unit id="verifyEmailTitle" datatype="html">
+        <source>Verify your email</source>
+        <target>Confirma tu correo electrónico</target>
+      </trans-unit>
+      <trans-unit id="verifyEmailDescription" datatype="html">
+        <source>Enter your registered email and verification code to finish setting up your account.</source>
+        <target>Introduce tu correo registrado y el código de confirmación para terminar de configurar tu cuenta.</target>
+      </trans-unit>
+      <trans-unit id="emailAuthEmailLabel" datatype="html">
+        <source>Email address</source>
+        <target>Correo electrónico</target>
+      </trans-unit>
+      <trans-unit id="emailAuthCodeLabel" datatype="html">
+        <source>Six-digit code</source>
+        <target>Código de seis dígitos</target>
+      </trans-unit>
+      <trans-unit id="emailAuthNewestCode" datatype="html">
+        <source>Use the most recent code you received.</source>
+        <target>Usa el código más reciente que hayas recibido.</target>
+      </trans-unit>
+      <trans-unit id="emailAuthWorking" datatype="html">
+        <source>Please wait…</source>
+        <target>Espera…</target>
+      </trans-unit>
+      <trans-unit id="verifyEmailButton" datatype="html">
+        <source>Verify email</source>
+        <target>Confirmar correo</target>
+      </trans-unit>
+      <trans-unit id="emailAuthConfirmWait" datatype="html">
+        <source>Try confirming again in <x id="INTERPOLATION" equiv-text="{{ confirmWait() }}"/> seconds.</source>
+        <target>Vuelve a intentar la confirmación en <x id="INTERPOLATION" equiv-text="{{ confirmWait() }}"/> segundos.</target>
+      </trans-unit>
+      <trans-unit id="sendVerificationCode" datatype="html">
+        <source>Send verification code</source>
+        <target>Enviar código de confirmación</target>
+      </trans-unit>
+      <trans-unit id="emailAuthResendWait" datatype="html">
+        <source>You can request another code in <x id="INTERPOLATION" equiv-text="{{ resendWait() }}"/> seconds.</source>
+        <target>Podrás solicitar otro código en <x id="INTERPOLATION" equiv-text="{{ resendWait() }}"/> segundos.</target>
+      </trans-unit>
+      <trans-unit id="emailAuthBackToLogin" datatype="html">
+        <source>Back to login</source>
+        <target>Volver al inicio de sesión</target>
+      </trans-unit>
+      <trans-unit id="emailAuthEmailError" datatype="html">
+        <source>Enter a valid email address.</source>
+        <target>Introduce un correo electrónico válido.</target>
+      </trans-unit>
+      <trans-unit id="emailAuthCodeError" datatype="html">
+        <source>Enter exactly six digits.</source>
+        <target>Introduce exactamente seis dígitos.</target>
+      </trans-unit>
+      <trans-unit id="emailVerifiedSuccess" datatype="html">
+        <source>Email verified. You can now log in.</source>
+        <target>Correo confirmado. Ya puedes iniciar sesión.</target>
+      </trans-unit>
+      <trans-unit id="forgotPasswordTitle" datatype="html">
+        <source>Forgot your password?</source>
+        <target>¿Olvidaste tu contraseña?</target>
+      </trans-unit>
+      <trans-unit id="forgotPasswordDescription" datatype="html">
+        <source>Enter your registered email to request a recovery code.</source>
+        <target>Introduce tu correo registrado para solicitar un código de recuperación.</target>
+      </trans-unit>
+      <trans-unit id="sendRecoveryCode" datatype="html">
+        <source>Send recovery code</source>
+        <target>Enviar código de recuperación</target>
+      </trans-unit>
+      <trans-unit id="emailAuthHaveRecoveryCode" datatype="html">
+        <source>I already have a recovery code</source>
+        <target>Ya tengo un código de recuperación</target>
+      </trans-unit>
+      <trans-unit id="resetPasswordTitle" datatype="html">
+        <source>Reset your password</source>
+        <target>Restablece tu contraseña</target>
+      </trans-unit>
+      <trans-unit id="resetPasswordDescription" datatype="html">
+        <source>Enter your registered email, recovery code, and a new password.</source>
+        <target>Introduce tu correo registrado, el código de recuperación y una nueva contraseña.</target>
+      </trans-unit>
+      <trans-unit id="emailAuthNewPasswordLabel" datatype="html">
+        <source>New password</source>
+        <target>Nueva contraseña</target>
+      </trans-unit>
+      <trans-unit id="emailAuthShowPassword" datatype="html">
+        <source>Show new password</source>
+        <target>Mostrar nueva contraseña</target>
+      </trans-unit>
+      <trans-unit id="emailAuthConfirmPasswordLabel" datatype="html">
+        <source>Repeat new password</source>
+        <target>Repite la nueva contraseña</target>
+      </trans-unit>
+      <trans-unit id="emailAuthRepeatRequired" datatype="html">
+        <source>Repeat your new password.</source>
+        <target>Repite tu nueva contraseña.</target>
+      </trans-unit>
+      <trans-unit id="emailAuthShowConfirmation" datatype="html">
+        <source>Show repeated password</source>
+        <target>Mostrar contraseña repetida</target>
+      </trans-unit>
+      <trans-unit id="emailAuthPasswordMismatch" datatype="html">
+        <source>The passwords do not match.</source>
+        <target>Las contraseñas no coinciden.</target>
+      </trans-unit>
+      <trans-unit id="resetPasswordButton" datatype="html">
+        <source>Reset password</source>
+        <target>Restablecer contraseña</target>
+      </trans-unit>
+      <trans-unit id="emailAuthVerifyInstead" datatype="html">
+        <source>Need to verify your email?</source>
+        <target>¿Necesitas confirmar tu correo?</target>
+      </trans-unit>
+      <trans-unit id="emailAuthPasswordError" datatype="html">
+        <source>Use a password with 4–50 characters.</source>
+        <target>Usa una contraseña de entre 4 y 50 caracteres.</target>
+      </trans-unit>
+      <trans-unit id="passwordRecoverySuccess" datatype="html">
+        <source>Password changed. Log in with your new password.</source>
+        <target>Contraseña cambiada. Inicia sesión con tu nueva contraseña.</target>
+      </trans-unit>
+      <trans-unit id="signupPasswordMinLengthError" datatype="html">
+        <source> Minimum 8 characters </source>
+        <target> Mínimo 8 caracteres </target>
+      </trans-unit>
+      <trans-unit id="registrationFailure" datatype="html">
+        <source>Could not create your account. Check your registration details and try again.</source>
+        <target>No se pudo crear tu cuenta. Revisa los datos de registro y vuelve a intentarlo.</target>
+      </trans-unit>
+      <trans-unit id="verificationAcknowledgement" datatype="html">
+        <source>If this account needs verification, a code will be sent. Check your inbox and spam folder.</source>
+        <target>Si esta cuenta necesita confirmación, se enviará un código. Revisa tu bandeja de entrada y la carpeta de spam.</target>
+      </trans-unit>
+      <trans-unit id="recoveryAcknowledgement" datatype="html">
+        <source>If a verified account exists for this email, a recovery code will be sent. Check your inbox and spam folder.</source>
+        <target>Si existe una cuenta verificada con este correo, se enviará un código de recuperación. Revisa tu bandeja de entrada y la carpeta de spam.</target>
+      </trans-unit>
+      <trans-unit id="emailAuthUncertain" datatype="html">
+        <source>We could not confirm the result. Try logging in, or request another code if needed.</source>
+        <target>No pudimos confirmar el resultado. Intenta iniciar sesión o solicita otro código si es necesario.</target>
+      </trans-unit>
+      <trans-unit id="emailAuthNetwork" datatype="html">
+        <source>Connection lost. Check your connection before requesting another code.</source>
+        <target>Se perdió la conexión. Comprueba tu conexión antes de solicitar otro código.</target>
+      </trans-unit>
+      <trans-unit id="emailAuthInvalidCode" datatype="html">
+        <source>This code could not be confirmed. Check your email and code, or request another code.</source>
+        <target>No se pudo confirmar este código. Revisa tu correo y el código, o solicita otro código.</target>
+      </trans-unit>
+      <trans-unit id="emailAuthCheckFields" datatype="html">
+        <source>Check the highlighted fields and try again.</source>
+        <target>Revisa los campos resaltados y vuelve a intentarlo.</target>
+      </trans-unit>
+      <trans-unit id="emailAuthFailure" datatype="html">
+        <source>Something went wrong. Please try again.</source>
+        <target>Algo salió mal. Vuelve a intentarlo.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

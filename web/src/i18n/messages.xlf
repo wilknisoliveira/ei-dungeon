@@ -1,0 +1,1726 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="landingSeoTitle" datatype="html">
+        <source>EI-DUNGEON | Your AI Game Master</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/seo/landing-seo.service.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingSeoDescription" datatype="html">
+        <source>Play tabletop adventures with an AI Game Master that is ready whenever you are.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/seo/landing-seo.service.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingSeoImageAlt" datatype="html">
+        <source>EI-DUNGEON logo over a fantasy dungeon landscape</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/seo/landing-seo.service.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/seo/landing-seo.service.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sessionExpired" datatype="html">
+        <source>Session expired. Please log in again.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/http-interceptors/auth-interceptor.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="appWordmark" datatype="html">
+        <source>EI-DUNGEON</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/auth/auth.component.html</context>
+          <context context-type="linenumber">14,15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
+          <context context-type="linenumber">8,9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-footer/landing-footer.component.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-header/landing-header.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">8,9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">14,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="loginDescription" datatype="html">
+        <source>Log in to your account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/auth/auth.component.html</context>
+          <context context-type="linenumber">16,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="usernameLabel" datatype="html">
+        <source>Username</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/auth/auth.component.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">67,68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="passwordLabel" datatype="html">
+        <source>Enter your password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/auth/auth.component.html</context>
+          <context context-type="linenumber">30,31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="forgotPasswordLink" datatype="html">
+        <source>Forgot password?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/auth/auth.component.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="loginButton" datatype="html">
+        <source> Login </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/auth/auth.component.html</context>
+          <context context-type="linenumber">49,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="noAccountPrompt" datatype="html">
+        <source>Don&apos;t have an account?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/auth/auth.component.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signUpLink" datatype="html">
+        <source>Sign Up Now</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/auth/auth.component.html</context>
+          <context context-type="linenumber">56,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="loginInvalidCredentials" datatype="html">
+        <source>Invalid username or password.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/auth/auth.component.ts</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthThrottled" datatype="html">
+        <source>Too many requests. Please wait before trying again.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/auth/auth.component.ts</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="verifyEmailTitle" datatype="html">
+        <source>Verify your email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="verifyEmailDescription" datatype="html">
+        <source>Enter your registered email and verification code to finish setting up your account.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthEmailLabel" datatype="html">
+        <source>Email address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthCodeLabel" datatype="html">
+        <source>Six-digit code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.html</context>
+          <context context-type="linenumber">16,17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">16,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthNewestCode" datatype="html">
+        <source>Use the most recent code you received.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">57,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthWorking" datatype="html">
+        <source>Please wait…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.html</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">61,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="verifyEmailButton" datatype="html">
+        <source>Verify email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthConfirmWait" datatype="html">
+        <source>Try confirming again in <x id="INTERPOLATION" equiv-text="{{ confirmWait() }}"/> seconds.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.html</context>
+          <context context-type="linenumber">27,28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">64,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sendVerificationCode" datatype="html">
+        <source>Send verification code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthResendWait" datatype="html">
+        <source>You can request another code in <x id="INTERPOLATION" equiv-text="{{ resendWait() }}"/> seconds.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.html</context>
+          <context context-type="linenumber">29,30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">66,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthBackToLogin" datatype="html">
+        <source>Back to login</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.html</context>
+          <context context-type="linenumber">32,35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">24,27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">70,73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthEmailError" datatype="html">
+        <source>Enter a valid email address.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthCodeError" datatype="html">
+        <source>Enter exactly six digits.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.ts</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailVerifiedSuccess" datatype="html">
+        <source>Email verified. You can now log in.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.ts</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="forgotPasswordTitle" datatype="html">
+        <source>Forgot your password?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="forgotPasswordDescription" datatype="html">
+        <source>Enter your registered email to request a recovery code.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sendRecoveryCode" datatype="html">
+        <source>Send recovery code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">65,66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthHaveRecoveryCode" datatype="html">
+        <source>I already have a recovery code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="gameOptionsTooltip" datatype="html">
+        <source>Game options</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="gameLanguageTooltip" datatype="html">
+        <source>Language used by the Game Master for narration and dialogue</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="chatLanguageLabel" datatype="html">
+        <source>Language</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.html</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="chatGameReady" datatype="html">
+        <source>Your new game is ready!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.html</context>
+          <context context-type="linenumber">119,121</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="chatStartButton" datatype="html">
+        <source> Start </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.html</context>
+          <context context-type="linenumber">128,129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="153799456510623899" datatype="html">
+        <source>Portuguese</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5866254605255506989" datatype="html">
+        <source>English</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5190825892106392539" datatype="html">
+        <source>Spanish</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3084566329643999642" datatype="html">
+        <source>What do you do?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">117</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6900473553536680806" datatype="html">
+        <source>This game has been finished, create a new one to start a new adventure!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="334139479101771120" datatype="html">
+        <source>Game language updated.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">157</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="394543175828208356" datatype="html">
+        <source>Something went wrong while attempting to update the game language.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">167</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7683705529753923369" datatype="html">
+        <source>Player</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">174</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7910849620457936504" datatype="html">
+        <source>Game Master</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">176</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3338122603397139235" datatype="html">
+        <source>Something went wrong while attempting to get the play list.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">351</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="883225603593837541" datatype="html">
+        <source>Something went wrong. Please try again.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">470</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6081488370267137537" datatype="html">
+        <source>The gods have not answered your call. Speak again, brave adventurer!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">561</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="firstStepsHeading" datatype="html">
+        <source>First steps</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="firstStepsSubtitle" datatype="html">
+        <source>Create a new game!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="gameNameLabel" datatype="html">
+        <source>Game name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.html</context>
+          <context context-type="linenumber">14,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="gameLanguageLabel" datatype="html">
+        <source>Game language</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.html</context>
+          <context context-type="linenumber">30,31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="gameLanguageHint" datatype="html">
+        <source>Language used by the Game Master for narration and dialogue</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="characterNameLabel" datatype="html">
+        <source>Character name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.html</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="raceLabel" datatype="html">
+        <source>Race</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.html</context>
+          <context context-type="linenumber">68,69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="characterDescriptionLabel" datatype="html">
+        <source>Character description</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.html</context>
+          <context context-type="linenumber">82,84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="skillsHeading" datatype="html">
+        <source>Skills</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.html</context>
+          <context context-type="linenumber">100,101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="racialBonusTooltip" datatype="html">
+        <source>Racial Bonus</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.html</context>
+          <context context-type="linenumber">117,118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="pointsToDistribute" datatype="html">
+        <source>Points to distribute:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.html</context>
+          <context context-type="linenumber">145,146</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="exceededMaxPoints" datatype="html">
+        <source>You have exceeded the maximum skill points</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.html</context>
+          <context context-type="linenumber">164,165</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="startGameButton" datatype="html">
+        <source> Start game </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.html</context>
+          <context context-type="linenumber">184,185</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7800061171704298797" datatype="html">
+        <source>Human</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4895190846964146304" datatype="html">
+        <source>Elf</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6487984047699114430" datatype="html">
+        <source>Dwarf</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1148914934735638586" datatype="html">
+        <source>Half Elf</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6003309338635897937" datatype="html">
+        <source>Halfling</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5931157710888126589" datatype="html">
+        <source>Tiefling</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6984581431061216462" datatype="html">
+        <source>Dragonborn</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1956337344618882908" datatype="html">
+        <source>Half Orc</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4019184240939181903" datatype="html">
+        <source>Gnome</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6632040223751981101" datatype="html">
+        <source>Strength</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5465529649433457628" datatype="html">
+        <source>Dexterity</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8489670130200267808" datatype="html">
+        <source>Intelligence</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1632323077493059273" datatype="html">
+        <source>Constitution</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6828638344650593860" datatype="html">
+        <source>Charisma</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6753176961354636644" datatype="html">
+        <source>Wisdom</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2549518094568275321" datatype="html">
+        <source>Game &apos;<x id="PH" equiv-text="newGame.name"/>&apos; created!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">181</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3688639030371133915" datatype="html">
+        <source>Something went wrong while attempting to create the game. Verify with the admin if you have the permissions.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">188</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="homeSubtitle" datatype="html">
+        <source>Campaigns</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="newRoleButton" datatype="html">
+        <source>New Session</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="renameMenuItem" datatype="html">
+        <source>Rename</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
+          <context context-type="linenumber">95,96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deleteMenuItem" datatype="html">
+        <source>Delete</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
+          <context context-type="linenumber">104,105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="showMoreButton" datatype="html">
+        <source> Show more </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
+          <context context-type="linenumber">118,119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settingsMenuItem" datatype="html">
+        <source>Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
+          <context context-type="linenumber">163,164</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="logoutMenuItem" datatype="html">
+        <source>Logout</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
+          <context context-type="linenumber">167,168</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7752330587380687192" datatype="html">
+        <source>Something went wrong while attempting to get the game list.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="269149994023386814" datatype="html">
+        <source>Game deleted successfully.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
+          <context context-type="linenumber">155</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5244014636631739754" datatype="html">
+        <source>Something went wrong while attempting to delete the game.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
+          <context context-type="linenumber">159</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1620894741817105195" datatype="html">
+        <source>Are you sure you want to delete the game &apos;<x id="PH" equiv-text="gameName"/>&apos;?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
+          <context context-type="linenumber">169</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1026218475958861845" datatype="html">
+        <source>Game renamed successfully.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
+          <context context-type="linenumber">206</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9132426788094363683" datatype="html">
+        <source>Something went wrong while attempting to rename the game.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
+          <context context-type="linenumber">210</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingCtaHeading" datatype="html">
+        <source> The dungeon doesn&apos;t need a calendar invite. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-cta/landing-cta.component.html</context>
+          <context context-type="linenumber">4,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingCtaBody" datatype="html">
+        <source> Make a character and be in your first scene in a couple of minutes. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-cta/landing-cta.component.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-cta/landing-cta.component.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingComingSoon" datatype="html">
+        <source> Coming soon </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-cta/landing-cta.component.html</context>
+          <context context-type="linenumber">15,16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-header/landing-header.component.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-hero/landing-hero.component.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingCtaBodyLoggedIn" datatype="html">
+        <source> Your world is where you left it. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-cta/landing-cta.component.html</context>
+          <context context-type="linenumber">25,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingContinueAdventure" datatype="html">
+        <source>Continue your adventure</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-cta/landing-cta.component.html</context>
+          <context context-type="linenumber">35,37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-hero/landing-hero.component.html</context>
+          <context context-type="linenumber">43,45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingCtaButton" datatype="html">
+        <source>Create your character</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-cta/landing-cta.component.html</context>
+          <context context-type="linenumber">51,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingCtaLoginLink" datatype="html">
+        <source>Already playing? Sign in</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-cta/landing-cta.component.html</context>
+          <context context-type="linenumber">57,59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingDevBadge" datatype="html">
+        <source>In development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-development/landing-development.component.html</context>
+          <context context-type="linenumber">3,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingDevHeading" datatype="html">
+        <source> Built in the open, and still being built. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-development/landing-development.component.html</context>
+          <context context-type="linenumber">6,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingDevBody" datatype="html">
+        <source> EI-DUNGEON is an active project, not a finished product. Features land regularly and things will change under you. If you would rather see how it works than take our word for it, both repositories are public. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-development/landing-development.component.html</context>
+          <context context-type="linenumber">10,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingDevWebRepo" datatype="html">
+        <source>Web repository</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-development/landing-development.component.html</context>
+          <context context-type="linenumber">24,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingDevApiRepo" datatype="html">
+        <source>API repository</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-development/landing-development.component.html</context>
+          <context context-type="linenumber">33,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFaqEyebrow" datatype="html">
+        <source> Before you sign up </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-faq/landing-faq.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFaqHeading" datatype="html">
+        <source> The questions everyone asks. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-faq/landing-faq.component.html</context>
+          <context context-type="linenumber">7,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFaqSoloQ" datatype="html">
+        <source>Do I need other players?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-faq/landing-faq.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFaqSoloA" datatype="html">
+        <source>No. EI-DUNGEON is built for solo play. The AI Game Master runs the world, the characters in it, and everything that happens to you.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-faq/landing-faq.component.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFaqRulesQ" datatype="html">
+        <source>Do I need to know role-playing rules?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-faq/landing-faq.component.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFaqRulesA" datatype="html">
+        <source>No. Character creation walks you through race, attributes and description one step at a time. If you have never rolled a die in your life, you can still play.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-faq/landing-faq.component.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFaqPriceQ" datatype="html">
+        <source>What does it cost?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-faq/landing-faq.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFaqPriceA" datatype="html">
+        <source>It is free to start. A paid tier is planned for later, but nothing is behind a paywall today.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-faq/landing-faq.component.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFaqLanguageQ" datatype="html">
+        <source>What language is the story told in?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-faq/landing-faq.component.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFaqLanguageA" datatype="html">
+        <source>Portuguese, English or Spanish. You choose it per game, so the language of the narration does not have to match the language of the interface.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-faq/landing-faq.component.ts</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFaqSaveQ" datatype="html">
+        <source>Do my games get saved?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-faq/landing-faq.component.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFaqSaveA" datatype="html">
+        <source>Yes. Every game and every exchange is stored on your account. Come back a month later and the scene is where you left it.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-faq/landing-faq.component.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFaqPrivacyQ" datatype="html">
+        <source>Who can see my games?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-faq/landing-faq.component.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFaqPrivacyA" datatype="html">
+        <source>Your games are tied to your account and reached by signing in. They are not published anywhere and they are not shared with other players.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-faq/landing-faq.component.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFeaturesEyebrow" datatype="html">
+        <source> What&apos;s inside </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-features/landing-features.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFeaturesHeading" datatype="html">
+        <source> A character sheet with consequences. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-features/landing-features.component.html</context>
+          <context context-type="linenumber">7,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFeaturesLede" datatype="html">
+        <source> Not a chat window with a fantasy skin. The numbers you pick shape what the world lets you do. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-features/landing-features.component.html</context>
+          <context context-type="linenumber">10,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFeatureRacesTitle" datatype="html">
+        <source>Nine races, real trade-offs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-features/landing-features.component.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFeatureRacesBody" datatype="html">
+        <source>Human, Elf, Dwarf, Half-Elf, Halfling, Tiefling, Dragonborn, Half-Orc and Gnome. Each one carries its own attribute bonuses.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-features/landing-features.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFeaturePointsTitle" datatype="html">
+        <source>Thirty points, your call</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-features/landing-features.component.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFeaturePointsBody" datatype="html">
+        <source>Six attributes, a floor of 8 and a ceiling of 18. Build the hero you want, then live with the character you made.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-features/landing-features.component.ts</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFeatureLanguageTitle" datatype="html">
+        <source>Narrated in your language</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-features/landing-features.component.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFeatureLanguageBody" datatype="html">
+        <source>The Game Master tells the story in Portuguese, English or Spanish. You set it per game, so it does not have to match the interface.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-features/landing-features.component.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFeatureSaveTitle" datatype="html">
+        <source>Your campaign keeps its place</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-features/landing-features.component.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFeatureSaveBody" datatype="html">
+        <source>Every game is saved to your account. Close the tab mid-sentence and the scene is still waiting when you come back.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-features/landing-features.component.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFooterTagline" datatype="html">
+        <source>An A.I. driven RPG simulator</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-footer/landing-footer.component.html</context>
+          <context context-type="linenumber">6,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFooterLinksLabel" datatype="html">
+        <source>Account and project links</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-footer/landing-footer.component.html</context>
+          <context context-type="linenumber">10,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFooterSignup" datatype="html">
+        <source>Sign up</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-footer/landing-footer.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingFooterLogin" datatype="html">
+        <source>Sign in</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-footer/landing-footer.component.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingLocaleLinksLabel" datatype="html">
+        <source>Choose a language version</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-footer/landing-footer.component.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingHeaderActionsLabel" datatype="html">
+        <source>Account navigation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-header/landing-header.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingGoToGames" datatype="html">
+        <source>Go to my games</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-header/landing-header.component.html</context>
+          <context context-type="linenumber">28,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingSignIn" datatype="html">
+        <source>Sign in</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-header/landing-header.component.html</context>
+          <context context-type="linenumber">36,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingHeroHeadline" datatype="html">
+        <source> Your AI Game Master never cancels. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-hero/landing-hero.component.html</context>
+          <context context-type="linenumber">14,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingHeroSub" datatype="html">
+        <source> A solo role-playing game run by AI. Build a character, step into the dark, and play whenever you want — no group to gather, no night to agree on, no one to talk into running it. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-hero/landing-hero.component.html</context>
+          <context context-type="linenumber">18,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingHeroCta" datatype="html">
+        <source>Create your character</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-hero/landing-hero.component.html</context>
+          <context context-type="linenumber">52,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingHeroSecondary" datatype="html">
+        <source>I already have an account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-hero/landing-hero.component.html</context>
+          <context context-type="linenumber">59,61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingHeroNote" datatype="html">
+        <source> Free to start · Play in Portuguese, English or Spanish </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-hero/landing-hero.component.html</context>
+          <context context-type="linenumber">66,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingLogoCompletedAlt" datatype="html">
+        <source>EI-DUNGEON — an A.I. driven RPG simulator</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-hero/landing-hero.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingHowEyebrow" datatype="html">
+        <source>The way out</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-how-it-works/landing-how-it-works.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingHowHeading" datatype="html">
+        <source> None of that is required here. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-how-it-works/landing-how-it-works.component.html</context>
+          <context context-type="linenumber">5,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingHowLede" datatype="html">
+        <source> Three steps, and you&apos;re in your first scene. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-how-it-works/landing-how-it-works.component.html</context>
+          <context context-type="linenumber">8,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingStepCharacterTitle" datatype="html">
+        <source>Build your character</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-how-it-works/landing-how-it-works.component.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingStepCharacterBody" datatype="html">
+        <source>Choose a race, spend thirty points across six attributes, and write who they are. Nine races, each with its own bonuses.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-how-it-works/landing-how-it-works.component.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingStepMasterTitle" datatype="html">
+        <source>The Game Master sets the scene</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-how-it-works/landing-how-it-works.component.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingStepMasterBody" datatype="html">
+        <source>An AI narrator opens the world in the language you picked, and reacts to what you actually do — not to a script.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-how-it-works/landing-how-it-works.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingStepPlayTitle" datatype="html">
+        <source>Play by chat</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-how-it-works/landing-how-it-works.component.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingStepPlayBody" datatype="html">
+        <source>Type what your character does. The world answers. Stop in the middle of a scene and pick it up tomorrow.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-how-it-works/landing-how-it-works.component.ts</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingProblemEyebrow" datatype="html">
+        <source> The real obstacle </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-problem/landing-problem.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingProblemHeading" datatype="html">
+        <source> The hardest part of a role-playing game isn&apos;t the dragon. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-problem/landing-problem.component.html</context>
+          <context context-type="linenumber">7,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingProblemLede" datatype="html">
+        <source> It&apos;s everything that has to happen before anyone rolls a die. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-problem/landing-problem.component.html</context>
+          <context context-type="linenumber">10,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingPainScheduleTitle" datatype="html">
+        <source>Four people, one calendar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-problem/landing-problem.component.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingPainScheduleBody" datatype="html">
+        <source>Finding a night everyone is free takes longer than the session itself.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-problem/landing-problem.component.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingPainMasterTitle" datatype="html">
+        <source>Somebody has to run it</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-problem/landing-problem.component.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingPainMasterBody" datatype="html">
+        <source>And that somebody spends the week preparing while everyone else just shows up.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-problem/landing-problem.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingPainDeadTitle" datatype="html">
+        <source>The campaign that died at session three</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-problem/landing-problem.component.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="landingPainDeadBody" datatype="html">
+        <source>Not from a total party kill. From a group chat that slowly went quiet.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-problem/landing-problem.component.ts</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resetPasswordTitle" datatype="html">
+        <source>Reset your password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resetPasswordDescription" datatype="html">
+        <source>Enter your registered email, recovery code, and a new password.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthNewPasswordLabel" datatype="html">
+        <source>New password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthShowPassword" datatype="html">
+        <source>Show new password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">30,31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthConfirmPasswordLabel" datatype="html">
+        <source>Repeat new password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthShowConfirmation" datatype="html">
+        <source>Show repeated password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthRepeatRequired" datatype="html">
+        <source>Repeat your new password.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthPasswordMismatch" datatype="html">
+        <source>The passwords do not match.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">55,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resetPasswordButton" datatype="html">
+        <source>Reset password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">63,64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthVerifyInstead" datatype="html">
+        <source>Need to verify your email?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">69,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthPasswordError" datatype="html">
+        <source>Use a password with 4–50 characters.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.ts</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="passwordRecoverySuccess" datatype="html">
+        <source>Password changed. Log in with your new password.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.ts</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settingsSubtitle" datatype="html">
+        <source>Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accountMenuItem" datatype="html">
+        <source>Account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="securityMenuItem" datatype="html">
+        <source>Security</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settingsTitle" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{
+                        activeSection === &apos;account&apos; ? &apos;Account&apos; : &apos;Security&apos;
+                    }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">50,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accountHeading" datatype="html">
+        <source>Account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">65,66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fullNameLabel" datatype="html">
+        <source>Full Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">71,72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailLabel" datatype="html">
+        <source>Email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">75,76</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">69,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="roleLabel" datatype="html">
+        <source>Role</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">79,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dangerZoneHeading" datatype="html">
+        <source>Danger Zone</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">85,86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deleteAccountWarning" datatype="html">
+        <source>Permanently delete your account and all associated data. This action cannot be undone.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">86,87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deleteAccountButton" datatype="html">
+        <source> Delete Account </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">93,94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="changePasswordHeading" datatype="html">
+        <source>Change Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">103,104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="currentPasswordLabel" datatype="html">
+        <source>Current Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">109,110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="currentPasswordRequiredError" datatype="html">
+        <source> Current password is required </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">123,124</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="passwordMinLengthError" datatype="html">
+        <source> Minimum 4 characters </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">162</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="newPasswordLabel" datatype="html">
+        <source>New Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">138,139</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="newPasswordRequiredError" datatype="html">
+        <source> New password is required </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">152,153</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="changePasswordButton" datatype="html">
+        <source> Change Password </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">175</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6472107528361453618" datatype="html">
+        <source>Are you sure you want to delete your account? This action is irreversible and all your data will be permanently lost.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.ts</context>
+          <context context-type="linenumber">120</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signupDescription" datatype="html">
+        <source>Sign Up</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">16,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signupUsernameLabel" datatype="html">
+        <source>Username</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="usernameRequiredError" datatype="html">
+        <source> Username is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">27,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="usernameMinLengthError" datatype="html">
+        <source> Minimum 4 characters </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">30,31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="usernameMaxLengthError" datatype="html">
+        <source> Maximum 20 characters </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="usernameTakenError" datatype="html">
+        <source> Username is already taken </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="checkingAvailability" datatype="html">
+        <source> Checking availability... </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">102,103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fullnameLabel" datatype="html">
+        <source>Fullname</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fullnameRequiredError" datatype="html">
+        <source> Fullname is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">58,59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fullnameMinLengthError" datatype="html">
+        <source> Minimum 4 characters </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">61,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fullnameMaxLengthError" datatype="html">
+        <source> Maximum 50 characters </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">64,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailInvalidError" datatype="html">
+        <source>Please enter a valid email address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">83,84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailRequiredError" datatype="html">
+        <source>Email is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">86,87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailTakenError" datatype="html">
+        <source> Email is already registered </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">95,96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signupPasswordLabel" datatype="html">
+        <source>Enter your password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">106,107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="passwordRequiredError" datatype="html">
+        <source> Password is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">113,114</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signupPasswordMinLengthError" datatype="html">
+        <source> Minimum 8 characters </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">116,117</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="passwordMaxLengthError" datatype="html">
+        <source> Maximum 50 characters </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">119,120</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signupButton" datatype="html">
+        <source> Sign Up </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">131,132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="alreadyHaveAccountPrompt" datatype="html">
+        <source>Do you already have an account?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">138,139</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signInLink" datatype="html">
+        <source>Sign In Now</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">139,141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="registrationFailure" datatype="html">
+        <source>Could not create your account. Check your registration details and try again.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.ts</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="verificationAcknowledgement" datatype="html">
+        <source>If this account needs verification, a code will be sent. Check your inbox and spam folder.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recoveryAcknowledgement" datatype="html">
+        <source>If a verified account exists for this email, a recovery code will be sent. Check your inbox and spam folder.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthUncertain" datatype="html">
+        <source>We could not confirm the result. Try logging in, or request another code if needed.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthNetwork" datatype="html">
+        <source>Connection lost. Check your connection before requesting another code.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthInvalidCode" datatype="html">
+        <source>This code could not be confirmed. Check your email and code, or request another code.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthCheckFields" datatype="html">
+        <source>Check the highlighted fields and try again.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="emailAuthFailure" datatype="html">
+        <source>Something went wrong. Please try again.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="confirmDialogYes" datatype="html">
+        <source>Yes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/confirmation-dialog/confirmation-dialog.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="confirmDialogCancel" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/confirmation-dialog/confirmation-dialog.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

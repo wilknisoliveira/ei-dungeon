@@ -1,0 +1,23 @@
+<section class="landing-section problem">
+    <div class="landing-shell">
+        <p class="landing-eyebrow" i18n="@@landingProblemEyebrow">
+            The real obstacle
+        </p>
+        <h2 class="landing-heading" i18n="@@landingProblemHeading">
+            The hardest part of a role-playing game isn't the dragon.
+        </h2>
+        <p class="landing-lede" i18n="@@landingProblemLede">
+            It's everything that has to happen before anyone rolls a die.
+        </p>
+
+        <ul class="pain-list">
+            <li class="pain" *ngFor="let pain of pains">
+                <mat-icon aria-hidden="true">{{ pain.icon }}</mat-icon>
+                <div>
+                    <h3 class="pain-title">{{ pain.title }}</h3>
+                    <p class="pain-body">{{ pain.body }}</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>

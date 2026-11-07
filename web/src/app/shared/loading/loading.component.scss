@@ -1,0 +1,17 @@
+@use "@angular/material" as mat;
+
+.spinner-wrapper {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+::ng-deep .spinner-wrapper mat-spinner {
+    @include mat.progress-spinner-overrides((
+        active-indicator-color: var(--mat-sys-tertiary),
+    ));
+}

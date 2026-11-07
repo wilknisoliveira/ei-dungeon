@@ -1,0 +1,268 @@
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-in-left {
+    from {
+        opacity: 0;
+        transform: translateX(-16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.main-container {
+    mat-drawer-container {
+        background-color: var(--mat-sys-background);
+        display: flex;
+        width: 100%;
+        height: 100dvh;
+        border: 1px solid
+            color-mix(in srgb, var(--mat-sys-outline) 50%, transparent);
+
+        mat-drawer {
+            background-color: var(--mat-sys-surface-container-low);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: clamp(250px, 20%, 350px);
+            overflow: hidden;
+            border-right: 1px solid var(--mat-sys-outline-variant);
+            animation: slide-in-left 0.4s ease-out;
+
+            @media (max-width: 767.98px) {
+                width: 100vw;
+                min-width: 100vw;
+            }
+
+            .sidebar-header {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                padding: 2rem 1rem 1.5rem;
+                opacity: 0.8;
+                position: relative;
+
+                .drawer-close {
+                    position: absolute;
+                    top: 1rem;
+                    right: 0.5rem;
+                    color: var(--mat-sys-on-surface-variant);
+                }
+
+                .brand {
+                    font: var(--mat-sys-label-small);
+                    color: var(--mat-sys-tertiary);
+                    letter-spacing: 0.1em;
+                }
+
+                .subtitle {
+                    font: var(--mat-sys-title-large);
+                    color: var(--mat-sys-on-surface);
+                    margin-top: 0.25rem;
+                }
+            }
+
+            .center-btn-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 1rem 0 2rem 0;
+
+                .new-play-btn {
+                    background-color: var(--mat-sys-primary);
+                    color: var(--mat-sys-on-primary);
+                    border-radius: 1rem;
+                    transition:
+                        box-shadow 0.15s ease,
+                        transform 0.15s ease;
+
+                    &:hover {
+                        box-shadow: 0 0 12px
+                            color-mix(
+                                in srgb,
+                                var(--mat-sys-primary) 50%,
+                                transparent
+                            );
+                        transform: translateY(-1px);
+                    }
+                }
+
+                .show-more-btn {
+                    background-color: transparent;
+                    color: var(--mat-sys-on-surface-variant);
+                    font-size: smaller;
+                    transition: color 0.15s ease;
+
+                    &:hover {
+                        color: var(--mat-sys-tertiary);
+                    }
+                }
+            }
+
+            .plays {
+                width: 100%;
+                padding: 0 0.5rem;
+
+                .loading-more {
+                    display: flex;
+                    justify-content: center;
+                    padding: 1rem 0;
+                }
+
+                .game-name {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                    margin-bottom: 0.25rem;
+                    padding-left: 0.5rem;
+                    border-radius: 0.5rem;
+                    transition: background-color 0.15s ease;
+                    animation: fade-in-up 0.3s ease-out backwards;
+
+                    &.selected {
+                        background-color: var(--mat-sys-secondary-container);
+
+                        // Rail indicator: absolutely positioned so the corner
+                        // radius never clips it and selecting shifts nothing.
+                        &::before {
+                            content: "";
+                            position: absolute;
+                            left: 0;
+                            top: 0.35rem;
+                            bottom: 0.35rem;
+                            width: 3px;
+                            border-radius: 999px;
+                            background-color: var(--mat-sys-tertiary);
+                        }
+
+                        .game-button button,
+                        .menu-button button {
+                            color: var(--mat-sys-on-secondary-container);
+                        }
+                    }
+
+                    .game-button {
+                        flex: 1;
+                        display: flex;
+                        justify-content: flex-start;
+                        overflow: hidden;
+
+                        button {
+                            color: var(--mat-sys-on-surface-variant);
+                            transition: color 0.15s ease;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            max-width: 100%;
+
+                            &:hover {
+                                color: var(--mat-sys-tertiary);
+                            }
+                        }
+                    }
+
+                    .rename-input {
+                        flex: 1;
+                        display: flex;
+                        align-items: center;
+
+                        input {
+                            width: 100%;
+                            background-color: transparent;
+                            border: 1px solid var(--mat-sys-primary);
+                            border-radius: 0.25rem;
+                            color: var(--mat-sys-on-surface);
+                            font-family: "Averia Serif Libre", serif;
+                            font-size: inherit;
+                            padding: 0.35rem 0.5rem;
+                            outline: none;
+                            transition: border-color 0.15s ease;
+
+                            &:focus {
+                                border-color: var(--mat-sys-tertiary);
+                            }
+                        }
+                    }
+
+                    .menu-button {
+                        flex: 0;
+                        display: flex;
+                        justify-content: flex-end;
+
+                        button {
+                            background-color: transparent;
+                            color: var(--mat-sys-on-surface-variant);
+                            transition: color 0.15s ease;
+
+                            &:hover {
+                                color: var(--mat-sys-tertiary);
+                            }
+                        }
+                    }
+
+                    button {
+                        background-color: transparent;
+
+                        mat-icon {
+                            -webkit-text-stroke: 1px var(--mat-sys-tertiary);
+                            color: transparent;
+                        }
+                    }
+                }
+            }
+        }
+
+        mat-drawer-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-height: 100dvh;
+
+            .header-menu {
+                display: flex;
+                justify-content: space-between;
+                height: 8dvh;
+                min-height: 5dvh;
+
+                .nav-btn-container {
+                    mat-icon {
+                        color: var(--mat-sys-secondary);
+                    }
+                }
+
+                .header-actions {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+
+                    .theme-button {
+                        margin: 0 1rem;
+                    }
+
+                    .profile-button {
+                        margin-right: 1rem;
+
+                        mat-icon {
+                            color: var(--mat-sys-secondary);
+                        }
+                    }
+                }
+            }
+
+            .main-content {
+                height: 91dvh;
+            }
+        }
+    }
+}

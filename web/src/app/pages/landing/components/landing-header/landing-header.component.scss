@@ -1,0 +1,50 @@
+.landing-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: color-mix(
+        in srgb,
+        var(--mat-sys-surface) 82%,
+        transparent
+    );
+    backdrop-filter: blur(10px);
+    border-bottom: solid 1px
+        color-mix(in srgb, var(--mat-sys-outline) 22%, transparent);
+}
+
+.header-inner {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0.6rem clamp(1rem, 4vw, 2rem);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    border-radius: var(--mat-sys-corner-small);
+
+    .wordmark {
+        font: var(--mat-sys-label-medium);
+        color: var(--mat-sys-tertiary);
+        letter-spacing: 0.1em;
+    }
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.35rem, 2vw, 0.85rem);
+}
+
+.signin {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+}

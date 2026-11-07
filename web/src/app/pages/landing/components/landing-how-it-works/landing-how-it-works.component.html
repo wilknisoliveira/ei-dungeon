@@ -1,0 +1,27 @@
+<section class="landing-section how">
+    <div class="landing-shell how-shell">
+        <p class="landing-eyebrow" i18n="@@landingHowEyebrow">The way out</p>
+        <h2 class="landing-heading" i18n="@@landingHowHeading">
+            None of that is required here.
+        </h2>
+        <p class="landing-lede" i18n="@@landingHowLede">
+            Three steps, and you're in your first scene.
+        </p>
+
+        <ol class="timeline">
+            <li class="node" *ngFor="let step of steps; let i = index">
+                <div class="node-marker" aria-hidden="true">
+                    <span class="node-number">{{ i + 1 }}</span>
+                </div>
+
+                <div class="node-body">
+                    <h3 class="node-title">
+                        <mat-icon aria-hidden="true">{{ step.icon }}</mat-icon>
+                        <span>{{ step.title }}</span>
+                    </h3>
+                    <p class="node-text">{{ step.body }}</p>
+                </div>
+            </li>
+        </ol>
+    </div>
+</section>

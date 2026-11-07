@@ -1,0 +1,29 @@
+<footer class="landing-footer">
+    <div class="landing-shell footer-inner">
+        <div class="footer-brand">
+            <span class="wordmark" i18n="@@appWordmark">EI-DUNGEON</span>
+            <span class="tagline" i18n="@@landingFooterTagline"
+                >An A.I. driven RPG simulator</span
+            >
+        </div>
+
+        <nav class="footer-links" i18n-aria-label="@@landingFooterLinksLabel" aria-label="Account and project links">
+            <a routerLink="/signup" i18n="@@landingFooterSignup">Sign up</a>
+            <a routerLink="/login" i18n="@@landingFooterLogin">Sign in</a>
+            <a [href]="webRepo" target="_blank" rel="noopener noreferrer"
+                >GitHub</a
+            >
+            <a [href]="apiRepo" target="_blank" rel="noopener noreferrer"
+                >API</a
+            >
+        </nav>
+
+        <nav class="language-links" i18n-aria-label="@@landingLocaleLinksLabel" aria-label="Choose a language version">
+            <a href="/en/" hreflang="en" lang="en">English</a>
+            <a href="/pt-BR/" hreflang="pt-BR" lang="pt-BR">Português</a>
+            <a href="/es/" hreflang="es" lang="es">Español</a>
+        </nav>
+    </div>
+
+    <p class="copyright">© {{ year }} Wilknis Deyvis</p>
+</footer>

@@ -1,0 +1,41 @@
+<header class="landing-header">
+    <div class="header-inner">
+        <span class="brand">
+            <span class="wordmark" i18n="@@appWordmark">EI-DUNGEON</span>
+        </span>
+
+        <nav class="actions" i18n-aria-label="@@landingHeaderActionsLabel" aria-label="Account navigation">
+            <app-language-selector></app-language-selector>
+
+            @if (isInDevelopment()) {
+                <button mat-stroked-button class="signin" disabled i18n="@@landingComingSoon">
+                    Coming soon
+                </button>
+                <!-- Current account-action labels, restored once MVP features are ready.
+                @if (isLoggedIn()) {
+                    Go to my games
+                } @else {
+                    Sign in
+                }
+                -->
+            } @else if (isLoggedIn()) {
+                <a
+                    mat-flat-button
+                    color="primary"
+                    routerLink="/home"
+                    class="signin"
+                    i18n="@@landingGoToGames"
+                    >Go to my games</a
+                >
+            } @else {
+                <a
+                    mat-stroked-button
+                    routerLink="/login"
+                    class="signin"
+                    i18n="@@landingSignIn"
+                    >Sign in</a
+                >
+            }
+        </nav>
+    </div>
+</header>

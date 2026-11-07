@@ -1,0 +1,7 @@
+@use "@angular/material" as mat;
+
+::ng-deep .spinner-wrapper mat-spinner {
+    @include mat.progress-spinner-overrides((
+        active-indicator-color: var(--mat-sys-tertiary),
+    ));
+}

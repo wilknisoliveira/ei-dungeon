@@ -1,0 +1,105 @@
+section {
+    min-height: 100vh;
+    overflow-y: auto;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    width: clamp(320px, 50%, 600px);
+    margin: 1rem 0;
+    position: relative;
+    z-index: 1;
+
+    .login {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--mat-sys-surface-container);
+        padding: 2rem 5rem 2rem 5rem;
+        border: solid 1px
+            color-mix(in srgb, var(--mat-sys-outline) 30%, transparent);
+        border-radius: 1rem;
+        backdrop-filter: blur(8px);
+        box-shadow:
+            0 0 20px color-mix(in srgb, var(--mat-sys-primary) 15%, transparent),
+            0 4px 8px color-mix(in srgb, var(--mat-sys-shadow) 30%, transparent);
+
+        @media (max-width: 480px) {
+            padding: 2rem 1.5rem 2rem 1.5rem;
+        }
+
+        .header-actions {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            color: var(--mat-sys-on-surface);
+            margin-bottom: 1.5rem;
+
+            .wordmark {
+                font: var(--mat-sys-label-small);
+                color: var(--mat-sys-tertiary);
+                letter-spacing: 0.1em;
+            }
+        }
+
+        .description {
+            color: var(--mat-sys-on-surface-variant);
+            margin-bottom: 1rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+
+            mat-form-field {
+                width: clamp(200px, 100%, 600px);
+            }
+
+            .login-button {
+                margin: 1rem 0 2rem 0;
+
+                button {
+                    font-size: medium;
+                    height: 100%;
+                    width: clamp(200px, 100%, 600px);
+                    padding: 0.5rem 0;
+                }
+            }
+        }
+    }
+
+    .sign-up {
+        color: var(--mat-sys-on-surface-variant);
+        text-align: center;
+        margin-top: 1rem;
+
+        a {
+            color: var(--mat-sys-tertiary);
+            font-weight: bold;
+            text-decoration: none;
+        }
+    }
+}
+
+.login__forgot-password {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--mat-sys-tertiary);
+}
+
+.login__error {
+    color: var(--mat-sys-error);
+}

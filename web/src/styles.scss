@@ -1,0 +1,230 @@
+/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+@use "./app/styles/snackbar";
+
+// ─── M3 Theme Definition ────────────────────────────────────────────────────
+// Using Angular Material's built-in M3 palettes (red, violet) as base.
+// Standard --mat-sys-* tokens are emitted automatically by the theme.
+
+$dark-theme: mat.define-theme(
+    (
+        color: (
+            theme-type: dark,
+            primary: mat.$violet-palette,
+            tertiary: mat.$orange-palette,
+            use-system-variables: true,
+        ),
+        typography: (
+            brand-family: (
+                "Averia Serif Libre",
+                serif,
+            ),
+            plain-family: (
+                Manrope,
+                "Helvetica Neue",
+                sans-serif,
+            ),
+            use-system-variables: true,
+        ),
+        density: (
+            scale: 0,
+        ),
+    )
+);
+
+$light-theme: mat.define-theme(
+    (
+        color: (
+            theme-type: light,
+            primary: mat.$violet-palette,
+            tertiary: mat.$orange-palette,
+            use-system-variables: true,
+        ),
+        typography: (
+            brand-family: (
+                "Averia Serif Libre",
+                serif,
+            ),
+            plain-family: (
+                Manrope,
+                "Helvetica Neue",
+                sans-serif,
+            ),
+            use-system-variables: true,
+        ),
+        density: (
+            scale: 0,
+        ),
+    )
+);
+
+// ─── Theme Application ──────────────────────────────────────────────────────
+
+// Apply dark theme globally via class (default)
+body.theme-dark {
+    @include mat.all-component-themes($dark-theme);
+    @include mat.system-level-colors($dark-theme);
+    @include mat.system-level-typography($dark-theme);
+}
+
+body.theme-light {
+    @include mat.all-component-themes($light-theme);
+    @include mat.system-level-colors($light-theme);
+    @include mat.system-level-typography($light-theme);
+}
+
+// ─── Global Styles ──────────────────────────────────────────────────────────
+
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: Manrope, "Helvetica Neue", sans-serif;
+
+    background-color: var(--mat-sys-background);
+    color: var(--mat-sys-on-surface);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+body.theme-dark ::-webkit-scrollbar-track {
+    background: var(--mat-sys-background);
+}
+
+body.theme-dark ::-webkit-scrollbar-thumb {
+    background-color: var(--mat-sys-on-surface-variant);
+    border-radius: 4px;
+    border: 2px solid var(--mat-sys-background);
+}
+
+body.theme-light ::-webkit-scrollbar-track {
+    background: var(--mat-sys-background);
+}
+
+body.theme-light ::-webkit-scrollbar-thumb {
+    background-color: var(--mat-sys-on-surface-variant);
+    border-radius: 4px;
+    border: 2px solid var(--mat-sys-background);
+}
+
+/* For Firefox */
+html {
+    scrollbar-width: thin;
+}
+
+/* Browser autofill styling override */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--mat-sys-surface-container) inset !important;
+    -webkit-text-fill-color: var(--mat-sys-on-surface) !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+input:-webkit-autofill::selection {
+    background-color: var(--mat-sys-primary);
+    -webkit-text-fill-color: var(--mat-sys-on-primary);
+}
+
+/* Select dropdown panel width override */
+.cdk-overlay-pane .mat-mdc-select-panel {
+    min-width: 80px !important;
+}
+
+/* Atmospheric background: two soft tertiary points fading fully to background */
+.atmospheric-bg {
+    background:
+        radial-gradient(
+            circle clamp(120px, 35vmax, 360px) at 0% 50%,
+            color-mix(in srgb, var(--mat-sys-tertiary) 6%, transparent) 0%,
+            transparent 100%
+        ),
+        radial-gradient(
+            circle clamp(120px, 35vmax, 360px) at 100% 100%,
+            color-mix(in srgb, var(--mat-sys-tertiary) 6%, transparent) 0%,
+            transparent 100%
+        ),
+        var(--mat-sys-background);
+}
+
+/* Landing page section shell. Shared by every landing section so that no single
+   component stylesheet has to repeat the layout and approach the 6kb budget. */
+.landing-section {
+    padding: clamp(3rem, 9vw, 7rem) clamp(1.25rem, 5vw, 3rem);
+}
+
+.landing-shell {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.landing-eyebrow {
+    font: var(--mat-sys-label-large);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mat-sys-tertiary);
+    margin: 0 0 0.75rem 0;
+}
+
+.landing-heading {
+    font-family: var(--mat-sys-brand-font-family, "Averia Serif Libre", serif);
+    font-size: clamp(1.75rem, 4.2vw, 2.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--mat-sys-on-surface);
+    margin: 0 0 1rem 0;
+}
+
+.landing-lede {
+    font: var(--mat-sys-body-large);
+    color: var(--mat-sys-on-surface-variant);
+    max-width: 60ch;
+    margin: 0;
+}
+
+/* Scroll reveal, driven by RevealOnScrollDirective.
+   Elements are visible by default. `.reveal-pending` is added by the directive only, and
+   only when IntersectionObserver exists, so content is never hidden by CSS that JavaScript
+   might fail to undo. */
+.reveal-pending {
+    opacity: 0;
+    transform: translateY(18px);
+}
+
+.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+        opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /* Never hold content back from a visitor who asked for less motion. */
+    .reveal-pending {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* Accessibility: Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

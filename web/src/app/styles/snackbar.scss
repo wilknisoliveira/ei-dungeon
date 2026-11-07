@@ -1,0 +1,15 @@
+@use "@angular/material" as mat;
+
+.snackbar-sucess {
+    @include mat.snack-bar-overrides((
+        container-color: var(--mat-sys-inverse-surface),
+        supporting-text-color: var(--mat-sys-inverse-on-surface),
+    ));
+}
+
+.snackbar-error {
+    @include mat.snack-bar-overrides((
+        container-color: var(--mat-sys-error),
+        supporting-text-color: var(--mat-sys-on-error),
+    ));
+}

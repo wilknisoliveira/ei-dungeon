@@ -1,0 +1,29 @@
+.landing {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--mat-sys-background);
+    color: var(--mat-sys-on-surface);
+    /* No overflow-x here. When one axis is hidden and the other is visible, the visible
+       axis computes to auto — which turns this into a scroll container, makes it a scroll
+       anchoring root, and steals the scrollport from the sticky header. Sections clip
+       their own decoration instead. */
+}
+
+main {
+    flex: 1 1 auto;
+}
+
+/* Custom elements are inline by default, so the reveal transform would not apply to them.
+   Every section host has to be a block for RevealOnScrollDirective to move it. */
+app-landing-header,
+app-landing-hero,
+app-landing-problem,
+app-landing-how-it-works,
+app-landing-features,
+app-landing-development,
+app-landing-faq,
+app-landing-cta,
+app-landing-footer {
+    display: block;
+}

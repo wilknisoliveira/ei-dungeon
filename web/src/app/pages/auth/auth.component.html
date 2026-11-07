@@ -1,0 +1,59 @@
+<section class="atmospheric-bg">
+    <app-loading [isLoading]="loading()"></app-loading>
+    <div class="main-container" *ngIf="!loading()">
+        <div class="login">
+            <div class="header-actions">
+                <div class="language-button">
+                    <app-language-selector></app-language-selector>
+                </div>
+                <div class="theme-button">
+                    <app-theme-toggle></app-theme-toggle>
+                </div>
+            </div>
+            <div class="title">
+                <span class="wordmark" i18n="@@appWordmark">EI-DUNGEON</span>
+            </div>
+            <div class="description" i18n="@@loginDescription">Log in to your account</div>
+
+            <form (ngSubmit)="onSubmit()" #form="ngForm">
+                <mat-form-field class="example-full-width">
+                    <mat-label i18n="@@usernameLabel">Username</mat-label>
+                    <input
+                        matInput
+                        [(ngModel)]="userLogin.userName"
+                        name="username"
+                        required
+                    />
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label i18n="@@passwordLabel">Enter your password</mat-label>
+                    <input
+                        matInput
+                        [type]="hide() ? 'password' : 'text'"
+                        [(ngModel)]="userLogin.password"
+                        name="password"
+                        required
+                    />
+                </mat-form-field>
+
+                <a class="login__forgot-password" routerLink="/forgot-password" i18n="@@forgotPasswordLink">Forgot password?</a>
+                <div class="login-button">
+                    <button
+                        type="submit"
+                        mat-flat-button
+                        color="primary"
+                        [disabled]="form.form.invalid"
+                        i18n="@@loginButton"
+                    >
+                        Login
+                    </button>
+                </div>
+                @if (error()) { <p class="login__error" role="alert">{{ error() }}</p> }
+            </form>
+        </div>
+        <div class="sign-up">
+            <span i18n="@@noAccountPrompt">Don't have an account?</span>&nbsp;<a [routerLink]="['/signup']" i18n="@@signUpLink">Sign Up Now</a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,7 @@
+<div mat-dialog-content>
+  <p>{{ data }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button class="yes-btn" (click)="onConfirm(true)" i18n="@@confirmDialogYes">Yes</button>
+  <button mat-button class="cancel-btn" (click)="onConfirm(false)" i18n="@@confirmDialogCancel">Cancel</button>
+</div>

@@ -1,0 +1,9 @@
+<mat-select
+    [value]="currentLang"
+    (selectionChange)="switchLanguage($event)"
+    aria-label="Select language"
+    class="language-selector">
+    <mat-option *ngFor="let lang of languages" [value]="lang.code">
+        {{ lang.abbreviation }}
+    </mat-option>
+</mat-select>

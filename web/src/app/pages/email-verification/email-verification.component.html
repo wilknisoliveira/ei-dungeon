@@ -1,0 +1,35 @@
+<section class="atmospheric-bg email-auth">
+    <main class="email-auth__container">
+        <div class="email-auth__panel">
+            <div class="email-auth__header-actions"><app-language-selector /><app-theme-toggle /></div>
+            <span class="email-auth__wordmark" i18n="@@appWordmark">EI-DUNGEON</span>
+            <h1 class="email-auth__title" i18n="@@verifyEmailTitle">Verify your email</h1>
+            <p class="email-auth__text email-auth__description" i18n="@@verifyEmailDescription">Enter your registered email and verification code to finish setting up your account.</p>
+            <form [formGroup]="form" (ngSubmit)="handleSubmit()" [attr.aria-busy]="busy()">
+                <fieldset class="email-auth__fields" [disabled]="busy() || completed()">
+                    <mat-form-field class="email-auth__field">
+                        <mat-label i18n="@@emailAuthEmailLabel">Email address</mat-label>
+                        <input class="email-auth__input" matInput type="email" formControlName="email" autocomplete="email" (blur)="trimEmail()" required />
+                        <mat-error>{{ form.controls.email.getError('server') || emailError }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="email-auth__field">
+                        <mat-label i18n="@@emailAuthCodeLabel">Six-digit code</mat-label>
+                        <input matInput class="email-auth__input email-auth__code" type="text" inputmode="numeric" autocomplete="one-time-code" formControlName="code" maxlength="6" required />
+                        <mat-error>{{ form.controls.code.getError('server') || codeError }}</mat-error>
+                    </mat-form-field>
+                    <p class="email-auth__text email-auth__hint" i18n="@@emailAuthNewestCode">Use the most recent code you received.</p>
+                    <div class="email-auth__feedback" aria-live="polite" aria-atomic="true">
+                        @if (error()) { <p class="email-auth__text email-auth__error" role="alert">{{ error() }}</p> }
+                        @if (status()) { <p class="email-auth__text">{{ status() }}</p> }
+                        @if (busy()) { <p class="email-auth__text" i18n="@@emailAuthWorking">Please wait…</p> }
+                    </div>
+                    <button class="email-auth__action" mat-flat-button type="submit" [disabled]="form.invalid || busy() || completed() || confirmWait() > 0" i18n="@@verifyEmailButton">Verify email</button>
+                    @if (confirmWait() > 0) { <p class="email-auth__text email-auth__hint" i18n="@@emailAuthConfirmWait">Try confirming again in {{ confirmWait() }} seconds.</p> }
+                    <button class="email-auth__action" mat-stroked-button type="button" (click)="handleRequest()" [disabled]="form.controls.email.invalid || busy() || completed() || resendWait() > 0" i18n="@@sendVerificationCode">Send verification code</button>
+                    @if (resendWait() > 0) { <p class="email-auth__text email-auth__hint" i18n="@@emailAuthResendWait">You can request another code in {{ resendWait() }} seconds.</p> }
+                </fieldset>
+            </form>
+            <a class="email-auth__action email-auth__link" mat-button routerLink="/login" i18n="@@emailAuthBackToLogin">Back to login</a>
+        </div>
+    </main>
+</section>

@@ -1,0 +1,131 @@
+@if (initialLoading()) {
+    <section class="game-ready atmospheric-bg">
+        <app-small-loading [isLoading]="initialLoading()"></app-small-loading>
+    </section>
+} @else if (plays().length > 0) {
+    <section class="game-playing atmospheric-bg">
+        <div class="game-toolbar">
+            <button
+                mat-icon-button
+                [matMenuTriggerFor]="gameOptionsMenu"
+                matTooltip="Game options"
+                i18n-matTooltip="@@gameOptionsTooltip"
+            >
+                <mat-icon fontIcon="more_horiz"></mat-icon>
+            </button>
+            <mat-menu #gameOptionsMenu="matMenu">
+                <button
+                    mat-menu-item
+                    [matMenuTriggerFor]="languageMenu"
+                    matTooltip="Language used by the Game Master for narration and dialogue"
+                    i18n-matTooltip="@@gameLanguageTooltip"
+                >
+                    <mat-icon fontIcon="language"></mat-icon>
+                    <span i18n="@@chatLanguageLabel">Language</span>
+                </button>
+            </mat-menu>
+            <mat-menu #languageMenu="matMenu">
+                @for (lang of gameLanguages; track lang.value) {
+                    <button mat-menu-item (click)="selectLanguage(lang.value)">
+                        <span>{{ lang.abbreviation }}</span>
+                        <mat-icon
+                            [style.visibility]="
+                                currentGameLanguage === lang.value
+                                    ? 'visible'
+                                    : 'hidden'
+                            "
+                            fontIcon="check"
+                        ></mat-icon>
+                    </button>
+                }
+            </mat-menu>
+        </div>
+        <div class="messages" #messagesContainer>
+            <div class="messages-content">
+                @if (isLoadingMore()) {
+                    <div class="loading-more">
+                        <app-small-loading
+                            [isLoading]="isLoadingMore()"
+                        ></app-small-loading>
+                    </div>
+                }
+                <div class="messages-list" role="list" #messagesList>
+                    @for (play of plays(); track play.id) {
+                        <div
+                            class="message"
+                            role="listitem"
+                            [class.user]="
+                                play.playType === 'Protagonist'
+                            "
+                            [class.other-player]="
+                                play.playType !== 'Protagonist'
+                            "
+                        >
+                            <div class="span-container">
+                                <span>{{ getDisplayName(play) }}</span>
+                                <span>{{ play.response }}</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="input">
+            <div class="input-area">
+                <form [formGroup]="newPlayFormGroup">
+                    <textarea
+                        [placeholder]="activePlaceholder"
+                        (input)="onInputChange($event)"
+                        rows="1"
+                        formControlName="newPlayControl"
+                        name="newPlayControl"
+                        #textAreaContainer
+                    ></textarea>
+
+                    @if (loading()) {
+                        <div class="loading">
+                            <app-small-loading
+                                [isLoading]="loading()"
+                            ></app-small-loading>
+                        </div>
+                    } @else {
+                        <button
+                            type="submit"
+                            mat-icon-button
+                            color="primary"
+                            (click)="onSubmit()"
+                            [disabled]="
+                                newPlayFormGroup.get('newPlayControl')?.value ==
+                                    '' ||
+                                isCommonUser ||
+                                game()?.gameStatus === 'PlayerDied' ||
+                                initialLoading()
+                            "
+                        >
+                            <mat-icon
+                                aria-hidden="false"
+                                aria-label="play"
+                                fontIcon="send"
+                            ></mat-icon>
+                        </button>
+                    }
+                </form>
+            </div>
+        </div>
+    </section>
+} @else if (!loadFailed()) {
+    <section class="game-ready atmospheric-bg">
+        <p i18n="@@chatGameReady">Your new game is ready!</p>
+        <button
+            type="submit"
+            mat-flat-button
+            color="primary"
+            (click)="onSubmit(true)"
+            [disabled]="isCommonUser"
+            i18n="@@chatStartButton"
+        >
+            Start
+        </button>
+    </section>
+}

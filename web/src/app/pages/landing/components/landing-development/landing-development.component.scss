@@ -1,0 +1,57 @@
+.dev-card {
+    max-width: 780px;
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    border-radius: var(--mat-sys-corner-extra-large);
+    background-color: var(--mat-sys-surface-container);
+    border: solid 1px
+        color-mix(in srgb, var(--mat-sys-tertiary) 32%, transparent);
+    box-shadow: 0 0 32px
+        color-mix(in srgb, var(--mat-sys-tertiary) 12%, transparent);
+    text-align: center;
+}
+
+.dev-badge {
+    display: inline-block;
+    margin-bottom: 1rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--mat-sys-corner-full);
+    background-color: color-mix(
+        in srgb,
+        var(--mat-sys-tertiary) 18%,
+        transparent
+    );
+    color: var(--mat-sys-tertiary);
+    font: var(--mat-sys-label-large);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.dev-card .landing-lede {
+    margin-inline: auto;
+}
+
+.dev-links {
+    margin-top: 1.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+
+    a {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .dev-links {
+        flex-direction: column;
+
+        a {
+            justify-content: center;
+            width: 100%;
+        }
+    }
+}

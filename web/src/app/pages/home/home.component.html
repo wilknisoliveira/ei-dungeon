@@ -1,0 +1,187 @@
+<section class="main-container">
+    <mat-drawer-container autosize>
+        <mat-drawer
+            [mode]="isHandset() ? 'over' : 'side'"
+            [opened]="drawerOpened()"
+        >
+            <div class="sidebar-header">
+                <span class="brand" i18n="@@appWordmark">EI-DUNGEON</span>
+                <span class="subtitle" i18n="@@homeSubtitle">Campaigns</span>
+                <button
+                    mat-icon-button
+                    class="drawer-close"
+                    (click)="drawerOpened.set(false)"
+                    *ngIf="isHandset()"
+                >
+                    <mat-icon fontIcon="close"></mat-icon>
+                </button>
+            </div>
+
+            <div class="center-btn-container">
+                <button
+                    class="new-play-btn"
+                    (click)="clearGameSelection()"
+                    mat-raised-button
+                >
+                    <mat-icon
+                        aria-hidden="false"
+                        aria-label="logo"
+                        fontIcon="add"
+                    ></mat-icon
+                    ><span i18n="@@newRoleButton">New Session</span>
+                </button>
+            </div>
+
+            <div class="plays">
+                <div *ngIf="isLoadingGames()" class="loading-more">
+                    <app-small-loading
+                        [isLoading]="isLoadingGames()"
+                    ></app-small-loading>
+                </div>
+                <div *ngFor="let game of gamePagedSearch()?.items">
+                    <div
+                        class="game-name"
+                        [ngClass]="{
+                            selected: gameSelected() === game.id,
+                        }"
+                    >
+                        <div
+                            class="game-button"
+                            *ngIf="renamingGameId() !== game.id"
+                        >
+                            <button (click)="setGame(game.id)" mat-flat-button>
+                                <mat-icon
+                                    aria-hidden="false"
+                                    aria-label="logo"
+                                    fontIcon="local_fire_department"
+                                ></mat-icon>
+                                {{ game.name }}
+                            </button>
+                        </div>
+                        <div
+                            class="rename-input"
+                            *ngIf="renamingGameId() === game.id"
+                            (mousedown)="$event.stopPropagation()"
+                        >
+                            <input
+                                #renameInput
+                                [value]="game.name"
+                                (input)="updateRenameName(renameInput.value)"
+                                (keydown)="onRenameKeydown($event, game.id)"
+                                (blur)="confirmRename()"
+                                minlength="2"
+                                maxlength="20"
+                                autofocus
+                            />
+                        </div>
+                        <div class="menu-button">
+                            <button
+                                mat-icon-button
+                                [matMenuTriggerFor]="gameMenu"
+                                (click)="$event.stopPropagation()"
+                            >
+                                <mat-icon
+                                    aria-hidden="false"
+                                    aria-label="game options"
+                                    fontIcon="more_vert"
+                                ></mat-icon>
+                            </button>
+                            <mat-menu #gameMenu="matMenu">
+                                <button
+                                    mat-menu-item
+                                    (click)="startRename(game.id, game.name)"
+                                >
+                                    <mat-icon fontIcon="edit"></mat-icon>
+                                    <span i18n="@@renameMenuItem">Rename</span>
+                                </button>
+                                <button
+                                    mat-menu-item
+                                    (click)="
+                                        openDeleteDialog(game.id, game.name)
+                                    "
+                                >
+                                    <mat-icon fontIcon="delete"></mat-icon>
+                                    <span i18n="@@deleteMenuItem">Delete</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="center-btn-container" *ngIf="enableShowMoreBtn()">
+                <button
+                    class="show-more-btn"
+                    (click)="showMore()"
+                    mat-flat-button
+                    i18n="@@showMoreButton"
+                >
+                    Show more
+                </button>
+            </div>
+        </mat-drawer>
+
+        <mat-drawer-content class="atmospheric-bg">
+            <div class="header-menu">
+                <div class="nav-btn-container">
+                    <button
+                        type="button"
+                        mat-button
+                        (click)="drawerOpened.set(!drawerOpened())"
+                    >
+                        <mat-icon
+                            aria-hidden="false"
+                            aria-label="logo"
+                            fontIcon="menu"
+                        ></mat-icon>
+                    </button>
+                </div>
+                <div class="header-actions">
+                    <div class="language-button">
+                        <app-language-selector></app-language-selector>
+                    </div>
+                    <div class="theme-button">
+                        <app-theme-toggle></app-theme-toggle>
+                    </div>
+                    <div class="profile-button">
+                        <button
+                            type="button"
+                            mat-icon-button
+                            [matMenuTriggerFor]="profileMenu"
+                        >
+                            <mat-icon
+                                aria-hidden="false"
+                                aria-label="profile"
+                                fontIcon="account_circle"
+                            ></mat-icon>
+                        </button>
+                        <mat-menu #profileMenu="matMenu">
+                            <button
+                                mat-menu-item
+                                (click)="navigateToSettings()"
+                            >
+                                <mat-icon fontIcon="settings"></mat-icon>
+                                <span i18n="@@settingsMenuItem">Settings</span>
+                            </button>
+                            <button mat-menu-item (click)="logout()">
+                                <mat-icon fontIcon="logout"></mat-icon>
+                                <span i18n="@@logoutMenuItem">Logout</span>
+                            </button>
+                        </mat-menu>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <app-chat
+                    *ngIf="gameSelected()"
+                    [gameId]="gameSelected()"
+                    (gamePlayed)="onGamePlayed($event)"
+                ></app-chat>
+                <app-first-steps
+                    *ngIf="!gameSelected()"
+                    (gameCreated)="gameCreated($event)"
+                ></app-first-steps>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</section>

@@ -1,0 +1,59 @@
+.landing-footer {
+    padding: clamp(2rem, 5vw, 3rem) clamp(1.25rem, 5vw, 3rem) 1.5rem;
+    background-color: var(--mat-sys-surface-container-low);
+    border-top: solid 1px
+        color-mix(in srgb, var(--mat-sys-outline) 22%, transparent);
+}
+
+.footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.wordmark {
+    font-family: var(--mat-sys-brand-font-family, "Averia Serif Libre", serif);
+    font-size: 1.25rem;
+    letter-spacing: 0.04em;
+    color: var(--mat-sys-on-surface);
+}
+
+.tagline {
+    font: var(--mat-sys-body-small);
+    color: var(--mat-sys-on-surface-variant);
+}
+
+.footer-links,
+.language-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1.25rem;
+
+    a {
+        font: var(--mat-sys-body-medium);
+        color: var(--mat-sys-on-surface-variant);
+        text-decoration: none;
+        padding: 0.5rem 0;
+
+        &:hover {
+            color: var(--mat-sys-primary);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+    }
+}
+
+.copyright {
+    margin: 2rem 0 0 0;
+    text-align: center;
+    font: var(--mat-sys-body-small);
+    color: color-mix(in srgb, var(--mat-sys-on-surface-variant) 75%, transparent);
+}

@@ -1,0 +1,184 @@
+<section class="main-container atmospheric-bg">
+    <mat-drawer-container autosize>
+        <mat-drawer
+            [mode]="isHandset() ? 'over' : 'side'"
+            [opened]="drawerOpened()"
+        >
+            <div class="sidebar-header">
+                <span class="brand" i18n="@@appWordmark">EI-DUNGEON</span>
+                <span class="subtitle" i18n="@@settingsSubtitle">Settings</span>
+                <button
+                    mat-icon-button
+                    class="drawer-close"
+                    (click)="drawerOpened.set(false)"
+                    *ngIf="isHandset()"
+                >
+                    <mat-icon fontIcon="close"></mat-icon>
+                </button>
+            </div>
+            <mat-nav-list>
+                <mat-list-item
+                    [class.active]="activeSection === 'account'"
+                    (click)="selectSection('account')"
+                >
+                    <mat-icon matListItemIcon fontIcon="person"></mat-icon>
+                    <span i18n="@@accountMenuItem">Account</span>
+                </mat-list-item>
+                <mat-list-item
+                    [class.active]="activeSection === 'security'"
+                    (click)="selectSection('security')"
+                >
+                    <mat-icon matListItemIcon fontIcon="lock"></mat-icon>
+                    <span i18n="@@securityMenuItem">Security</span>
+                </mat-list-item>
+            </mat-nav-list>
+        </mat-drawer>
+
+        <mat-drawer-content>
+            <div class="header-menu">
+                <div class="left">
+                    <button
+                        mat-button
+                        (click)="drawerOpened.set(!drawerOpened())"
+                    >
+                        <mat-icon fontIcon="menu"></mat-icon>
+                    </button>
+                    <button mat-button routerLink="/home">
+                        <mat-icon fontIcon="arrow_back"></mat-icon>
+                    </button>
+                    <span class="title" i18n="@@settingsTitle">{{
+                        activeSection === 'account' ? 'Account' : 'Security'
+                    }}</span>
+                </div>
+                <div class="right">
+                    <app-language-selector></app-language-selector>
+                    <app-theme-toggle></app-theme-toggle>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div
+                    *ngIf="activeSection === 'account'"
+                    class="section-content"
+                >
+                    <div class="settings-card" *ngIf="userInfo">
+                        <h2 i18n="@@accountHeading">Account</h2>
+                        <div class="info-row">
+                            <span class="label" i18n="@@usernameLabel">Username</span>
+                            <span class="value">{{ userInfo.username }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label" i18n="@@fullNameLabel">Full Name</span>
+                            <span class="value">{{ userInfo.fullName }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label" i18n="@@emailLabel">Email</span>
+                            <span class="value">{{ userInfo.email }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label" i18n="@@roleLabel">Role</span>
+                            <span class="value">{{ userInfo.role }}</span>
+                        </div>
+                    </div>
+
+                    <div class="danger-zone" *ngIf="userInfo">
+                        <h3 i18n="@@dangerZoneHeading">Danger Zone</h3>
+                        <p i18n="@@deleteAccountWarning">Permanently delete your account and all associated data. This action cannot be undone.</p>
+                        <button
+                            mat-flat-button
+                            [disabled]="loading"
+                            (click)="openDeleteAccountDialog()"
+                            i18n="@@deleteAccountButton"
+                        >
+                            Delete Account
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    *ngIf="activeSection === 'security'"
+                    class="section-content"
+                >
+                    <div class="settings-card">
+                        <h2 i18n="@@changePasswordHeading">Change Password</h2>
+                        <form
+                            [formGroup]="changePasswordForm"
+                            (ngSubmit)="onChangePassword()"
+                        >
+                            <mat-form-field>
+                                <mat-label i18n="@@currentPasswordLabel">Current Password</mat-label>
+                                <input
+                                    matInput
+                                    type="password"
+                                    formControlName="currentPassword"
+                                />
+                                <mat-error
+                                    *ngIf="
+                                        changePasswordForm
+                                            .get('currentPassword')
+                                            ?.hasError('required')
+                                    "
+                                    i18n="@@currentPasswordRequiredError"
+                                >
+                                    Current password is required
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="
+                                        changePasswordForm
+                                            .get('currentPassword')
+                                            ?.hasError('minlength')
+                                    "
+                                    i18n="@@passwordMinLengthError"
+                                >
+                                    Minimum 4 characters
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <mat-label i18n="@@newPasswordLabel">New Password</mat-label>
+                                <input
+                                    matInput
+                                    type="password"
+                                    formControlName="newPassword"
+                                />
+                                <mat-error
+                                    *ngIf="
+                                        changePasswordForm
+                                            .get('newPassword')
+                                            ?.hasError('required')
+                                    "
+                                    i18n="@@newPasswordRequiredError"
+                                >
+                                    New password is required
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="
+                                        changePasswordForm
+                                            .get('newPassword')
+                                            ?.hasError('minlength')
+                                    "
+                                    i18n="@@passwordMinLengthError"
+                                >
+                                    Minimum 4 characters
+                                </mat-error>
+                            </mat-form-field>
+
+                            <div class="submit-button">
+                                <button
+                                    type="submit"
+                                    mat-flat-button
+                                    [disabled]="
+                                        changePasswordForm.invalid || loading
+                                    "
+                                    i18n="@@changePasswordButton"
+                                >
+                                    Change Password
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</section>

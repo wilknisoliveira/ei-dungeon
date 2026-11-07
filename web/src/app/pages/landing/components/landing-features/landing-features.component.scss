@@ -1,0 +1,72 @@
+.features {
+    background-color: var(--mat-sys-surface-container-low);
+}
+
+.feature-grid {
+    margin-top: clamp(2rem, 5vw, 3rem);
+    display: grid;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.feature {
+    padding: clamp(1.35rem, 3vw, 1.85rem);
+    border-radius: var(--mat-sys-corner-large);
+    background-color: var(--mat-sys-surface-container);
+    border: solid 1px
+        color-mix(in srgb, var(--mat-sys-outline) 24%, transparent);
+
+    mat-icon {
+        color: var(--mat-sys-tertiary);
+        margin-bottom: 0.65rem;
+    }
+}
+
+/* Guarded so a tap on a phone does not leave the card stuck in its hover state. */
+@media (hover: hover) {
+    .feature {
+        transition:
+            border-color 220ms ease-out,
+            box-shadow 220ms ease-out,
+            transform 220ms ease-out;
+    }
+
+    .feature:hover {
+        transform: translateY(-4px);
+        border-color: color-mix(
+            in srgb,
+            var(--mat-sys-primary) 50%,
+            transparent
+        );
+        box-shadow:
+            0 0 26px color-mix(in srgb, var(--mat-sys-primary) 18%, transparent),
+            0 10px 22px
+                color-mix(in srgb, var(--mat-sys-shadow) 35%, transparent);
+    }
+
+    .feature:hover mat-icon {
+        color: var(--mat-sys-primary);
+    }
+
+    .feature mat-icon {
+        transition: color 220ms ease-out;
+    }
+}
+
+.feature-title {
+    font: var(--mat-sys-title-medium);
+    color: var(--mat-sys-on-surface);
+    margin: 0 0 0.4rem 0;
+}
+
+.feature-body {
+    font: var(--mat-sys-body-medium);
+    color: var(--mat-sys-on-surface-variant);
+    margin: 0;
+}

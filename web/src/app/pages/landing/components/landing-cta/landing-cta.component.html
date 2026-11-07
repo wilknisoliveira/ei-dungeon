@@ -1,0 +1,62 @@
+<section class="landing-section cta atmospheric-bg">
+    <div class="landing-shell cta-inner">
+        <h2 class="cta-heading" i18n="@@landingCtaHeading">
+            The dungeon doesn't need a calendar invite.
+        </h2>
+
+        @if (isInDevelopment()) {
+            <p class="cta-body" i18n="@@landingCtaBody">
+                Make a character and be in your first scene in a couple of
+                minutes.
+            </p>
+
+            <div class="cta-actions">
+                <button mat-flat-button color="primary" class="cta-primary" disabled i18n="@@landingComingSoon">
+                    Coming soon
+                </button>
+                <!-- Current account-action labels, restored once MVP features are ready.
+                Continue your adventure
+                Create your character
+                Already playing? Sign in
+                -->
+            </div>
+        } @else if (isLoggedIn()) {
+            <p class="cta-body" i18n="@@landingCtaBodyLoggedIn">
+                Your world is where you left it.
+            </p>
+
+            <div class="cta-actions">
+                <a
+                    mat-flat-button
+                    color="primary"
+                    routerLink="/home"
+                    class="cta-primary"
+                    i18n="@@landingContinueAdventure"
+                    >Continue your adventure</a
+                >
+            </div>
+        } @else {
+            <p class="cta-body" i18n="@@landingCtaBody">
+                Make a character and be in your first scene in a couple of
+                minutes.
+            </p>
+
+            <div class="cta-actions">
+                <a
+                    mat-flat-button
+                    color="primary"
+                    routerLink="/signup"
+                    class="cta-primary"
+                    i18n="@@landingCtaButton"
+                    >Create your character</a
+                >
+                <a
+                    class="cta-login"
+                    routerLink="/login"
+                    i18n="@@landingCtaLoginLink"
+                    >Already playing? Sign in</a
+                >
+            </div>
+        }
+    </div>
+</section>

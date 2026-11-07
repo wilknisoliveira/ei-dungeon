@@ -1,0 +1,343 @@
+[
+  {
+    "type": 0,
+    "value": "Alaric"
+  },
+  {
+    "type": 0,
+    "value": "Baldric"
+  },
+  {
+    "type": 0,
+    "value": "Caelum"
+  },
+  {
+    "type": 0,
+    "value": "Darian"
+  },
+  {
+    "type": 0,
+    "value": "Edric"
+  },
+  {
+    "type": 0,
+    "value": "Faelar"
+  },
+  {
+    "type": 0,
+    "value": "Gareth"
+  },
+  {
+    "type": 0,
+    "value": "Haldor"
+  },
+  {
+    "type": 0,
+    "value": "Iorlan"
+  },
+  {
+    "type": 0,
+    "value": "Jarek"
+  },
+  {
+    "type": 0,
+    "value": "Kael"
+  },
+  {
+    "type": 0,
+    "value": "Leoric"
+  },
+  {
+    "type": 0,
+    "value": "Maedric"
+  },
+  {
+    "type": 0,
+    "value": "Nerian"
+  },
+  {
+    "type": 0,
+    "value": "Oryn"
+  },
+  {
+    "type": 0,
+    "value": "Perrin"
+  },
+  {
+    "type": 0,
+    "value": "Quentyn"
+  },
+  {
+    "type": 0,
+    "value": "Roric"
+  },
+  {
+    "type": 0,
+    "value": "Sylas"
+  },
+  {
+    "type": 0,
+    "value": "Thalion"
+  },
+  {
+    "type": 0,
+    "value": "Ulric"
+  },
+  {
+    "type": 0,
+    "value": "Valen"
+  },
+  {
+    "type": 0,
+    "value": "Wyatt"
+  },
+  {
+    "type": 0,
+    "value": "Xarion"
+  },
+  {
+    "type": 0,
+    "value": "Zared"
+  },
+  {
+    "type": 0,
+    "value": "Aeliana"
+  },
+  {
+    "type": 0,
+    "value": "Brienna"
+  },
+  {
+    "type": 0,
+    "value": "Caelynn"
+  },
+  {
+    "type": 0,
+    "value": "Delyth"
+  },
+  {
+    "type": 0,
+    "value": "Elysande"
+  },
+  {
+    "type": 0,
+    "value": "Fiora"
+  },
+  {
+    "type": 0,
+    "value": "Gwyneira"
+  },
+  {
+    "type": 0,
+    "value": "Hesperia"
+  },
+  {
+    "type": 0,
+    "value": "Isolde"
+  },
+  {
+    "type": 0,
+    "value": "Jorielle"
+  },
+  {
+    "type": 0,
+    "value": "Kaedra"
+  },
+  {
+    "type": 0,
+    "value": "Lirael"
+  },
+  {
+    "type": 0,
+    "value": "Mariel"
+  },
+  {
+    "type": 0,
+    "value": "Naeris"
+  },
+  {
+    "type": 0,
+    "value": "Orithia"
+  },
+  {
+    "type": 0,
+    "value": "Phaedra"
+  },
+  {
+    "type": 0,
+    "value": "Quenya"
+  },
+  {
+    "type": 0,
+    "value": "Rhiannon"
+  },
+  {
+    "type": 0,
+    "value": "Serenna"
+  },
+  {
+    "type": 0,
+    "value": "Talyssa"
+  },
+  {
+    "type": 0,
+    "value": "Urithiel"
+  },
+  {
+    "type": 0,
+    "value": "Valindra"
+  },
+  {
+    "type": 0,
+    "value": "Wynne"
+  },
+  {
+    "type": 0,
+    "value": "Xandria"
+  },
+  {
+    "type": 0,
+    "value": "Yselda"
+  },
+  {
+    "type": 0,
+    "value": "Zerina"
+  },
+  {
+    "type": 1,
+    "value": "Human"
+  },
+  {
+    "type": 1,
+    "value": "Elf"
+  },
+  {
+    "type": 1,
+    "value": "Dwarf"
+  },
+  {
+    "type": 1,
+    "value": "Halfling"
+  },
+  {
+    "type": 1,
+    "value": "Tiefling"
+  },
+  {
+    "type": 1,
+    "value": "Dragonborn"
+  },
+  {
+    "type": 1,
+    "value": "Half-Orc"
+  },
+  {
+    "type": 1,
+    "value": "Half-Elf"
+  },
+  {
+    "type": 1,
+    "value": "Gnome"
+  },
+  {
+    "type": 1,
+    "value": "Aasimar"
+  },
+  {
+    "type": 1,
+    "value": "Genasi"
+  },
+  {
+    "type": 1,
+    "value": "Firbolg"
+  },
+  {
+    "type": 1,
+    "value": "Tabaxi"
+  },
+  {
+    "type": 1,
+    "value": "Kenku"
+  },
+  {
+    "type": 1,
+    "value": "Triton"
+  },
+  {
+    "type": 1,
+    "value": "Goliath"
+  },
+  {
+    "type": 2,
+    "value": "Barbarian"
+  },
+  {
+    "type": 2,
+    "value": "Bard"
+  },
+  {
+    "type": 2,
+    "value": "Cleric"
+  },
+  {
+    "type": 2,
+    "value": "Druid"
+  },
+  {
+    "type": 2,
+    "value": "Fighter"
+  },
+  {
+    "type": 2,
+    "value": "Monk"
+  },
+  {
+    "type": 2,
+    "value": "Paladin"
+  },
+  {
+    "type": 2,
+    "value": "Ranger"
+  },
+  {
+    "type": 2,
+    "value": "Rogue"
+  },
+  {
+    "type": 2,
+    "value": "Sorcerer"
+  },
+  {
+    "type": 2,
+    "value": "Warlock"
+  },
+  {
+    "type": 2,
+    "value": "Wizard"
+  },
+  {
+    "type": 3,
+    "value": "Alaric"
+  },
+  {
+    "type": 3,
+    "value": "Dungeons & Dragons (D&D)"
+  },
+  {
+    "type": 3,
+    "value": "Pathfinder"
+  },
+  {
+    "type": 3,
+    "value": "Call of Cthulhu"
+  },
+  {
+    "type": 3,
+    "value": "Shadowrun"
+  },
+  {
+    "type": 3,
+    "value": "GURPS (Generic Universal RolePlaying System)"
+  }
+]
+

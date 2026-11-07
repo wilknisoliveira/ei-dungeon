@@ -1,0 +1,37 @@
+<section class="landing-section development">
+    <div class="landing-shell dev-card">
+        <span class="dev-badge" i18n="@@landingDevBadge">In development</span>
+
+        <h2 class="landing-heading" i18n="@@landingDevHeading">
+            Built in the open, and still being built.
+        </h2>
+
+        <p class="landing-lede" i18n="@@landingDevBody">
+            EI-DUNGEON is an active project, not a finished product. Features
+            land regularly and things will change under you. If you would rather
+            see how it works than take our word for it, both repositories are
+            public.
+        </p>
+
+        <div class="dev-links">
+            <a
+                mat-stroked-button
+                [href]="webRepo"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <mat-icon aria-hidden="true">code</mat-icon>
+                <span i18n="@@landingDevWebRepo">Web repository</span>
+            </a>
+            <a
+                mat-stroked-button
+                [href]="apiRepo"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <mat-icon aria-hidden="true">dns</mat-icon>
+                <span i18n="@@landingDevApiRepo">API repository</span>
+            </a>
+        </div>
+    </div>
+</section>

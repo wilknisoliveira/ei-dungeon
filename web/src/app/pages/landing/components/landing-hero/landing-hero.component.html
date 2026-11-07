@@ -1,0 +1,70 @@
+<section class="hero atmospheric-bg">
+    <div class="hero-inner landing-shell">
+        <img
+            class="wordmark"
+            src="assets/logo_completed.webp"
+            [alt]="logoAlt"
+            width="1200"
+            height="400"
+            fetchpriority="high"
+            decoding="async"
+        />
+
+        <h1 class="hero-headline" i18n="@@landingHeroHeadline">
+            Your AI Game Master never cancels.
+        </h1>
+
+        <p class="hero-sub" i18n="@@landingHeroSub">
+            A solo role-playing game run by AI. Build a character, step into the
+            dark, and play whenever you want — no group to gather, no night to
+            agree on, no one to talk into running it.
+        </p>
+
+        <div class="hero-actions">
+            @if (isInDevelopment()) {
+                <button mat-flat-button color="primary" class="cta-primary" disabled i18n="@@landingComingSoon">
+                    Coming soon
+                </button>
+                <!-- Current account-action labels, restored once MVP features are ready.
+                @if (isLoggedIn()) {
+                    Continue your adventure
+                } @else {
+                    Create your character
+                    I already have an account
+                }
+                -->
+            } @else if (isLoggedIn()) {
+                <a
+                    mat-flat-button
+                    color="primary"
+                    routerLink="/home"
+                    class="cta-primary"
+                    i18n="@@landingContinueAdventure"
+                    >Continue your adventure</a
+                >
+            } @else {
+                <a
+                    mat-flat-button
+                    color="primary"
+                    routerLink="/signup"
+                    class="cta-primary"
+                    i18n="@@landingHeroCta"
+                    >Create your character</a
+                >
+                <a
+                    mat-stroked-button
+                    routerLink="/login"
+                    class="cta-secondary"
+                    i18n="@@landingHeroSecondary"
+                    >I already have an account</a
+                >
+            }
+        </div>
+
+        @if (!isLoggedIn()) {
+            <p class="hero-note" i18n="@@landingHeroNote">
+                Free to start · Play in Portuguese, English or Spanish
+            </p>
+        }
+    </div>
+</section>

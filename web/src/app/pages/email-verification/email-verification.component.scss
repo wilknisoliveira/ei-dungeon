@@ -1,0 +1,7 @@
+@use '../../styles/email-auth';
+
+@include email-auth.layout;
+
+.email-auth__code {
+    @include email-auth.code-input;
+}

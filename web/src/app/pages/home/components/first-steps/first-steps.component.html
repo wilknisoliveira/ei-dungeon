@@ -1,0 +1,189 @@
+<app-loading [isLoading]="loading"></app-loading>
+<div class="first-steps atmospheric-bg" *ngIf="!loading">
+    <h1 i18n="@@firstStepsHeading">First steps</h1>
+    <h2 i18n="@@firstStepsSubtitle">Create a new game!</h2>
+    <form
+        [formGroup]="gameFormGroup"
+        #gameNgForm="ngForm"
+        (ngSubmit)="onSubmit()"
+    >
+        <div class="form-grid">
+            <mat-card class="section-card game-card">
+                <mat-card-content>
+                    <mat-form-field>
+                        <mat-label i18n="@@gameNameLabel">Game name</mat-label>
+                        <input
+                            matInput
+                            #nameInput
+                            minlength="2"
+                            maxlength="50"
+                            id="gameName"
+                            formControlName="gameNameControl"
+                            placeholder="Game name"
+                        />
+                        <mat-hint align="end"
+                            >{{ nameInput.value.length }} / 50</mat-hint
+                        >
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label i18n="@@gameLanguageLabel"
+                            >Game language</mat-label
+                        >
+                        <mat-select formControlName="gameLanguageControl">
+                            <mat-option
+                                *ngFor="let lang of gameLanguages"
+                                [value]="lang.value"
+                            >
+                                {{ lang.abbreviation }} - {{ lang.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint i18n="@@gameLanguageHint"
+                            >Language used by the Game Master for narration and
+                            dialogue</mat-hint
+                        >
+                    </mat-form-field>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="section-card character-card">
+                <mat-card-content>
+                    <mat-form-field>
+                        <mat-label i18n="@@characterNameLabel"
+                            >Character name</mat-label
+                        >
+                        <input
+                            matInput
+                            #characterNameInput
+                            minlength="4"
+                            maxlength="50"
+                            id="characterName"
+                            formControlName="characterNameControl"
+                            placeholder="Character name"
+                        />
+                        <mat-hint align="end"
+                            >{{ characterNameInput.value.length }} /
+                            50</mat-hint
+                        >
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label i18n="@@raceLabel">Race</mat-label>
+                        <mat-select formControlName="characterRaceControl">
+                            <mat-option
+                                *ngFor="let race of races"
+                                [value]="race.value"
+                            >
+                                {{ race.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-card-content>
+            </mat-card>
+            <mat-form-field class="full-width description-field">
+                <mat-label i18n="@@characterDescriptionLabel"
+                    >Character description</mat-label
+                >
+                <textarea
+                    matInput
+                    #characterDescriptionInput
+                    minlength="4"
+                    maxlength="2000"
+                    placeholder="Character description"
+                    id="characterDescription"
+                    formControlName="characterDescriptionControl"
+                ></textarea>
+                <mat-hint align="end"
+                    >{{ characterDescriptionInput.value.length }} /
+                    2000</mat-hint
+                >
+            </mat-form-field>
+            <mat-card class="full-width skills-card">
+                <mat-card-content>
+                    <h2 i18n="@@skillsHeading">Skills</h2>
+                    <div formGroupName="skillsGroup">
+                        <div *ngFor="let skill of skills">
+                            <div class="value-card-container">
+                                <label [id]="skill.value + '-label'">{{
+                                    skill.name
+                                }}</label>
+                                <div class="points">
+                                    <span
+                                        >{{
+                                            gameFormGroup.get(
+                                                "skillsGroup." + skill.value
+                                            )?.value
+                                        }}
+                                    </span>
+                                    <div
+                                        class="racial-bonus"
+                                        matTooltip="Racial Bonus"
+                                        i18n-matTooltip="@@racialBonusTooltip"
+                                    >
+                                        +{{
+                                            getRacialBonusByRaceAndSkill(
+                                                gameFormGroup.get(
+                                                    "characterRaceControl"
+                                                )?.value,
+                                                skill.value
+                                            )
+                                        }}
+                                    </div>
+                                </div>
+                            </div>
+                            <mat-slider
+                                [max]="18"
+                                [min]="minSkillPoints"
+                                [step]="1"
+                                [attr.aria-labelledby]="skill.value + '-label'"
+                            >
+                                <input
+                                    matSliderThumb
+                                    [formControlName]="skill.value"
+                                />
+                            </mat-slider>
+                        </div>
+                        <div class="attribute-points">
+                            <span i18n="@@pointsToDistribute"
+                                >Points to distribute:</span
+                            >&nbsp;
+                            <span
+                                [ngClass]="{
+                                    warn:
+                                        currentSkillPointsDistributed >
+                                        maxSkillPointsToDistribute,
+                                }"
+                                >{{ currentSkillPointsDistributed }}</span
+                            >
+                            /
+                            {{ maxSkillPointsToDistribute }}
+                        </div>
+                        <mat-error
+                            *ngIf="
+                                currentSkillPointsDistributed >
+                                maxSkillPointsToDistribute
+                            "
+                            i18n="@@exceededMaxPoints"
+                            >You have exceeded the maximum skill
+                            points</mat-error
+                        >
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <div class="form-actions full-width">
+                <button
+                    mat-raised-button
+                    color="primary"
+                    type="submit"
+                    [disabled]="
+                        gameFormGroup.invalid ||
+                        loading ||
+                        isCommonUser ||
+                        currentSkillPointsDistributed >
+                            maxSkillPointsToDistribute
+                    "
+                    i18n="@@startGameButton"
+                >
+                    Start game
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

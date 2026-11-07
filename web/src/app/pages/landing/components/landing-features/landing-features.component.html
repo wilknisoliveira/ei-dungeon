@@ -1,0 +1,22 @@
+<section class="landing-section features">
+    <div class="landing-shell">
+        <p class="landing-eyebrow" i18n="@@landingFeaturesEyebrow">
+            What's inside
+        </p>
+        <h2 class="landing-heading" i18n="@@landingFeaturesHeading">
+            A character sheet with consequences.
+        </h2>
+        <p class="landing-lede" i18n="@@landingFeaturesLede">
+            Not a chat window with a fantasy skin. The numbers you pick shape
+            what the world lets you do.
+        </p>
+
+        <div class="feature-grid">
+            <article class="feature" *ngFor="let feature of features">
+                <mat-icon aria-hidden="true">{{ feature.icon }}</mat-icon>
+                <h3 class="feature-title">{{ feature.title }}</h3>
+                <p class="feature-body">{{ feature.body }}</p>
+            </article>
+        </div>
+    </div>
+</section>
