@@ -26,7 +26,7 @@ Longer-term goals include premium account flows and administration tools for tun
 | [.github/workflows/](.github/workflows/) | Active API and web validation/image workflows |
 | `specs/` | Feature plans and execution tasks |
 | [AGENTS.md](AGENTS.md), `api/AGENTS.md`, `web/AGENTS.md` | Shared and module contributor guidance |
-| `.agents/skills/` | Repository skills; currently an empty placeholder |
+| `.agents/skills/` | Repository skills with usage rules in the shared and module guides |
 
 The original repositories remain available for history. Their current working trees were copied here without their `.git` directories. Internal project names are retained. Module-level `.github/workflows/` copies are inactive references; edit the root workflows for CI changes.
 

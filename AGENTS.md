@@ -10,7 +10,13 @@ EI Dungeon is an RPG application with AI-generated game responses. This monorepo
 - `.github/workflows/`: active API and web container workflows. Module-level workflow copies are inactive references.
 - `specs/`: feature specifications and tasks; `.agents/skills/`: repository skills.
 
-Read the relevant module's `AGENTS.md` before changing it. For API work, also read `api/ARCHITECTURE.md` and the local, ignored `api/LOCAL_GUIDES.md` when present.
+Read [api/AGENTS.md](api/AGENTS.md) or [web/AGENTS.md](web/AGENTS.md) before designing, reviewing, or changing the corresponding module, including when starting from the repository root. Read both for work that spans both modules. For API work, also read `api/ARCHITECTURE.md` and the local, ignored `api/LOCAL_GUIDES.md` when present.
+
+## Repository Skills
+
+When the task matches a skill listed here or in an affected module's guide, read and apply the linked `SKILL.md` even without an explicit skill mention. Use the linked repository copy when a personal skill has the same name. Apply skill guidance within the repository's conventions and the task's scope.
+
+- [ci-cd-and-automation](.agents/skills/ci-cd-and-automation/SKILL.md) for changes to GitHub Actions, build and publish pipelines, automated quality gates, or deployment workflows.
 
 ## Build, Test, and Development Commands
 

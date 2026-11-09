@@ -6,6 +6,12 @@ Read [README.md](README.md) and [ARCHITECTURE.md](ARCHITECTURE.md) before API an
 
 This guide consolidates `.aipartner/memory/project-standards.md`. For outdated version, deployment, CI, testing, or transaction descriptions in that historical snapshot, follow this guide and the current architecture.
 
+## Repository Skills
+
+- [aspnet-core](../.agents/skills/aspnet-core/SKILL.md) for work on controllers, middleware, hosting, dependency injection, authentication, authorization, or SignalR.
+- [csharp-developer](../.agents/skills/csharp-developer/SKILL.md) for C# implementation involving domain logic, use cases, services, EF Core persistence, or async and cancellation behavior.
+- [rest-api-design](../.agents/skills/rest-api-design/SKILL.md) for changes to REST routes, HTTP methods, request and response contracts, status codes, or versioning.
+
 ## Layout and Conventions
 
 `ei-back/` is one .NET 9 application with `Core/Domain`, `Core/Application`, `Infrastructure`, and `UserInterface` layers. Controllers call use cases and services; persistence uses repository interfaces and Unit of Work. Respect the documented transaction and streaming commit exceptions. Preserve namespaces and existing project names.

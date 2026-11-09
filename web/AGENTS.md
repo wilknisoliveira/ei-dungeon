@@ -1,5 +1,14 @@
 # Web Guidelines
 
+## Repository Skills
+
+- [angular-developer](../.agents/skills/angular-developer/SKILL.md) for changes to Angular components, services, routing, forms, signals, HTTP integration, or Angular tests.
+- [angular-material-theming](../.agents/skills/angular-material-theming/SKILL.md) for styling custom components to match the Material theme or changing design tokens, theme palettes, or light and dark behavior.
+- [bencium-innovative-ux-designer](../.agents/skills/bencium-innovative-ux-designer/SKILL.md) for designing new pages or components or substantially reworking layouts or interactions within EI Dungeon's visual identity.
+- [scss-best-practices](../.agents/skills/scss-best-practices/SKILL.md) for writing or refactoring SCSS, including selectors, mixins, and shared styles.
+- [landing-page-copywriter](../.agents/skills/landing-page-copywriter/SKILL.md) for writing or revising public landing-page headlines, value propositions, or calls to action.
+- [seo](../.agents/skills/seo/SKILL.md) for changes to public-page indexing, metadata, canonical or `hreflang` links, structured data, sitemaps, or `robots.txt`.
+
 ## Layout and Style
 
 Read [README.md](README.md) and the current feature plan under the monorepo's `specs/` before feature work. Older module plans remain under `web/specs/` as local context. Application code lives in `src/app/`; translations are in `src/i18n/`, static assets in `src/assets/`, and build/SEO helpers in `scripts/`.
