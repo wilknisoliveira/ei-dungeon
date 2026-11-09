@@ -59,10 +59,10 @@ Both root workflows validate pull requests targeting `main` and pushes to `main`
 
 Each workflow runs only when its module (`api/**` or `web/**`) or its own root workflow file changes. API-only changes do not rebuild the web image, and web-only changes do not rebuild the API image. Changes limited to root documentation skip both workflows.
 
-- [API workflow](.github/workflows/api-container.yml): `ghcr.io/wilknisoliveira/ei-dungeon-back`.
-- [Web workflow](.github/workflows/web-container.yml): `ghcr.io/wilknisoliveira/ei-dungeon-web`.
+- [API workflow](.github/workflows/api-container.yml): `ghcr.io/wilknisoliveira/ei-dungeon/api`.
+- [Web workflow](.github/workflows/web-container.yml): `ghcr.io/wilknisoliveira/ei-dungeon/web`.
 
-Set `SITE_URL` and `API_URL` repository variables in the monorepo and verify its Actions write access to both existing GHCR packages. Module READMEs list the required checks and publishing details. Deployment remains separate; the existing sibling `../infra` repository contains deployment instructions when available locally.
+Set `SITE_URL` and `API_URL` repository variables for the web build. Each workflow derives its image path from the repository name and publishes using its `GITHUB_TOKEN`. On the next deployment, set `BACKEND_IMAGE` and `FRONTEND_IMAGE` in the infrastructure environment to the new image paths with published commit tags or digests. The sibling `../infra` repository contains deployment instructions.
 
 When configuring branch protection, account for these path filters: GitHub can leave required checks pending when their entire workflow is skipped. Avoid requiring both filtered workflows unconditionally; use an always-running required gate if every PR must have a check. See [GitHub's path-filter documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#onpushpull_requestpull_request_targetpathspaths-ignore).
 

@@ -133,15 +133,14 @@ fail if either variable is missing. Local builds may use HTTP for localhost; whe
 `API_URL` is omitted from `npm run build`, the production environment file provides
 the local API fallback.
 
-Pushes to `main` publish `ghcr.io/<owner>/ei-dungeon-web:latest` and
-`ghcr.io/<owner>/ei-dungeon-web:sha-<full-commit-sha>` using the built-in `GITHUB_TOKEN`.
+Matching pushes to `main` publish `ghcr.io/<owner>/ei-dungeon/web:latest` and
+`ghcr.io/<owner>/ei-dungeon/web:sha-<full-commit-sha>` using the built-in `GITHUB_TOKEN`.
 Pull requests build without publishing. The image targets `linux/amd64` and uses
 GitHub Actions Docker layer caching. Allow GitHub Actions to publish packages in
 the repository or organization settings. No registry password secret is needed.
-The existing `ei-dungeon-web` package must grant the new `wilknisoliveira/ei-dungeon`
-repository Actions access with write permission if it does not already have it.
-Repository variables and package permissions do not transfer through a file copy;
-remote settings have not been verified locally.
+The workflow derives the image path from the repository name. Configure pull access
+in GitHub package settings, then point `FRONTEND_IMAGE` at a published tag or digest
+when deploying.
 
 The `Web container` workflow uses separate concurrency and Docker cache scopes from
 the API. Required checks for this app are `Web build and test` and

@@ -169,10 +169,10 @@ The [GitHub Actions workflow](../.github/workflows/api-container.yml) builds the
 
 Only pushes to `main` publish to GitHub Container Registry:
 
-- `ghcr.io/wilknisoliveira/ei-dungeon-back:latest`
-- `ghcr.io/wilknisoliveira/ei-dungeon-back:sha-<full-commit-sha>`
+- `ghcr.io/wilknisoliveira/ei-dungeon/api:latest`
+- `ghcr.io/wilknisoliveira/ei-dungeon/api:sha-<full-commit-sha>`
 
-Use the commit tag to select a specific build. The workflow uses the built-in `GITHUB_TOKEN` with package write permission; no Docker Hub account or custom registry secret is required. GitHub Actions and package publishing must be allowed by repository or organization policies. Package visibility and access are managed separately in GitHub package settings. The image name is retained from the original API repository. In the existing package's settings, grant the new `wilknisoliveira/ei-dungeon` repository Actions access with write permission if it does not already have it. Access from the old repository does not establish access from the monorepo. Remote package permissions have not been verified locally.
+Use the commit tag to select a specific build. The workflow derives the image path from the repository name and uses the built-in `GITHUB_TOKEN` with package write permission. GitHub Actions and package publishing must be allowed by repository or organization policies. Configure pull access in GitHub package settings, then point `BACKEND_IMAGE` at a published tag or digest when deploying.
 
 Pull requests never log in to the registry or publish images. Database credentials, the JWT secret, and AI API keys are only needed when running the application. This workflow does not deploy the application or change the local Docker Compose setup.
 

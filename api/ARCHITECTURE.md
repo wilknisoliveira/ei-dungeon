@@ -54,7 +54,7 @@ Each game has a `GameLanguage` (enum: `Portuguese`, `English`, `Spanish`; defaul
 - The monorepo root `../.github/workflows/api-container.yml` runs on pull requests targeting `main` and pushes to `main`.
 - A .NET 9 job restores dependencies, builds the application and tests in Release mode, and runs unit tests. The container job requires this job to pass.
 - Docker Buildx builds `api/ei-back/Dockerfile` with `api/` as context (paths from the monorepo root) for Linux AMD64, reusing GitHub Actions build cache.
-- Pull requests build without publishing or registry login. Pushes to `main` publish `ghcr.io/<owner>/ei-dungeon-back:sha-<full-commit-sha>` and `:latest` using the built-in `GITHUB_TOKEN` with `packages: write` permission.
+- Pull requests build without publishing or registry login. Matching pushes to `main` publish `ghcr.io/<owner>/ei-dungeon/api:sha-<full-commit-sha>` and `:latest` using the built-in `GITHUB_TOKEN` with `packages: write` permission.
 - Database credentials, JWT secrets, and AI keys are supplied at runtime, not during CI. Deployment remains outside this workflow.
 
 ## Local Docker Compose
