@@ -174,7 +174,9 @@ Only pushes to `main` publish to GitHub Container Registry:
 
 Use the commit tag to select a specific build. The workflow derives the image path from the repository name and uses the built-in `GITHUB_TOKEN` with package write permission. GitHub Actions and package publishing must be allowed by repository or organization policies. Configure pull access in GitHub package settings, then point `BACKEND_IMAGE` at a published tag or digest when deploying.
 
-Pull requests never log in to the registry or publish images. Database credentials, the JWT secret, and AI API keys are only needed when running the application. This workflow does not deploy the application or change the local Docker Compose setup.
+Pull requests never log in to the registry or publish images. Database credentials, the JWT secret, and AI API keys are only needed when running the application. After successful main publication, an optional deployment job calls the shared SSH workflow when repository variable `DUNGEON_AUTO_DEPLOY=true`.
+
+Manual production deployment uses **Actions → Deploy production → Run workflow**, service `backend` and its published commit tag. The workflow verifies main publication, pins the registry digest and runs the provisioned script in `/opt/infra/apps/dungeon/scripts/deploy.sh`. The script backs up the database before replacement and checks local/public `/health`. Production setup and recovery are documented in the sibling `../../infra/apps/dungeon/DEPLOYMENT.md`. The `production` environment can require a reviewer when supported by the GitHub plan. Runtime Resend and verification-key configuration must also be checked through the authentication journeys because `/health` only checks database connectivity.
 
 To require these checks before merging, configure a branch protection rule or ruleset for `main` requiring `API build and test` and `API container (publish on main)`. The `API container` workflow uses its own concurrency group and Docker cache scope, separate from the web image. No remote ruleset changes or image publication are performed by the local migration.
 

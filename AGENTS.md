@@ -8,6 +8,7 @@ EI Dungeon is an RPG application with AI-generated game responses. This monorepo
 - `api/ei-back.Tests/`: backend tests; `api/docs/`: API integration documentation.
 - `web/src/app/`: Angular application; `web/src/assets/`: static assets; `web/src/i18n/`: English, Brazilian Portuguese, and Spanish translations.
 - `.github/workflows/`: active API and web container workflows. Module-level workflow copies are inactive references.
+- `.github/workflows/deploy-production.yml`: manual/reusable SSH production deployment. Application-owned VPS configuration lives in sibling `../infra/apps/dungeon/` within the shared VM repository.
 - `specs/`: feature specifications and tasks; `.agents/skills/`: repository skills.
 
 Read [api/AGENTS.md](api/AGENTS.md) or [web/AGENTS.md](web/AGENTS.md) before designing, reviewing, or changing the corresponding module, including when starting from the repository root. Read both for work that spans both modules. For API work, also read `api/ARCHITECTURE.md` and the local, ignored `api/LOCAL_GUIDES.md` when present.
@@ -47,3 +48,5 @@ Require Conventional Commits with short, imperative descriptions, such as `feat(
 ## Security & Configuration
 
 Keep credentials in ignored `.env` files or .NET User Secrets. Commit environment examples only. Preserve Compose project names and existing database volumes; avoid destructive resets.
+
+Production deploys published commit tags resolved to digests. Manual dispatch is the default, with automatic deployment enabled only by `DUNGEON_AUTO_DEPLOY=true`. Follow `../infra/apps/dungeon/DEPLOYMENT.md` for SSH provisioning and live migration. Keep Dungeon-specific infrastructure scripts under its application directory. Preserve production project `dungeon-production` and volume `dungeon-production_postgres_data`.

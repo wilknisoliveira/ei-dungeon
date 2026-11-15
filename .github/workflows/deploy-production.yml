@@ -1,0 +1,162 @@
+name: Deploy production
+
+on:
+  workflow_dispatch:
+    inputs:
+      service:
+        description: Service to deploy
+        type: choice
+        options: [backend, frontend, both]
+        required: true
+      backend_tag:
+        description: Published API tag (sha- followed by the full commit SHA)
+        type: string
+        default: ''
+      frontend_tag:
+        description: Published web tag (sha- followed by the full commit SHA)
+        type: string
+        default: ''
+  workflow_call:
+    inputs:
+      service:
+        type: string
+        required: true
+      backend_tag:
+        type: string
+        default: ''
+      frontend_tag:
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+  actions: read
+  packages: read
+
+jobs:
+  deploy:
+    name: Deploy selected images
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment: production
+    concurrency:
+      group: dungeon-production-deploy
+      cancel-in-progress: false
+    steps:
+      - name: Check out deployment source and main history
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Authenticate image inspection
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Validate published revisions and resolve immutable images
+        id: images
+        uses: actions/github-script@v8
+        env:
+          DEPLOY_SERVICE: ${{ inputs.service }}
+          BACKEND_TAG: ${{ inputs.backend_tag }}
+          FRONTEND_TAG: ${{ inputs.frontend_tag }}
+        with:
+          script: |
+            const { execFileSync } = require('node:child_process');
+            const service = process.env.DEPLOY_SERVICE;
+            if (!['backend', 'frontend', 'both'].includes(service)) {
+              throw new Error('Invalid deployment service');
+            }
+            core.setOutput('mode', context.eventName === 'workflow_dispatch' ? 'manual' : 'automatic');
+            const components = [
+              ['backend', process.env.BACKEND_TAG, 'api-container.yml', 'API container (publish on main)', 'api'],
+              ['frontend', process.env.FRONTEND_TAG, 'web-container.yml', 'Web container (publish on main)', 'web'],
+            ];
+            for (const [component, tag, workflow, imageJob, imageSuffix] of components) {
+              const selected = service === component || service === 'both';
+              if (!selected) {
+                if (tag) throw new Error(`Unexpected tag for unselected ${component}`);
+                core.setOutput(`${component}-tag`, '-');
+                core.setOutput(`${component}-digest`, '-');
+                core.setOutput(`${component}-order`, '0');
+                continue;
+              }
+              if (!/^sha-[0-9a-f]{40}$/.test(tag)) {
+                throw new Error(`Invalid ${component} commit tag`);
+              }
+              const sha = tag.slice(4);
+              execFileSync('git', ['merge-base', '--is-ancestor', sha, 'origin/main']);
+              const order = execFileSync('git', ['rev-list', '--count', sha], { encoding: 'utf8' }).trim();
+              // A reusable call is still inside its publishing run. Validate the
+              // successful image job instead of waiting for the entire parent run.
+              const runs = await github.paginate(github.rest.actions.listWorkflowRuns, {
+                ...context.repo, workflow_id: workflow, branch: 'main', event: 'push', head_sha: sha, per_page: 100,
+              });
+              let publication;
+              for (const run of runs) {
+                if (run.head_sha !== sha || run.head_branch !== 'main' || run.event !== 'push') continue;
+                const jobs = await github.paginate(github.rest.actions.listJobsForWorkflowRun, {
+                  ...context.repo, run_id: run.id, filter: 'latest', per_page: 100,
+                });
+                if (jobs.some(job => job.name === imageJob && job.conclusion === 'success')) {
+                  publication = run;
+                  break;
+                }
+              }
+              if (!publication) throw new Error(`No successful main image publication for ${component} ${tag}`);
+              const image = `ghcr.io/${process.env.GITHUB_REPOSITORY.toLowerCase()}/${imageSuffix}`;
+              const descriptor = JSON.parse(execFileSync('docker', [
+                'buildx', 'imagetools', 'inspect', `${image}:${tag}`, '--format', '{{json .Manifest}}',
+              ], { encoding: 'utf8', timeout: 120000 }));
+              if (!/^sha256:[0-9a-f]{64}$/.test(descriptor.digest)) {
+                throw new Error(`Invalid registry digest for ${component}`);
+              }
+              core.setOutput(`${component}-tag`, tag);
+              core.setOutput(`${component}-digest`, descriptor.digest);
+              core.setOutput(`${component}-order`, order);
+              await core.summary.addHeading(component)
+                .addRaw(`${tag}\n\n${descriptor.digest}\n\nPublication ${publication.html_url}\n\n`).write();
+            }
+
+      - name: Deploy through the restricted SSH command
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DUNGEON_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.DUNGEON_SSH_KNOWN_HOSTS }}
+          SSH_HOST: ${{ vars.DUNGEON_SSH_HOST }}
+          SSH_PORT: ${{ vars.DUNGEON_SSH_PORT || '22' }}
+          SSH_USER: ${{ vars.DUNGEON_SSH_USER || 'dungeon-deploy' }}
+          DEPLOY_SERVICE: ${{ inputs.service }}
+          DEPLOY_MODE: ${{ steps.images.outputs.mode }}
+          BACKEND_TAG: ${{ steps.images.outputs.backend-tag }}
+          BACKEND_DIGEST: ${{ steps.images.outputs.backend-digest }}
+          BACKEND_ORDER: ${{ steps.images.outputs.backend-order }}
+          FRONTEND_TAG: ${{ steps.images.outputs.frontend-tag }}
+          FRONTEND_DIGEST: ${{ steps.images.outputs.frontend-digest }}
+          FRONTEND_ORDER: ${{ steps.images.outputs.frontend-order }}
+        run: |
+          set -euo pipefail
+          [[ "$SSH_HOST" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]*$ ]]
+          [[ "$SSH_USER" =~ ^[a-z_][a-z0-9_-]*$ ]]
+          [[ "$SSH_PORT" =~ ^[0-9]{1,5}$ ]] && (( SSH_PORT >= 1 && SSH_PORT <= 65535 ))
+          test -n "$SSH_PRIVATE_KEY" && test -n "$SSH_KNOWN_HOSTS"
+          ssh_dir="$(mktemp -d)"
+          trap 'rm -rf -- "$ssh_dir"' EXIT
+          chmod 700 "$ssh_dir"
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$ssh_dir/key"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$ssh_dir/known_hosts"
+          chmod 600 "$ssh_dir/key" "$ssh_dir/known_hosts"
+          # Every remote token was allowlisted in the previous step. The server
+          # parses the command as data and enforces its own validation again.
+          remote_command="dungeon-deploy $DEPLOY_MODE $DEPLOY_SERVICE $BACKEND_TAG $BACKEND_DIGEST $BACKEND_ORDER $FRONTEND_TAG $FRONTEND_DIGEST $FRONTEND_ORDER"
+          timeout --signal=TERM 20m ssh -F /dev/null -T \
+            -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            -o "UserKnownHostsFile=$ssh_dir/known_hosts" \
+            -o ConnectTimeout=15 -o ServerAliveInterval=15 -o ServerAliveCountMax=3 \
+            -i "$ssh_dir/key" -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" "$remote_command"

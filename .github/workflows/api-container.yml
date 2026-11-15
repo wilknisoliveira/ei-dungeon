@@ -93,3 +93,17 @@ jobs:
             org.opencontainers.image.revision=${{ github.sha }}
           cache-from: type=gha,scope=api
           cache-to: type=gha,mode=max,scope=api
+
+  deploy:
+    name: Deploy API when enabled
+    needs: image
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.DUNGEON_AUTO_DEPLOY == 'true'
+    permissions:
+      contents: read
+      actions: read
+      packages: read
+    uses: ./.github/workflows/deploy-production.yml
+    with:
+      service: backend
+      backend_tag: sha-${{ github.sha }}
+    secrets: inherit

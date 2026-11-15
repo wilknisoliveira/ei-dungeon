@@ -148,6 +148,6 @@ the API. Required checks for this app are `Web build and test` and
 branch rules after they are available. The local migration does not modify remote
 rules or publish images.
 
-Deploy a chosen image tag through your hosting platform. Use a previous `sha-...`
-tag for rollback. This workflow publishes images; deployment remains a separate step.
-Configure branch protection to require the workflow checks before merging.
+Deploy a chosen published image through **Actions → Deploy production → Run workflow** on `main`, selecting `frontend` and its `sha-<full-commit-sha>` tag. The shared workflow verifies publication, resolves the digest, connects by SSH and checks the localized HTTPS route after replacement. Use a previous published tag for frontend rollback.
+
+Manual deployment is the default. Set repository variable `DUNGEON_AUTO_DEPLOY=true` to call that workflow after successful web publication. Optional reviewers use environment `production`, subject to GitHub account features. The sibling `../../infra/apps/dungeon/DEPLOYMENT.md` documents production credentials, migration and recovery. Configure branch protection to require the applicable workflow checks before merging, accounting for path filters.

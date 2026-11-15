@@ -81,3 +81,5 @@ Require atomic Conventional Commits with an optional scope, using types such as 
 ## Containers and CI
 
 Run Compose from `web/`; it reads `web/.env` and uses project name `ei-dungeon-web`. The nginx container serves localized static output on host port 8000 by default. The active workflow is [web-container.yml](../.github/workflows/web-container.yml), with `web/` as Docker context and `web/package-lock.json` as npm's cache dependency path. The copied workflow under this module's `.github/` is inactive.
+
+Production deployment uses the root `deploy-production.yml` workflow and sibling `../../infra/apps/dungeon/` configuration. Manual dispatch selects published commit tags resolved to digests. `DUNGEON_AUTO_DEPLOY=true` enables deployment after successful main publication. Keep public URLs correct at build time and follow the infrastructure deployment guide for SSH and readiness configuration.

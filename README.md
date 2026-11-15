@@ -62,7 +62,15 @@ Each workflow runs only when its module (`api/**` or `web/**`) or its own root w
 - [API workflow](.github/workflows/api-container.yml): `ghcr.io/wilknisoliveira/ei-dungeon/api`.
 - [Web workflow](.github/workflows/web-container.yml): `ghcr.io/wilknisoliveira/ei-dungeon/web`.
 
-Set `SITE_URL` and `API_URL` repository variables for the web build. Each workflow derives its image path from the repository name and publishes using its `GITHUB_TOKEN`. On the next deployment, set `BACKEND_IMAGE` and `FRONTEND_IMAGE` in the infrastructure environment to the new image paths with published commit tags or digests. The sibling `../infra` repository contains deployment instructions.
+Set `SITE_URL` and `API_URL` repository variables for the web build. Each workflow derives its image path from the repository name and publishes using its `GITHUB_TOKEN`.
+
+## Production deployment
+
+Use **Actions → Deploy production → Run workflow** on branch `main` to select backend, frontend or both and a published `sha-<full-commit-sha>` tag for each selected service. The workflow verifies successful main image publication, resolves digests and calls the restricted SSH deployment script. The VPS installs that content and checks local/public readiness. API updates require a validated database backup first.
+
+Manual dispatch is the default. Set repository variable `DUNGEON_AUTO_DEPLOY=true` to deploy each service after its successful main image publication. The same workflow supports optional required reviewers through environment `production`, subject to GitHub account features. Each service has independent versions. Use manual selection of both images for a coordinated release.
+
+The shared sibling infrastructure repository groups Dungeon configuration under `../infra/apps/dungeon/`. Its `DEPLOYMENT.md` documents the SSH key, verified host identity, variables/secrets, live-directory migration, script provisioning, failure recovery and operational acceptance. On the VPS the path is `/opt/infra/apps/dungeon`. Preserve Compose project `dungeon-production` and its database volume when moving files. Backend image rollback requires schema compatibility because startup applies migrations.
 
 When configuring branch protection, account for these path filters: GitHub can leave required checks pending when their entire workflow is skipped. Avoid requiring both filtered workflows unconditionally; use an always-running required gate if every PR must have a check. See [GitHub's path-filter documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#onpushpull_requestpull_request_targetpathspaths-ignore).
 
