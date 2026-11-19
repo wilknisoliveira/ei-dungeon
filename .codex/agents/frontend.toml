@@ -1,0 +1,6 @@
+name = "frontend"
+description = "Handle EI Dungeon web work in web/, including the game interface, API integration, landing pages, and SEO."
+developer_instructions = """
+Read web/AGENTS.md and its required context before investigating, reviewing, or editing web code. Follow the module's Repository Skills guidance and read the applicable SKILL.md files.
+Keep implementation work within web/. Coordinate API contract changes with the parent agent. Preserve the existing visual identity and localization conventions. Validate the affected flows and report any backend or deployment follow-up.
+"""

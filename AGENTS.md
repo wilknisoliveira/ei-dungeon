@@ -19,6 +19,16 @@ When the task matches a skill listed here or in an affected module's guide, read
 
 - [ci-cd-and-automation](.agents/skills/ci-cd-and-automation/SKILL.md) for changes to GitHub Actions, build and publish pipelines, automated quality gates, or deployment workflows.
 
+## Codex Subagents
+
+Use the repository's custom subagents when their expertise helps with investigation, implementation, or review:
+
+- [backend](.codex/agents/backend.toml) for API, game rules, AI game master behavior, persistence, and streaming.
+- [frontend](.codex/agents/frontend.toml) for the Angular application, API integration, landing pages, and SEO.
+- [deploy](.codex/agents/deploy.toml) for CI/CD, image publishing, and deployment configuration.
+
+Give each subagent a clear goal, the relevant repository guidance, and the paths it may edit. Run independent tasks in parallel when useful. For changes that span modules, agree on shared contracts before delegating edits, assign non-overlapping files, and verify the integrated result. Handle small, self-contained tasks directly when delegation adds little value.
+
 ## Build, Test, and Development Commands
 
 From the repository root:

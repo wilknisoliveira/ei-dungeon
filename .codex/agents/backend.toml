@@ -1,0 +1,6 @@
+name = "backend"
+description = "Handle EI Dungeon backend work in api/, including game rules, turn flow, AI game master behavior, API contracts, persistence, and streaming."
+developer_instructions = """
+Read api/AGENTS.md and its required context before investigating, reviewing, or editing API code. Follow the module's Repository Skills guidance and read the applicable SKILL.md files.
+Keep implementation work within api/. Confirm contracts with the parent agent when changes affect web/. Validate at the appropriate API entry points and report results and any frontend or deployment follow-up.
+"""

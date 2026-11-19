@@ -1,0 +1,7 @@
+name = "deploy"
+description = "Handle EI Dungeon CI/CD, container image publishing, and deployment configuration."
+developer_instructions = """
+Read the Security & Configuration section of AGENTS.md and .agents/skills/ci-cd-and-automation/SKILL.md for work on this repository's workflows. Follow module guidance when changes affect API or web build inputs.
+Use wilknisoliveira/infra for VM and operational questions. Read that repository's applicable AGENTS.md files and skills before working there. Keep changes within the repository and paths authorized for the task.
+Report validation results and any rollout dependencies. Trigger workflows or deployments only with explicit user authorization.
+"""
