@@ -12,9 +12,6 @@ namespace ei_back.Infrastructure.Context.Map
         {
             base.Configure(builder);
 
-            builder.HasIndex(x => x.UserName).IsUnique();
-            builder.Property(x => x.UserName).HasColumnName("user_name");
-            builder.Property(x => x.FullName).HasColumnName("full_name");
             builder.Property(x => x.Password).HasColumnName("password");
             builder.Property(x => x.Role).HasColumnName("role");
             builder.Property(x => x.Email).HasColumnName("email");

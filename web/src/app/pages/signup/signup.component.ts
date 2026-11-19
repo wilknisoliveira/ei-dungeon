@@ -1,4 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { GoogleAuthService } from 'src/app/service/auth/google-auth.service';
+import { GoogleCredential } from 'src/app/types/auth/google-auth';
+import { GoogleSigninButtonComponent } from 'src/app/shared/google-signin-button/google-signin-button.component';
+import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -8,13 +11,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { EmailAuthFlowService } from 'src/app/service/auth/email-auth-flow.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/service/auth/auth.service';
-import { SnackbarService } from 'src/app/service/snackbar/snackbar.service';
 import { LoadingComponent } from 'src/app/shared/loading/loading.component';
 import { LanguageSelectorComponent } from 'src/app/shared/components/language-selector/language-selector.component';
 import { ThemeToggleComponent } from 'src/app/shared/theme-toggle/theme-toggle.component';
 @Component({
     standalone: true,
     imports: [
+        GoogleSigninButtonComponent,
         CommonModule,
         ReactiveFormsModule,
         RouterModule,
@@ -30,42 +33,22 @@ import { ThemeToggleComponent } from 'src/app/shared/theme-toggle/theme-toggle.c
     styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent {
+    private readonly changeDetector = inject(ChangeDetectorRef);
+    readonly google = inject(GoogleAuthService);
+    googleAction = '';
+
     private readonly flow = inject(EmailAuthFlowService);
     error = '';
     hide = signal(true);
     formGroup: FormGroup;
     loading: boolean = false;
 
-    usernameAvailable: boolean | null = null;
-    emailAvailable: boolean | null = null;
-    usernameChecking = false;
-    emailChecking = false;
-    private usernameDebounce: any = null;
-    private emailDebounce: any = null;
-
     constructor(
         private fb: FormBuilder,
         private authService: AuthService,
         private router: Router,
-        private snackBar: SnackbarService,
     ) {
         this.formGroup = this.fb.group({
-            userName: [
-                '',
-                [
-                    Validators.required,
-                    Validators.minLength(4),
-                    Validators.maxLength(20),
-                ],
-            ],
-            fullName: [
-                '',
-                [
-                    Validators.required,
-                    Validators.minLength(4),
-                    Validators.maxLength(50),
-                ],
-            ],
             email: ['', [Validators.required, Validators.email]],
             password: [
                 '',
@@ -75,7 +58,25 @@ export class SignupComponent {
                     Validators.maxLength(50),
                 ],
             ],
-        });
+            confirmPassword: ['', [Validators.required]],
+        }, { validators: group => group.get('password')?.value === group.get('confirmPassword')?.value ? null : { passwordMismatch: true } });
+    }
+
+    async onGoogle(credential: GoogleCredential): Promise<void> {
+        if (this.loading) return;
+        this.loading = true;
+        this.googleAction = '';
+        try {
+            await this.google.signin(credential);
+            await this.router.navigate(['/home']);
+        } catch (error) {
+            this.error = this.google.message(error);
+            const code = error instanceof HttpErrorResponse ? error.error?.code : '';
+            this.googleAction = code === 'google_registration_required' ? 'signup' : code === 'google_link_required' ? 'login' : '';
+        } finally {
+            this.loading = false;
+            this.changeDetector.markForCheck();
+        }
     }
 
     async onSubmit() {
@@ -86,8 +87,8 @@ export class SignupComponent {
         this.loading = true;
         this.error = '';
         try {
-            const result = await this.authService.signup({ ...this.formGroup.value, email: this.formGroup.value.email.trim() });
-            this.flow.registered(result.userName, result.email);
+            const result = await this.authService.signup({ email: this.formGroup.value.email.trim(), password: this.formGroup.value.password });
+            this.flow.registered(result.email);
             await this.router.navigate(['/email-verification']);
         } catch (error) {
             this.error = error instanceof HttpErrorResponse && error.status === 400
@@ -95,64 +96,8 @@ export class SignupComponent {
                 : this.flow.error(error, 'verification').message;
         } finally {
             this.loading = false;
+            this.changeDetector.markForCheck();
         }
     }
 
-    onUsernameBlur(): void {
-        if (this.usernameDebounce) clearTimeout(this.usernameDebounce);
-        const userName = this.formGroup.get('userName')?.value?.trim();
-        if (!userName || this.formGroup.get('userName')?.invalid) {
-            this.usernameAvailable = null;
-            return;
-        }
-        this.usernameChecking = true;
-        this.usernameDebounce = setTimeout(async () => {
-            try {
-                const result = await this.authService.checkAvailability(
-                    userName,
-                    undefined,
-                );
-                this.usernameAvailable = result.usernameAvailable;
-            } catch (error: any) {
-                if (error.status === 429) {
-                    this.snackBar.addError(
-                        'Too many requests. Please wait a moment.',
-                    );
-                } else {
-                    this.usernameAvailable = null;
-                }
-            } finally {
-                this.usernameChecking = false;
-            }
-        }, 300);
-    }
-
-    onEmailBlur(): void {
-        if (this.emailDebounce) clearTimeout(this.emailDebounce);
-        const emailControl = this.formGroup.get('email');
-        if (!emailControl?.value?.trim() || emailControl.invalid) {
-            this.emailAvailable = null;
-            return;
-        }
-        this.emailChecking = true;
-        this.emailDebounce = setTimeout(async () => {
-            try {
-                const result = await this.authService.checkAvailability(
-                    undefined,
-                    emailControl.value,
-                );
-                this.emailAvailable = result.emailAvailable;
-            } catch (error: any) {
-                if (error.status === 429) {
-                    this.snackBar.addError(
-                        'Too many requests. Please wait a moment.',
-                    );
-                } else {
-                    this.emailAvailable = null;
-                }
-            } finally {
-                this.emailChecking = false;
-            }
-        }, 300);
-    }
 }

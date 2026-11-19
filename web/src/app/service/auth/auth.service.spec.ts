@@ -111,4 +111,21 @@ describe('AuthService email endpoints', () => {
             await result;
         });
     }
+
+    it('retrieves authoritative account capabilities through an authenticated request', async () => {
+        const pending = service.getAccount();
+        const request = http.expectOne(environment.api + '/api/user/auth/account');
+        expect(request.request.method).toBe('GET');
+        expect(request.request.context.get(PUBLIC_AUTH)).toBeFalse();
+        const account = { id: 'id', email: 'player@example.com', role: 'CommonUser', hasPassword: false, googleLinked: true };
+        request.flush(account);
+        expect(await pending).toEqual(account);
+    });
+    it('propagates current-account lookup failures without inventing capabilities', async () => {
+        const pending = service.getAccount();
+        const result = expectAsync(pending).toBeRejected();
+        http.expectOne(environment.api + '/api/user/auth/account').flush(null, { status: 401, statusText: 'Unauthorized' });
+        await result;
+    });
+
 });

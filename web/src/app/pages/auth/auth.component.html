@@ -17,11 +17,11 @@
 
             <form (ngSubmit)="onSubmit()" #form="ngForm">
                 <mat-form-field class="example-full-width">
-                    <mat-label i18n="@@usernameLabel">Username</mat-label>
+                    <mat-label i18n="@@emailLabel">Email</mat-label>
                     <input
                         matInput
-                        [(ngModel)]="userLogin.userName"
-                        name="username"
+                        [(ngModel)]="userLogin.email"
+                        name="email" type="email" email autocomplete="username"
                         required
                     />
                 </mat-form-field>
@@ -51,6 +51,9 @@
                 </div>
                 @if (error()) { <p class="login__error" role="alert">{{ error() }}</p> }
             </form>
+            <app-google-signin-button (credential)="onGoogle($event)" [disabled]="loading()" [showSeparator]="true" />
+            @if (googleAction === 'signup') { <a routerLink="/signup" i18n="@@googleGoToSignup">Go to registration</a> }
+            @if (googleAction === 'login') { <a routerLink="/login" i18n="@@googleGoToLogin">Sign in to your existing account</a> }
         </div>
         <div class="sign-up">
             <span i18n="@@noAccountPrompt">Don't have an account?</span>&nbsp;<a [routerLink]="['/signup']" i18n="@@signUpLink">Sign Up Now</a>

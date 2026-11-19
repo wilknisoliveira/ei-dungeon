@@ -34,7 +34,7 @@ namespace ei_back.Core.Application.UseCase.Play
             ILogger<NewUserPlayUseCase> logger,
             IServiceProvider serviceProvider,
             IConfiguration configuration,
-            IGenAi genAi, 
+            IGenAi genAi,
             IPlayAnalyzerService playAnalyzerService,
             IInitialMasterPlayService initialMasterPlayService)
         {
@@ -56,19 +56,19 @@ namespace ei_back.Core.Application.UseCase.Play
         }
 
         public async IAsyncEnumerable<StreamPlayDtoResponse> Handler(
-            PlayDtoRequest playDtoRequest, 
-            string userName, 
+            PlayDtoRequest playDtoRequest,
+            Guid userId,
             [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             List<Domain.Entity.Play> plays = [];
-             
-            var game = await _gameRepository.GetGameByIdAndOwnerUserName(playDtoRequest.GameId, userName, cancellationToken);
+
+            var game = await _gameRepository.GetGameByIdAndOwnerId(playDtoRequest.GameId, userId, cancellationToken);
             if (game == null)
             {
-                yield return new StreamPlayDtoResponse 
-                { 
-                    EventType = EventType.Error, 
-                    Content = $"No game found with id {playDtoRequest.GameId} to user name {userName}." 
+                yield return new StreamPlayDtoResponse
+                {
+                    EventType = EventType.Error,
+                    Content = $"No game found with id {playDtoRequest.GameId} to user ID {userId}."
                 };
 
                 yield break;
@@ -76,9 +76,9 @@ namespace ei_back.Core.Application.UseCase.Play
 
             if (!game.GameStatus.Equals(GameStatus.Active))
             {
-                yield return new StreamPlayDtoResponse 
-                { 
-                    EventType = EventType.Error, 
+                yield return new StreamPlayDtoResponse
+                {
+                    EventType = EventType.Error,
                     Content = $"Game '{game.Id}' is not active."
                 };
 
@@ -94,7 +94,7 @@ namespace ei_back.Core.Application.UseCase.Play
                 if (nextPlays.Count < numberOfPlaysRequiredForContext)
                 {
                     var missingPlaysNumber = numberOfPlaysRequiredForContext - nextPlays.Count;
-                    
+
                     List<Domain.Entity.Play> previousPlays = (await _playRepository
                         .GetLastNBeforeDate(game.Id, missingPlaysNumber, lastSummary.CreatedAt, cancellationToken))
                         .OrderBy(x => x.CreatedAt).ToList();
@@ -158,19 +158,19 @@ namespace ei_back.Core.Application.UseCase.Play
             _ = await _playRepository.CreateAsync(newPlay, cancellationToken) ??
                 throw new InternalServerErrorException($"Something went wrong while attempting to create the play");
             plays.Add(newPlay);
-            
+
             AnalyzerDtoResponse analyzerDtoResponse = await _playAnalyzerService.Handler(
-                plays, 
-                game, 
+                plays,
+                game,
                 cancellationToken);
             if (analyzerDtoResponse.Result == AnalyzerResult.PlayerDied)
             {
                 game.KillPlayer();
             }
-            
+
             var completedMasterResponse = "";
 
-            await foreach (var chunk in 
+            await foreach (var chunk in
                 StreamGenerateMasterPlay(plays, game, analyzerDtoResponse, cancellationToken)
                 .WithCancellation(cancellationToken))
             {
@@ -183,7 +183,7 @@ namespace ei_back.Core.Application.UseCase.Play
                         Content = chunk.Content
                     };
                     yield break;
-                } 
+                }
                 else
                 {
                     completedMasterResponse += chunk.Content;
@@ -206,9 +206,9 @@ namespace ei_back.Core.Application.UseCase.Play
             changedItems = await _unitOfWork.CommitAsync(cancellationToken);
             if (changedItems == 0)
             {
-                yield return new StreamPlayDtoResponse 
-                { 
-                    EventType = EventType.Error, 
+                yield return new StreamPlayDtoResponse
+                {
+                    EventType = EventType.Error,
                     Content = "Something went wrong while attempting to create the user play."
                 };
 
@@ -228,23 +228,23 @@ namespace ei_back.Core.Application.UseCase.Play
 
                     using var summaryScope = _serviceProvider.CreateScope();
                     var newGeneratePlaysSummaryService = summaryScope.ServiceProvider.GetRequiredService<IGeneratePlaysSummaryService>();
-                        
+
                     await newGeneratePlaysSummaryService.Handler(game.Id, plays, cancellationTokenService.Token);
                 }, cancellationTokenTask.Token);
             }
         }
 
         private async IAsyncEnumerable<StreamAIDtoResponse> StreamGenerateMasterPlay(
-            List<Domain.Entity.Play> plays, 
+            List<Domain.Entity.Play> plays,
             Domain.Entity.Game game,
             AnalyzerDtoResponse analyzerDtoResponse,
             [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             var systemPrompt = $"<master-instruction>\n{MasterPlayCommand()}\n</master-instruction>\n" +
-                               $"<player-info>\n{game.InfoToString()}\n</player-info>\n" + 
+                               $"<player-info>\n{game.InfoToString()}\n</player-info>\n" +
                                $"<world-info>\n{game.WorldInfo}\n</world-info>\n" +
                                $"<language>\n{LanguageInstructionHelper.GetLanguageInstruction(game.GameLanguage)}\n</language>\n";
-            
+
             List<AiPromptRequest> promptList = [];
 
             foreach (var play in plays)
@@ -365,7 +365,7 @@ namespace ei_back.Core.Application.UseCase.Play
             }
 
             var prompts = "";
-                
+
             plays.ForEach(x => prompts += x.Response + " ");
 
             return encoder.CountTokens(prompts);

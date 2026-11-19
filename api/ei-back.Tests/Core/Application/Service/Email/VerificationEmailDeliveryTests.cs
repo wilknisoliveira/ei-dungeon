@@ -37,7 +37,7 @@ public class VerificationEmailDeliveryTests
         var codeService = new VerificationCodeService();
         var codes = A.Fake<IVerificationCodeService>();
         var repository = A.Fake<IVerificationCodeRepository>();
-        var user = new UserEntity("player", "Player Name", "player@example.com", "hash", UserRole.CommonUser)
+        var user = new UserEntity("player@example.com", "hash", UserRole.CommonUser)
             { Id = Guid.NewGuid() };
         A.CallTo(() => codes.CanIssue(A<IEnumerable<ei_back.Core.Domain.Entity.VerificationCode>>._, A<DateTimeOffset>._)).Returns(true);
         A.CallTo(() => codes.Create(user.Id, user.Email, VerificationCodePurpose.EmailVerification, A<DateTimeOffset>._))

@@ -40,7 +40,7 @@ describe('languageInterceptor', () => {
             afterEach(() => controller.verify());
 
             it('sets the active language on signup, both requests and both confirmations without changing contracts', async () => {
-                const registration = { userName: 'player', fullName: 'Player Name', email: 'player@example.com', password: 'password123' };
+                const registration = { email: 'player@example.com', password: 'password123' };
                 const email = { email: registration.email };
                 const confirm = { ...email, code: '000123' };
                 const recovery = { ...confirm, newPassword: 'replacement' };
@@ -59,7 +59,7 @@ describe('languageInterceptor', () => {
                     expect(req.request.headers.has('Authorization')).toBeFalse();
                     expect(req.request.body).toEqual(call.body);
                     expect(req.request.params.keys()).toEqual([]);
-                    req.flush(call.status === 200 ? { userName: 'player', fullName: 'Player Name', email: email.email } : null,
+                    req.flush(call.status === 200 ? { email: email.email } : null,
                         { status: call.status, statusText: 'Success' });
                     await result;
                 }

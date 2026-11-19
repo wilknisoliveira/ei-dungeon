@@ -15,9 +15,9 @@ namespace ei_back.Infrastructure.Context.Repository
             return await _context.Games.AnyAsync(x => x.Id.Equals(gameId) && x.OwnerUserId.Equals(OwnerUserId), cancellationToken);
         }
 
-        public async Task<Game?> GetGameByIdAndOwnerUserName(Guid id, string userName, CancellationToken cancellationToken)
+        public async Task<Game?> GetGameByIdAndOwnerId(Guid id, Guid userId, CancellationToken cancellationToken)
         {
-            return await _context.Games.Include(x => x.OwnerUser).FirstOrDefaultAsync(x => x.Id.Equals(id) && x.OwnerUser.UserName.Equals(userName), cancellationToken: cancellationToken);
+            return await _context.Games.Include(x => x.OwnerUser).FirstOrDefaultAsync(x => x.Id.Equals(id) && x.OwnerUserId.Equals(userId), cancellationToken: cancellationToken);
         }
 
         public async Task<List<Game>> FindWithPagedSearchAsync(string sort, int size, int offset, Guid ownerUserId, CancellationToken cancellationToken = default)

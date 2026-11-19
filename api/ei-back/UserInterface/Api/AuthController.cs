@@ -21,7 +21,7 @@ namespace ei_back.UserInterface.Api
         private readonly IRefreshTokenUseCase _refreshTokenUseCase;
         private readonly ILogoutUseCase _logoutUseCase;
         private readonly IChangePasswordUseCase _changePasswordUseCase;
-        private readonly IGetUserNameUseCase _getUserNameUseCase;
+        private readonly IGetUserIdUseCase _getUserIdUseCase;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IStringLocalizer<AuthController> _stringLocalizer;
         private readonly ILogger<AuthController> _logger;
@@ -35,7 +35,7 @@ namespace ei_back.UserInterface.Api
             IRefreshTokenUseCase refreshTokenUseCase,
             ILogoutUseCase logoutUseCase,
             IChangePasswordUseCase changePasswordUseCase,
-            IGetUserNameUseCase getUserNameUseCase,
+            IGetUserIdUseCase getUserIdUseCase,
             IUnitOfWork unitOfWork,
             IStringLocalizer<AuthController> stringLocalizer,
             ILogger<AuthController> logger)
@@ -48,7 +48,7 @@ namespace ei_back.UserInterface.Api
             _refreshTokenUseCase = refreshTokenUseCase;
             _logoutUseCase = logoutUseCase;
             _changePasswordUseCase = changePasswordUseCase;
-            _getUserNameUseCase = getUserNameUseCase;
+            _getUserIdUseCase = getUserIdUseCase;
             _unitOfWork = unitOfWork;
             _stringLocalizer = stringLocalizer;
             _logger = logger;
@@ -116,7 +116,7 @@ namespace ei_back.UserInterface.Api
         /// Rate limited: 5 requests per minute sliding window (Login policy).
         ///
         /// Request body (LoginDtoRequest):
-        ///   - UserName (string, 4-20 characters, required)
+        ///   - Email (string, valid email address, required)
         ///   - Password (string, 4-50 characters, required)
         ///
         /// Response 200 (TokenDtoReponse):
@@ -140,17 +140,17 @@ namespace ei_back.UserInterface.Api
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Route("signin")]
-        public IActionResult Signin([FromBody] LoginDtoRequest loginDtoRequest)
+        public async Task<IActionResult> Signin([FromBody] LoginDtoRequest loginDtoRequest, CancellationToken cancellationToken)
         {
             if (loginDtoRequest == null) return BadRequest(_stringLocalizer["AuthInvalidRequest"].Value);
 
-            var token = _signInUseCase.Handler(loginDtoRequest);
+            var token = await _signInUseCase.Handler(loginDtoRequest, cancellationToken);
 
             if (token == null) return Unauthorized();
 
-            _unitOfWork.Commit();
+            await _unitOfWork.CommitAsync(cancellationToken);
 
-            _logger.LogInformation("API: Logged user - " + loginDtoRequest.UserName);
+            _logger.LogInformation("API: Logged user - " + loginDtoRequest.Email);
 
             return Ok(token);
         }
@@ -176,9 +176,9 @@ namespace ei_back.UserInterface.Api
         [Route("refresh")]
         [ProducesResponseType(typeof(TokenDtoReponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult Refresh([FromBody] RefreshTokenDtoRequest request)
+        public async Task<IActionResult> Refresh([FromBody] RefreshTokenDtoRequest request, CancellationToken cancellationToken)
         {
-            var token = _refreshTokenUseCase.Handler(request);
+            var token = await _refreshTokenUseCase.Handler(request, cancellationToken);
             _unitOfWork.Commit();
             _logger.LogInformation("API: Token refreshed");
             return Ok(token);
@@ -205,12 +205,12 @@ namespace ei_back.UserInterface.Api
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin, CommonUser, PremiumUser")]
-        public IActionResult Logout([FromBody] LogoutDtoRequest request)
+        public async Task<IActionResult> Logout([FromBody] LogoutDtoRequest request, CancellationToken cancellationToken)
         {
-            var userName = _getUserNameUseCase.Handler(User);
-            _logoutUseCase.Handler(userName, request.RefreshToken);
+            var userId = _getUserIdUseCase.Handler(User);
+            await _logoutUseCase.Handler(userId, request.RefreshToken, cancellationToken);
             _unitOfWork.Commit();
-            _logger.LogInformation("API: Logged out user - " + userName);
+            _logger.LogInformation("API: Logged out user - " + userId);
             return Ok();
         }
 
@@ -224,8 +224,6 @@ namespace ei_back.UserInterface.Api
         ///
         /// Response 200 (UserGetDtoResponse):
         ///   - Id (Guid)
-        ///   - UserName (string)
-        ///   - FullName (string)
         ///   - Email (string)
         ///
         /// Response 400: Wrong current password or invalid request.
@@ -243,14 +241,14 @@ namespace ei_back.UserInterface.Api
         {
             if (passwordDtoRequest == null) return BadRequest(_stringLocalizer["AuthInvalidRequest"].Value);
 
-            var userName = _getUserNameUseCase.Handler(User);
-            var userChanged = await _changePasswordUseCase.Handler(userName, passwordDtoRequest);
+            var userId = _getUserIdUseCase.Handler(User);
+            var userChanged = await _changePasswordUseCase.Handler(userId, passwordDtoRequest);
 
             if (userChanged == null) return BadRequest();
 
             await _unitOfWork.CommitAsync();
 
-            _logger.LogInformation("API: Password changed for user - " + userName);
+            _logger.LogInformation("API: Password changed for user - " + userId);
 
             return Ok(userChanged);
         }

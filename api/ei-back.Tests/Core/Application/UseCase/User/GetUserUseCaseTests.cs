@@ -27,15 +27,13 @@ namespace ei_back.Tests.Core.Application.UseCase.User
         {
             var users = new List<UserEntity>
             {
-                new UserEntity("user1", "User One", "u1@t.com", "hash", UserRole.CommonUser),
-                new UserEntity("user2", "User Two", "u2@t.com", "hash", UserRole.CommonUser)
+                new UserEntity("u1@t.com", "hash", UserRole.CommonUser),
+                new UserEntity("u2@t.com", "hash", UserRole.CommonUser)
             };
 
             var dtos = users.Select(u => new UserGetDtoResponse
             {
                 Id = Guid.NewGuid(),
-                UserName = u.UserName,
-                FullName = u.FullName,
                 Email = u.Email
             }).ToList();
 

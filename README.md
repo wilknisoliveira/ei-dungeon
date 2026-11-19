@@ -6,7 +6,7 @@ EI Dungeon is a role-playing game simulator with players and game responses cont
 
 ## Features
 
-- Account registration, JWT authentication, email verification, and password recovery.
+- Email/password and Google registration/sign-in, explicit Google linking, email verification, and password recovery.
 - Game creation and management, a game list, and streaming chat plays.
 - English, Brazilian Portuguese, and Spanish interfaces and localized game responses.
 - Public landing pages with static prerendering and SEO output.
@@ -47,6 +47,8 @@ The stacks retain project names `ei-dungeon-back` and `ei-dungeon-web`. The API 
 
 For native development, see [API setup](api/README.md#run-without-docker) and [web setup](web/README.md#development). The API's direct development HTTP port is 5231; Angular development uses that URL, while the production web build defaults to API port 8080.
 
+See the [Google setup tutorial](api/docs/google-auth-setup.md) for administrator configuration. Accounts use internal IDs and unique email. Registration collects email and password with client-side confirmation. Google-only users can create their first password in Settings after confirming their linked Google identity.
+
 ## Validation
 
 From the root, run `dotnet build api/ei-back.Tests/ei-back.Tests.csproj -c Release` and `dotnet test api/ei-back.Tests/ei-back.Tests.csproj -c Release`. Database tests additionally require an isolated, migrated PostgreSQL database through `VERIFICATION_TEST_CONNECTION`.
@@ -62,7 +64,7 @@ Each workflow runs only when its module (`api/**` or `web/**`) or its own root w
 - [API workflow](.github/workflows/api-container.yml): `ghcr.io/wilknisoliveira/ei-dungeon/api`.
 - [Web workflow](.github/workflows/web-container.yml): `ghcr.io/wilknisoliveira/ei-dungeon/web`.
 
-Set `SITE_URL` and `API_URL` repository variables for the web build. Each workflow derives its image path from the repository name and publishes using its `GITHUB_TOKEN`.
+Set `SITE_URL` and `API_URL` repository variables for the web build. Set optional public `GOOGLE_CLIENT_ID` to enable Google sign-in. Each workflow derives its image path from the repository name and publishes using its `GITHUB_TOKEN`.
 
 ## Production deployment
 

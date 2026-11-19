@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { SESSION_STORAGE } from 'src/app/core/storage/app-storage';
 import { EmailAuthPurpose } from 'src/app/types/auth/email-auth';
 
-interface FlowContext { email: string; userName?: string; deadline: number; confirmationDeadline?: number; requested: boolean; }
+interface FlowContext { email: string; deadline: number; confirmationDeadline?: number; requested: boolean; }
 interface FlowState { verification: FlowContext; recovery: FlowContext; requestDeadline: number; }
 export interface EmailAuthError { message: string; fields: Record<string, string>; }
 
@@ -20,19 +20,17 @@ export class EmailAuthFlowService {
         if (context.email !== email.trim()) {
             context.email = email.trim();
             context.requested = false;
-            delete context.userName;
         }
         this.save();
     }
 
-    registered(userName: string, email: string): void {
+    registered(email: string): void {
         this.setEmail('verification', email);
-        this.state.verification.userName = userName;
         this.requested('verification');
     }
 
-    prepareVerification(userName: string): void {
-        if (this.state.verification.userName !== userName) this.setEmail('verification', '');
+    prepareVerification(email: string): void {
+        this.setEmail('verification', email);
     }
 
     requested(purpose: EmailAuthPurpose): void {
@@ -66,7 +64,7 @@ export class EmailAuthFlowService {
     acknowledgement(purpose: EmailAuthPurpose): string {
         return purpose === 'verification'
             ? $localize`:@@verificationAcknowledgement:If this account needs verification, a code will be sent. Check your inbox and spam folder.`
-            : $localize`:@@recoveryAcknowledgement:If a verified account exists for this email, a recovery code will be sent. Check your inbox and spam folder.`;
+            : $localize`:@@recoveryAcknowledgement:If an eligible account with a password exists for this email, a recovery code will be sent. Check your inbox and spam folder.`;
     }
 
     error(error: unknown, purpose: EmailAuthPurpose, confirmation = false): EmailAuthError {
@@ -109,8 +107,7 @@ export class EmailAuthFlowService {
                 const item = data?.[purpose];
                 if (item && typeof item.email === 'string' && Number.isFinite(item.deadline) && item.deadline >= 0) {
                     state[purpose] = { email: item.email, deadline: item.deadline, requested: item.requested === true,
-                        confirmationDeadline: Number.isFinite(item.confirmationDeadline) ? item.confirmationDeadline : 0,
-                        ...(typeof item.userName === 'string' ? { userName: item.userName } : {}) };
+                        confirmationDeadline: Number.isFinite(item.confirmationDeadline) ? item.confirmationDeadline : 0 };
                 }
             }
             if (Number.isFinite(data?.requestDeadline) && data.requestDeadline >= 0) state.requestDeadline = data.requestDeadline;

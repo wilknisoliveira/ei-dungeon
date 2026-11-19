@@ -31,14 +31,14 @@ namespace ei_back.Core.Application.UseCase.Play
             string sortDirection,
             int pageSize,
             int page,
-            string userName,
+            Guid userId,
             CancellationToken cancellationToken)
         {
-            var user = await _userRepository.FindByUserName(userName) ??
-                throw new NotFoundException($"No user found to user name {userName}.");
+            var user = await _userRepository.FindByIdAsync(userId, cancellationToken) ??
+                throw new NotFoundException($"No user found to user ID {userId}.");
 
             if (!await _gameRepository.CheckIfExistGameByUser(gameId, user.Id, cancellationToken))
-                throw new NotFoundException($"Not found game {gameId} to user {userName}");
+                throw new NotFoundException($"Not found game {gameId} to user {userId}");
 
             var sort = PaginationHelper.ValidateSort(sortDirection);
             var size = PaginationHelper.ValidateSize(pageSize);

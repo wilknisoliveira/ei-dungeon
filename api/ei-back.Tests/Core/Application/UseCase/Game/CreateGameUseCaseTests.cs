@@ -34,7 +34,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
         public async Task Handler_CreatesGameSuccessfully()
         {
             var userId = Guid.NewGuid();
-            var user = new UserEntity("testuser", "Test User", "test@test.com", "hash", UserRole.CommonUser);
+            var user = new UserEntity("test@test.com", "hash", UserRole.CommonUser);
             typeof(ei_back.Core.Domain.Entity.Base).GetProperty(nameof(ei_back.Core.Domain.Entity.Base.Id))!.SetValue(user, userId);
 
             var request = new GameDtoRequest
@@ -64,7 +64,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
                 GameStatus = GameStatus.Active
             };
 
-            A.CallTo(() => _userRepository.FindByUserName("testuser", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByIdAsync(Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(user));
             A.CallTo(() => _upsertWorldInfoService.Handler(A<string>._, A<GameLanguage>._, CancellationToken.None))
                 .Returns(Task.FromResult("World info text"));
@@ -73,7 +73,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
             A.CallTo(() => _mapper.Map<GameDtoResponse>(createdGame))
                 .Returns(responseDto);
 
-            var result = await _useCase.Handler(request, "testuser", CancellationToken.None);
+            var result = await _useCase.Handler(request, Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None);
 
             result.Should().NotBeNull();
             result.Name.Should().Be(request.Name);
@@ -92,10 +92,10 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
                 Skills = new SkillsDtoRequest()
             };
 
-            A.CallTo(() => _userRepository.FindByUserName("unknown", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByIdAsync(Guid.Parse("22222222-2222-2222-2222-222222222222"), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(null));
 
-            await _useCase.Invoking(x => x.Handler(request, "unknown", CancellationToken.None))
+            await _useCase.Invoking(x => x.Handler(request, Guid.Parse("22222222-2222-2222-2222-222222222222"), CancellationToken.None))
                 .Should().ThrowAsync<NotFoundException>();
         }
 
@@ -103,7 +103,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
         public async Task Handler_WhenSkillPointsInvalid_ThrowsBadRequestException()
         {
             var userId = Guid.NewGuid();
-            var user = new UserEntity("testuser", "Test User", "test@test.com", "hash", UserRole.CommonUser);
+            var user = new UserEntity("test@test.com", "hash", UserRole.CommonUser);
             typeof(ei_back.Core.Domain.Entity.Base).GetProperty(nameof(ei_back.Core.Domain.Entity.Base.Id))!.SetValue(user, userId);
 
             var request = new GameDtoRequest
@@ -123,10 +123,10 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
                 }
             };
 
-            A.CallTo(() => _userRepository.FindByUserName("testuser", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByIdAsync(Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(user));
 
-            await _useCase.Invoking(x => x.Handler(request, "testuser", CancellationToken.None))
+            await _useCase.Invoking(x => x.Handler(request, Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Should().ThrowAsync<BadRequestException>();
         }
     }

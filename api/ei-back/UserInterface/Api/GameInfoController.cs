@@ -16,16 +16,16 @@ namespace ei_back.UserInterface.Api
     public class GameInfoController : ControllerBase
     {
         private readonly ILogger<GameInfoController> _logger;
-        private readonly IGetUserNameUseCase _getUserNameUseCase;
+        private readonly IGetUserIdUseCase _getUserIdUseCase;
         private readonly ICreateGameInfoUseCase _createGameInfoUseCase;
 
         public GameInfoController(
             ILogger<GameInfoController> logger,
-            IGetUserNameUseCase getUserNameUseCase,
+            IGetUserIdUseCase getUserIdUseCase,
             ICreateGameInfoUseCase createGameInfoUseCase)
         {
             _logger = logger;
-            _getUserNameUseCase = getUserNameUseCase;
+            _getUserIdUseCase = getUserIdUseCase;
             _createGameInfoUseCase = createGameInfoUseCase;
         }
 
@@ -35,16 +35,9 @@ namespace ei_back.UserInterface.Api
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] IEnumerable<GameInfoDto> gameInfoDtos, CancellationToken cancellationToken = default)
         {
-            var userName = _getUserNameUseCase.Handler(User);
+            var userId = _getUserIdUseCase.Handler(User);
 
-            if (userName.IsNullOrEmpty())
-            {
-                var errorMessage = "Something went wrong while attempting to get the user logged credential.";
-                _logger.LogError(errorMessage);
-                return StatusCode(StatusCodes.Status500InternalServerError, errorMessage);
-            }
-
-            _logger.LogInformation($"Creating game info by user {userName}...");
+            _logger.LogInformation($"Creating game info by user {userId}...");
 
             IEnumerable<GameInfoDto> result = await _createGameInfoUseCase.Handler(gameInfoDtos, cancellationToken);
 

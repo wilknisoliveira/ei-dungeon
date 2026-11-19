@@ -1,0 +1,15 @@
+@if (google.configured) {
+    @if (showSeparator()) {
+        <div class="google-divider">
+            <span i18n="@@authAlternativeOr">or</span>
+        </div>
+    }
+    <div class="google-button" [inert]="disabled()" [attr.aria-busy]="disabled()">
+        <div #buttonHost></div>
+        @if (error()) {
+            <p role="alert">{{ error() }}</p>
+            <button type="button" (click)="render()" i18n="@@googleRetry">Try Google again</button>
+        }
+    </div>
+}
+

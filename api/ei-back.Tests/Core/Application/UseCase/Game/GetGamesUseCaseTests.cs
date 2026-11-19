@@ -29,7 +29,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
         public async Task Handler_ReturnsPagedSearchWithMappedGames()
         {
             var userId = Guid.NewGuid();
-            var user = new UserEntity("testuser", "Test User", "test@test.com", "hash", ei_back.Core.Domain.Enums.UserRole.CommonUser);
+            var user = new UserEntity("test@test.com", "hash", ei_back.Core.Domain.Enums.UserRole.CommonUser);
             typeof(ei_back.Core.Domain.Entity.Base).GetProperty(nameof(ei_back.Core.Domain.Entity.Base.Id))!.SetValue(user, userId);
 
             var games = new List<GameEntity>
@@ -46,7 +46,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
                 GameStatus = ei_back.Core.Domain.Enums.GameStatus.Active
             }).ToList();
 
-            A.CallTo(() => _userRepository.FindByUserName("testuser", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByIdAsync(Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(user));
             A.CallTo(() => _gameRepository.FindWithPagedSearchAsync("asc", 10, 0, userId, CancellationToken.None))
                 .Returns(Task.FromResult(games));
@@ -57,7 +57,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
             A.CallTo(() => _mapper.Map<GameDtoResponse>(games[1]))
                 .Returns(dtos[1]);
 
-            var result = await _useCase.Handler("asc", 10, 1, "testuser", CancellationToken.None);
+            var result = await _useCase.Handler("asc", 10, 1, Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None);
 
             result.CurrentPage.Should().Be(1);
             result.PageSize.Should().Be(10);
@@ -69,10 +69,10 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
         [Fact]
         public async Task Handler_WhenUserNotFound_ThrowsNotFoundException()
         {
-            A.CallTo(() => _userRepository.FindByUserName("unknown", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByIdAsync(Guid.Parse("22222222-2222-2222-2222-222222222222"), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(null));
 
-            await _useCase.Invoking(x => x.Handler("asc", 10, 1, "unknown", CancellationToken.None))
+            await _useCase.Invoking(x => x.Handler("asc", 10, 1, Guid.Parse("22222222-2222-2222-2222-222222222222"), CancellationToken.None))
                 .Should().ThrowAsync<NotFoundException>();
         }
     }

@@ -8,7 +8,7 @@ namespace ei_back.Core.Application.UseCase.User.Dtos
         [StringLength(50, MinimumLength = 4)]
         public required string Password { get; set; }
         [Required]
-        [StringLength(20, MinimumLength = 4)]
-        public required string UserName { get; set; }
+        [EmailAddress]
+        public required string Email { get; set; }
     }
 }

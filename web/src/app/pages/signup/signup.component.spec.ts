@@ -42,11 +42,11 @@ describe('SignupComponent', () => {
 
     it('routes to verification with returned context and no immediate duplicate request', async () => {
         const auth = TestBed.inject(AuthService);
-        spyOn(auth, 'signup').and.resolveTo({ userName: 'player', fullName: 'Player Name', email: 'p@example.com' });
+        spyOn(auth, 'signup').and.resolveTo({ email: 'p@example.com' });
         spyOn(auth, 'requestEmailVerification');
         const router = TestBed.inject(Router);
         spyOn(router, 'navigate').and.resolveTo(true);
-        component.formGroup.setValue({ userName: 'player', fullName: 'Player Name', email: 'p@example.com', password: 'password123' });
+        component.formGroup.setValue({ email: 'p@example.com', password: 'password123', confirmPassword: 'password123' });
         await component.onSubmit();
         expect(router.navigate).toHaveBeenCalledWith(['/email-verification']);
         expect(TestBed.inject(EmailAuthFlowService).context('verification').email).toBe('p@example.com');
@@ -58,8 +58,31 @@ describe('SignupComponent', () => {
         spyOn(auth, 'signup').and.rejectWith(new HttpErrorResponse({ status: 400 }));
         await component.onSubmit();
         expect(auth.signup).not.toHaveBeenCalled();
-        component.formGroup.setValue({ userName: 'player', fullName: 'Player Name', email: 'p@example.com', password: 'password123' });
+        component.formGroup.setValue({ email: 'p@example.com', password: 'password123', confirmPassword: 'password123' });
         await component.onSubmit();
         expect(component.error).toContain('Check your registration details');
     });
+
+    it('rejects mismatched passwords and sends only email and password', async () => {
+        const auth = TestBed.inject(AuthService);
+        spyOn(auth, 'signup').and.resolveTo({ email: 'p@example.com' });
+        spyOn(TestBed.inject(Router), 'navigate').and.resolveTo(true);
+        component.formGroup.setValue({ email: 'p@example.com', password: 'password123', confirmPassword: 'different' });
+        await component.onSubmit();
+        expect(auth.signup).not.toHaveBeenCalled();
+        component.formGroup.controls['confirmPassword'].setValue('password123');
+        await component.onSubmit();
+        expect(auth.signup).toHaveBeenCalledWith({ email: 'p@example.com', password: 'password123' });
+    });
+    it('takes Google users directly home or to explicit registration guidance', async () => {
+        const signin = spyOn(component.google, 'signin').and.resolveTo();
+        const navigate = spyOn(TestBed.inject(Router), 'navigate').and.resolveTo(true);
+        await component.onGoogle({ challengeId: 'id', credential: 'proof' });
+        expect(navigate).toHaveBeenCalledWith(['/home']);
+        signin.and.rejectWith(new HttpErrorResponse({ status: 422, error: { code: 'google_registration_required' } }));
+        await component.onGoogle({ challengeId: 'next', credential: 'proof' });
+        expect(component.googleAction).toBe('signup');
+        expect(component.error).toContain('traditional registration');
+    });
+
 });

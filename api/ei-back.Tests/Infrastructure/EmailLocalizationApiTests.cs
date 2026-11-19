@@ -48,7 +48,7 @@ public class EmailLocalizationApiTests
         A.CallTo(() => create.Handler(A<UserDtoRequest>._)).ReturnsLazily((UserDtoRequest request) =>
         {
             Capture(VerificationCodePurpose.EmailVerification);
-            return Task.FromResult(new UserDtoResponse { UserName = request.UserName, FullName = request.FullName, Email = request.Email });
+            return Task.FromResult(new UserDtoResponse { Email = request.Email });
         });
         var verify = A.Fake<IRequestEmailVerificationUseCase>();
         A.CallTo(() => verify.Handler(A<EmailCodeRequestDto>._, A<CancellationToken>._)).Invokes(() => Capture(VerificationCodePurpose.EmailVerification));
@@ -63,9 +63,8 @@ public class EmailLocalizationApiTests
         builder.Services.AddSingleton(A.Fake<IRefreshTokenUseCase>());
         builder.Services.AddSingleton(A.Fake<ILogoutUseCase>());
         builder.Services.AddSingleton(A.Fake<IChangePasswordUseCase>());
-        builder.Services.AddSingleton(A.Fake<IGetUserNameUseCase>());
+        builder.Services.AddSingleton(A.Fake<IGetUserIdUseCase>());
         builder.Services.AddSingleton(A.Fake<IGetUserUseCase>());
-        builder.Services.AddSingleton(A.Fake<ICheckUserInfoUseCase>());
         builder.Services.AddSingleton(A.Fake<IDeleteUserUseCase>());
         builder.Services.AddSingleton(A.Fake<IUnitOfWork>());
         await using var app = builder.Build();

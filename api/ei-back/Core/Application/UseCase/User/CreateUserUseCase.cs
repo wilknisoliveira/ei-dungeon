@@ -30,7 +30,7 @@ public class CreateUserUseCase : ICreateUserUseCase
     public async Task<UserDtoResponse> Handler(UserDtoRequest request)
     {
         var normalized = EmailNormalizer.Normalize(request.Email);
-        if (await _userRepository.FindByUserName(request.UserName) != null || await _userRepository.FindByEmail(normalized) != null)
+        if (await _userRepository.FindByEmail(normalized) != null)
             throw new BadRequestException("Invalid registration data.");
 
         var user = _mapper.Map<Domain.Entity.User>(request);
@@ -38,7 +38,7 @@ public class CreateUserUseCase : ICreateUserUseCase
         user.NormalizedEmail = normalized;
         user.Role = UserRole.CommonUser;
         user.EmailVerifiedAt = null;
-        user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+        user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
         user.CreatedAt = user.UpdatedAt = DateTimeOffset.UtcNow;
 
         var saved = await _userRepository.CreateAsync(user);

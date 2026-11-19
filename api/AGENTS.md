@@ -22,6 +22,8 @@ Use four-space indentation and descriptive dependency names. Follow nearby const
 
 - Keep `Core/Domain` independent of `Infrastructure` and `UserInterface`; layer boundaries are enforced through namespaces within the single application project.
 - Keep business logic out of controllers. Delegate each operation to a use case and return the appropriate DTO.
+- Each use-case class represents one application operation and exposes one public entry method named `Handler`, mirrored by its interface. Do not group independent operations as multiple public methods in one use case. Keep helper methods private and extract shared behavior into Application services behind interfaces, without moving distinct business operations into a service merely to wrap them with use cases.
+- Group use cases by feature under `Core/Application/UseCase/{Feature}/`, with matching `Interfaces/` and `Dtos/` subfolders. Google authentication operations belong in `UseCase/GoogleAuth/`; keep shared local-user contracts in `UseCase/User/`. Match existing dependency injection, cancellation, exception mapping and transaction ownership when introducing or refactoring a use case.
 - Access persistence through repository interfaces; do not use `DbContext` directly in application code.
 - Use constructor injection for dependencies, never a service locator. Central DI registration lives in `Infrastructure/Extensions/ServiceCollectionExtensions.cs`.
 - Organize use cases under `Core/Application/UseCase/{Domain}/`, domain services under `Core/Application/Service/{Domain}/`, and their contracts in `Interfaces/` or `Core/Application/Repository/`.
@@ -32,17 +34,22 @@ Use four-space indentation and descriptive dependency names. Follow nearby const
 - Preserve `NewUserPlayUseCase`'s internal commit for streaming atomicity.
 - Registration saves the user and initial verification code with one Application-owned `CommitAsync()`; do not add another controller commit.
 - Existing-account verification/recovery flows use `ExecuteInTransactionAsync` and acquire the email lock before querying challenge state. The transaction owns saving/committing; do not nest transactions or manually commit/rollback inside it.
+- Google registration, linking and first-password creation own a single Application transaction. Atomically consume the browser/user/purpose-bound challenge with the protected change. Use the normalized-email lock for first-password creation and reload after the lock. Do not add a controller commit.
 - Send verification/recovery email after the database commit, outside locks. Follow `ARCHITECTURE.md` for concurrency, failure handling, and cancellation details.
 
 ### Naming, Errors, and API Contracts
 
 - Use PascalCase for C# classes, methods, properties, and enum values; use snake_case for database columns. Serialize enums as strings with `JsonStringEnumConverter`.
 - Preserve nullable reference types and implicit usings in the project configuration.
-- Use the `Async` suffix for EF/I/O-bound operations, following existing exceptions for synchronous use cases.
+- Use the `Async` suffix for EF/I/O-bound service and repository operations. Use-case entry methods keep the established `Handler` name even when returning `Task`.
 - Define domain exceptions in `Core/Domain/DomainExceptions/`; map application errors to HTTP through `Infrastructure/Exceptions/AppExceptionHandler`.
 - Use structured Serilog logging through `ILogger<T>`; file output rolls daily alongside console output.
 - Document every endpoint with Swagger XML summaries/remarks and `[ProducesResponseType]` attributes. Preserve the existing rate-limit policies for public and authenticated endpoints.
 - Keep mappings in `Infrastructure/Mappings/MappingsProfile.cs` and persistence configuration around `EIContext`.
+
+## Account identity
+
+Use GetUserIdUseCase to extract the internal GUID from mapped/raw JWT sub. Local login uses normalized email. Password is nullable for Google-only accounts. Recovery requires verified email and an existing password at both stages. Never link accounts automatically on matching email. The Google provider subject belongs in external_identities. Configuration uses GoogleAuth:ClientId. Read docs/google-auth-setup.md for setup and rollout requirements.
 
 ## Commands
 

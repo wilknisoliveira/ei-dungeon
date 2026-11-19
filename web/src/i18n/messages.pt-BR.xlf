@@ -34,10 +34,7 @@
         <source>Log in to your account</source>
         <target>Entre na sua conta</target>
       </trans-unit>
-      <trans-unit id="usernameLabel" datatype="html">
-        <source>Username</source>
-        <target>Nome de usuário</target>
-      </trans-unit>
+
       <trans-unit id="passwordLabel" datatype="html">
         <source>Enter your password</source>
         <target>Digite sua senha</target>
@@ -47,7 +44,7 @@
         <target> Entrar </target>
       </trans-unit>
       <trans-unit id="noAccountPrompt" datatype="html">
-        <source>Don't have an account?</source>
+        <source>Don&apos;t have an account?</source>
         <target>Não tem uma conta?</target>
       </trans-unit>
       <trans-unit id="signUpLink" datatype="html">
@@ -87,17 +84,16 @@
         <target>Segurança</target>
       </trans-unit>
       <trans-unit id="settingsTitle" datatype="html">
-        <source>Settings</source>
+        <source><x id="INTERPOLATION" equiv-text="{{
+                        activeSection === &apos;account&apos; ? &apos;Account&apos; : &apos;Security&apos;
+                    }}"/></source>
         <target>Configurações</target>
       </trans-unit>
       <trans-unit id="accountHeading" datatype="html">
         <source>Account</source>
         <target>Conta</target>
       </trans-unit>
-      <trans-unit id="fullNameLabel" datatype="html">
-        <source>Full Name</source>
-        <target>Nome completo</target>
-      </trans-unit>
+
       <trans-unit id="emailLabel" datatype="html">
         <source>Email</source>
         <target>E-mail</target>
@@ -150,58 +146,16 @@
         <source>Sign Up</source>
         <target>Inscreva-se</target>
       </trans-unit>
-      <trans-unit id="signupUsernameLabel" datatype="html">
-        <source>Username</source>
-        <target>Nome de usuário</target>
-      </trans-unit>
-      <trans-unit id="usernameRequiredError" datatype="html">
-        <source> Username is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
-        <target> O nome de usuário é <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>obrigatório<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></target>
-      </trans-unit>
-      <trans-unit id="usernameMinLengthError" datatype="html">
-        <source> Minimum 4 characters </source>
-        <target> Mínimo de 4 caracteres </target>
-      </trans-unit>
-      <trans-unit id="usernameMaxLengthError" datatype="html">
-        <source> Maximum 20 characters </source>
-        <target> Máximo de 20 caracteres </target>
-      </trans-unit>
-      <trans-unit id="usernameTakenError" datatype="html">
-        <source> Username is already taken </source>
-        <target> O nome de usuário já está em uso </target>
-      </trans-unit>
-      <trans-unit id="checkingAvailability" datatype="html">
-        <source> Checking availability... </source>
-        <target> Verificando disponibilidade... </target>
-      </trans-unit>
-      <trans-unit id="fullnameLabel" datatype="html">
-        <source>Fullname</source>
-        <target>Nome completo</target>
-      </trans-unit>
-      <trans-unit id="fullnameRequiredError" datatype="html">
-        <source> Fullname is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
-        <target> O nome completo é <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>obrigatório<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></target>
-      </trans-unit>
-      <trans-unit id="fullnameMinLengthError" datatype="html">
-        <source> Minimum 4 characters </source>
-        <target> Mínimo de 4 caracteres </target>
-      </trans-unit>
-      <trans-unit id="fullnameMaxLengthError" datatype="html">
-        <source> Maximum 50 characters </source>
-        <target> Máximo de 50 caracteres </target>
-      </trans-unit>
+
       <trans-unit id="emailInvalidError" datatype="html">
         <source>Please enter a valid email address</source>
         <target>Por favor, insira um endereço de e-mail válido</target>
       </trans-unit>
       <trans-unit id="emailRequiredError" datatype="html">
-        <source> Email is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
+        <source>Email is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
         <target> O e-mail é <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>obrigatório<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></target>
       </trans-unit>
-      <trans-unit id="emailTakenError" datatype="html">
-        <source> Email is already registered </source>
-        <target> O e-mail já está registrado </target>
-      </trans-unit>
+
       <trans-unit id="signupPasswordLabel" datatype="html">
         <source>Enter your password</source>
         <target>Digite sua senha</target>
@@ -731,8 +685,8 @@
         <target>Esqueceu a senha?</target>
       </trans-unit>
       <trans-unit id="loginInvalidCredentials" datatype="html">
-        <source>Invalid username or password.</source>
-        <target>Nome de usuário ou senha inválidos.</target>
+        <source>Invalid email or password.</source>
+        <target>E-mail ou senha inválidos.</target>
       </trans-unit>
       <trans-unit id="emailAuthThrottled" datatype="html">
         <source>Too many requests. Please wait before trying again.</source>
@@ -871,8 +825,8 @@
         <target>Se esta conta precisar de confirmação, um código será enviado. Confira sua caixa de entrada e a pasta de spam.</target>
       </trans-unit>
       <trans-unit id="recoveryAcknowledgement" datatype="html">
-        <source>If a verified account exists for this email, a recovery code will be sent. Check your inbox and spam folder.</source>
-        <target>Se existir uma conta com e-mail confirmado para este endereço, um código de recuperação será enviado. Confira sua caixa de entrada e a pasta de spam.</target>
+        <source>If an eligible account with a password exists for this email, a recovery code will be sent. Check your inbox and spam folder.</source>
+        <target>Se houver uma conta elegível com senha para este e-mail, enviaremos um código de recuperação. Verifique sua caixa de entrada e o spam.</target>
       </trans-unit>
       <trans-unit id="emailAuthUncertain" datatype="html">
         <source>We could not confirm the result. Try logging in, or request another code if needed.</source>
@@ -893,6 +847,114 @@
       <trans-unit id="emailAuthFailure" datatype="html">
         <source>Something went wrong. Please try again.</source>
         <target>Algo deu errado. Tente novamente.</target>
+      </trans-unit>
+      <trans-unit id="googleGoToSignup" datatype="html">
+        <source>Go to registration</source>
+        <target>Ir para cadastro</target>
+      </trans-unit>
+      <trans-unit id="googleGoToLogin" datatype="html">
+        <source>Sign in to your existing account</source>
+        <target>Entrar na sua conta existente</target>
+      </trans-unit>
+      <trans-unit id="googleRecoveryReminder" datatype="html">
+        <source>If you usually sign in with Google, use Continue with Google.</source>
+        <target>Se você costuma entrar com Google, use Continuar com Google.</target>
+      </trans-unit>
+      <trans-unit id="googleContinueFromRecovery" datatype="html">
+        <source>Continue with Google</source>
+        <target>Continuar com Google</target>
+      </trans-unit>
+      <trans-unit id="googleAccountHeading" datatype="html">
+        <source>Google Account</source>
+        <target>Conta Google</target>
+      </trans-unit>
+      <trans-unit id="googleAccountConnected" datatype="html">
+        <source>Your Google Account is linked.</source>
+        <target>Sua Conta Google está vinculada.</target>
+      </trans-unit>
+      <trans-unit id="googleLinkExplanation" datatype="html">
+        <source>Link the Google Account with this email to sign in with Google.</source>
+        <target>Vincule a Conta Google com este e-mail para entrar com Google.</target>
+      </trans-unit>
+      <trans-unit id="createPasswordHeading" datatype="html">
+        <source>Create password</source>
+        <target>Criar senha</target>
+      </trans-unit>
+      <trans-unit id="createPasswordExplanation" datatype="html">
+        <source>You sign in with Google. Confirm your Google Account to create a password and also sign in with your email.</source>
+        <target>Você entra usando Google. Confirme sua Conta Google para criar uma senha e também entrar com seu e-mail.</target>
+      </trans-unit>
+      <trans-unit id="newLocalPasswordHint" datatype="html">
+        <source>Use 8–50 characters.</source>
+        <target>Use de 8 a 50 caracteres.</target>
+      </trans-unit>
+      <trans-unit id="confirmPasswordLabel" datatype="html">
+        <source>Confirm password</source>
+        <target>Confirmar senha</target>
+      </trans-unit>
+      <trans-unit id="passwordMismatch" datatype="html">
+        <source>Passwords must match.</source>
+        <target>As senhas devem ser iguais.</target>
+      </trans-unit>
+      <trans-unit id="createPasswordButton" datatype="html">
+        <source>Create password</source>
+        <target>Criar senha</target>
+      </trans-unit>
+      <trans-unit id="accountLoadFailed" datatype="html">
+        <source>Could not load account settings. Please reload the page.</source>
+        <target>Não foi possível carregar as configurações da conta. Recarregue a página.</target>
+      </trans-unit>
+      <trans-unit id="googleLinkedSuccess" datatype="html">
+        <source>Google Account linked successfully.</source>
+        <target>Conta Google vinculada com sucesso.</target>
+      </trans-unit>
+      <trans-unit id="passwordCreated" datatype="html">
+        <source>Password created. You can now also sign in with email and password.</source>
+        <target>Senha criada. Agora você também pode entrar com e-mail e senha.</target>
+      </trans-unit>
+      <trans-unit id="passwordChangedSuccess" datatype="html">
+        <source>Password changed successfully.</source>
+        <target>Senha alterada com sucesso.</target>
+      </trans-unit>
+      <trans-unit id="currentPasswordIncorrect" datatype="html">
+        <source>Current password is incorrect.</source>
+        <target>A senha atual está incorreta.</target>
+      </trans-unit>
+      <trans-unit id="settingsFailure" datatype="html">
+        <source>Something went wrong. Please try again.</source>
+        <target>Ocorreu um erro. Tente novamente.</target>
+      </trans-unit>
+      <trans-unit id="googleRegistrationRequired" datatype="html">
+        <source>To use this email address, complete traditional registration and verify your email. You can then link Google in Settings.</source>
+        <target>Para usar este endereço, conclua o cadastro tradicional e confirme seu e-mail. Depois, você poderá vincular Google em Configurações.</target>
+      </trans-unit>
+      <trans-unit id="googleLinkRequired" datatype="html">
+        <source>Sign in to your existing account, then link Google in Settings.</source>
+        <target>Entre na sua conta existente e depois vincule Google em Configurações.</target>
+      </trans-unit>
+      <trans-unit id="googleEmailMismatch" datatype="html">
+        <source>Select the Google Account with the same email as your EI Dungeon account.</source>
+        <target>Selecione a Conta Google com o mesmo e-mail da sua conta no EI Dungeon.</target>
+      </trans-unit>
+      <trans-unit id="googleLinkConflict" datatype="html">
+        <source>This Google Account could not be linked. Check your connected account and try again.</source>
+        <target>Não foi possível vincular esta Conta Google. Confira sua conta conectada e tente novamente.</target>
+      </trans-unit>
+      <trans-unit id="passwordAlreadyExists" datatype="html">
+        <source>A password is already configured. Reload Settings to change it.</source>
+        <target>Uma senha já está configurada. Recarregue Configurações para alterá-la.</target>
+      </trans-unit>
+      <trans-unit id="googleAuthFailed" datatype="html">
+        <source>Google sign-in could not be completed. Please try again or use email and password.</source>
+        <target>Não foi possível concluir o login com Google. Tente novamente ou use e-mail e senha.</target>
+      </trans-unit>
+      <trans-unit id="googleRetry" datatype="html">
+        <source>Try Google again</source>
+        <target>Tentar Google novamente</target>
+      </trans-unit>
+      <trans-unit id="authAlternativeOr" datatype="html">
+        <source>or</source>
+        <target>ou</target>
       </trans-unit>
     </body>
   </file>

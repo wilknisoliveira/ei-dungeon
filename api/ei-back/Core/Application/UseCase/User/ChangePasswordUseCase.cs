@@ -16,12 +16,12 @@ namespace ei_back.Core.Application.UseCase.User
         private readonly IEncryptionService _encryptionService = encryptionService;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<UserGetDtoResponse> Handler(string userName, PasswordDtoRequest passwordDtoRequest)
+        public async Task<UserGetDtoResponse> Handler(Guid userId, PasswordDtoRequest passwordDtoRequest)
         {
-            var user = await _userRepository.FindByUserName(userName) ??
-                throw new NotFoundException($"User '{userName}' not found.");
+            var user = await _userRepository.FindByIdAsync(userId) ??
+                throw new NotFoundException($"User '{userId}' not found.");
 
-            string storedHash = user.Password;
+            string storedHash = user.Password ?? throw new BadRequestException("This account has no local password.");
             bool validPassword;
 
             if (storedHash.StartsWith("$2"))

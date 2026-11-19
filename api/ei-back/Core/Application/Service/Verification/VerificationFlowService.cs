@@ -82,7 +82,7 @@ public class VerificationFlowService(IUserRepository userRepository,
     private static bool Eligible(UserEntity user, VerificationCodePurpose purpose) => purpose switch
     {
         VerificationCodePurpose.EmailVerification => user.EmailVerifiedAt == null,
-        VerificationCodePurpose.PasswordRecovery => user.EmailVerifiedAt != null,
+        VerificationCodePurpose.PasswordRecovery => user.EmailVerifiedAt != null && !string.IsNullOrEmpty(user.Password),
         _ => false
     };
 }

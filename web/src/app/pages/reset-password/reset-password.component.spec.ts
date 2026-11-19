@@ -49,7 +49,7 @@ describe('ResetPasswordComponent', () => {
         component.form.controls.email.setValue('p@example.com');
         await component.handleRequest();
         expect(auth.requestPasswordRecovery).toHaveBeenCalledOnceWith({ email: 'p@example.com' });
-        expect(component.status()).toContain('If a verified account exists');
+        expect(component.status()).toContain('If an eligible account with a password exists');
         expect(component.resendWait()).toBe(60);
     });
     it('preserves input on invalid-code or uncertain network results without logging out', async () => {

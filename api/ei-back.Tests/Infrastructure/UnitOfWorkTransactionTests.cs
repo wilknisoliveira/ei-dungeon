@@ -8,7 +8,7 @@ namespace ei_back.Tests.Infrastructure;
 
 public class UnitOfWorkTransactionTests
 {
-    private static User NewUser() => new(Guid.NewGuid().ToString("N"), "Transaction Test", "test@example.com", "hash", UserRole.CommonUser)
+    private static User NewUser() => new("test@example.com", "hash", UserRole.CommonUser)
     {
         Id = Guid.NewGuid(), NormalizedEmail = $"{Guid.NewGuid():N}@EXAMPLE.COM",
         CreatedAt = DateTimeOffset.UtcNow, UpdatedAt = DateTimeOffset.UtcNow
@@ -28,9 +28,9 @@ public class UnitOfWorkTransactionTests
         result.Should().Be(42);
         await using var check = VerificationTestSupport.Open();
         (await check.Users.AnyAsync(x => x.Id == user.Id)).Should().BeTrue();
-        user.FullName = "Updated";
+        user.Password = "Updated";
         await unitOfWork.CommitAsync();
-        (await check.Users.AsNoTracking().SingleAsync(x => x.Id == user.Id)).FullName.Should().Be("Updated");
+        (await check.Users.AsNoTracking().SingleAsync(x => x.Id == user.Id)).Password.Should().Be("Updated");
     }
 
     [VerificationDatabaseFact]

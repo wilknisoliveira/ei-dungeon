@@ -1,3 +1,4 @@
+using ei_back.Core.Application.Service.Auth;
 using ei_back.Infrastructure.Context;
 using AutoMapper;
 using ei_back.Core.Application.Service.Encryption;
@@ -30,7 +31,7 @@ public class EmailVerificationJourneyTests
                 new UnitOfWork(db), VerificationTestSupport.Flow(db, sender));
             try
             {
-                await create.Handler(new UserDtoRequest { UserName = username, FullName = "Race Test", Email = email, Password = "password123" });
+                await create.Handler(new UserDtoRequest { Email = email, Password = "password123" });
                 return true;
             }
             catch (RegistrationConflictException) { return false; }
@@ -39,7 +40,7 @@ public class EmailVerificationJourneyTests
         results.Count(x => x).Should().Be(1);
         delivered.Should().Be(1);
         await using var check = VerificationTestSupport.Open();
-        (await check.Users.CountAsync(x => x.UserName == username)).Should().Be(1);
+        (await check.Users.CountAsync(x => x.Email == email)).Should().Be(1);
         (await check.VerificationCodes.CountAsync(x => x.Email == email.ToUpperInvariant())).Should().Be(1);
     }
     [VerificationDatabaseFact]
@@ -54,19 +55,19 @@ public class EmailVerificationJourneyTests
         {
             var create = new CreateUserUseCase(new UserRepository(db), mapper,
                 new UnitOfWork(db), VerificationTestSupport.Flow(db, sender));
-            var response = await create.Handler(new UserDtoRequest { UserName = username, FullName = "Test", Email = email, Password = "old-password" });
+            var response = await create.Handler(new UserDtoRequest { Email = email, Password = "old-password" });
             response.Email.Should().Be(email);
         }
         await using (var db = VerificationTestSupport.Open())
         {
-            var user = await db.Users.SingleAsync(x => x.UserName == username);
+            var user = await db.Users.SingleAsync(x => x.Email == email);
             user.EmailVerifiedAt.Should().BeNull();
             user.NormalizedEmail.Should().Be(email.ToUpperInvariant());
             var tokens = A.Fake<ITokenService>();
-            var signin = new SigninUseCase(new TokenConfiguration { Minutes = 30, DaysToExpiry = 7 },
-                new UserRepository(db), tokens, new EncryptionService(), new RefreshTokenRepository(db));
-            Action attempt = () => signin.Handler(new() { UserName = username, Password = "old-password" });
-            attempt.Should().Throw<EmailVerificationRequiredException>();
+            var signin = new SigninUseCase(new UserRepository(db), new EncryptionService(),
+                new ApplicationSessionService(tokens, new RefreshTokenRepository(db), new EncryptionService(), new TokenConfiguration { Minutes = 30, DaysToExpiry = 7 }));
+            Func<Task> attempt = () => signin.Handler(new() { Email = email, Password = "old-password" });
+            await attempt.Should().ThrowAsync<EmailVerificationRequiredException>();
             A.CallTo(() => tokens.GenerateAccessToken(A<IEnumerable<Claim>>._)).MustNotHaveHappened();
         }
         await using (var db = VerificationTestSupport.Open())
@@ -85,9 +86,9 @@ public class EmailVerificationJourneyTests
             var tokens = A.Fake<ITokenService>();
             A.CallTo(() => tokens.GenerateAccessToken(A<IEnumerable<Claim>>._)).Returns("access");
             A.CallTo(() => tokens.GenerateRefreshToken()).Returns("refresh");
-            var signin = new SigninUseCase(new TokenConfiguration { Minutes = 30, DaysToExpiry = 7 },
-                new UserRepository(db), tokens, new EncryptionService(), new RefreshTokenRepository(db));
-            signin.Handler(new() { UserName = username, Password = "old-password" }).AccessToken.Should().Be("access");
+            var signin = new SigninUseCase(new UserRepository(db), new EncryptionService(),
+                new ApplicationSessionService(tokens, new RefreshTokenRepository(db), new EncryptionService(), new TokenConfiguration { Minutes = 30, DaysToExpiry = 7 }));
+            (await signin.Handler(new() { Email = email, Password = "old-password" }))!.AccessToken.Should().Be("access");
         }
     }
 }

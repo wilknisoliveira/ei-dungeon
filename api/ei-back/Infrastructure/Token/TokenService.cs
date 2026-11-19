@@ -1,3 +1,4 @@
+using ei_back.Infrastructure.Exceptions.ExceptionTypes;
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -55,8 +56,10 @@ namespace ei_back.Infrastructure.Token
         {
             var tokenValidationParameters = new TokenValidationParameters
             {
-                ValidateAudience = false,
-                ValidateIssuer = false,
+                ValidateAudience = true,
+                ValidAudience = _tokenConfiguration.Audience,
+                ValidateIssuer = true,
+                ValidIssuer = _tokenConfiguration.Issuer,
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenConfiguration.Secret)),
                 ValidateLifetime = false
@@ -65,7 +68,15 @@ namespace ei_back.Infrastructure.Token
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken securityToken;
 
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+            ClaimsPrincipal principal;
+            try
+            {
+                principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+            }
+            catch (Exception exception) when (exception is SecurityTokenException or ArgumentException)
+            {
+                throw new UnauthorizedException("Invalid credentials.");
+            }
             var jwtSecurityToken  = securityToken as JwtSecurityToken;
 
             if (
@@ -74,7 +85,7 @@ namespace ei_back.Infrastructure.Token
                     SecurityAlgorithms.HmacSha256,
                     StringComparison.InvariantCulture
                 )
-            ) throw new SecurityTokenException("Invalid Token!");
+            ) throw new UnauthorizedException("Invalid credentials.");
 
             return principal;
         }

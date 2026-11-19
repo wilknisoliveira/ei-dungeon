@@ -25,20 +25,20 @@ namespace ei_back.Tests.Core.Application.UseCase.User
         }
 
         [Fact]
-        public void Handler_WhenUserNotFound_ThrowsNotFoundException()
+        public async Task Handler_WhenUserNotFound_ThrowsNotFoundException()
         {
-            A.CallTo(() => _userRepository.FindByUserName("unknown", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByIdAsync(Guid.Parse("22222222-2222-2222-2222-222222222222"), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(null));
 
-            Action act = () => _useCase.Handler("unknown", null);
+            Func<Task> act = () => _useCase.Handler(Guid.Parse("22222222-2222-2222-2222-222222222222"), null);
 
-            act.Should().Throw<NotFoundException>().WithMessage("*unknown*");
+            await act.Should().ThrowAsync<NotFoundException>().WithMessage("*22222222*");
         }
 
         [Fact]
-        public void Handler_WhenSpecificRefreshTokenGiven_DeletesThatToken()
+        public async Task Handler_WhenSpecificRefreshTokenGiven_DeletesThatToken()
         {
-            var user = new UserEntity("testuser", "Test", "t@t.com", "hash", UserRole.CommonUser);
+            var user = new UserEntity("t@t.com", "hash", UserRole.CommonUser);
             typeof(ei_back.Core.Domain.Entity.Base).GetProperty("Id")!.SetValue(user, Guid.NewGuid());
             var token = new RefreshTokenEntity
             {
@@ -48,28 +48,28 @@ namespace ei_back.Tests.Core.Application.UseCase.User
                 ExpiresAt = DateTime.UtcNow.AddDays(7)
             };
 
-            A.CallTo(() => _userRepository.FindByUserName("testuser", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByIdAsync(Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(user));
             A.CallTo(() => _encryptionService.ComputeSha256Hash("rt-value"))
                 .Returns("hash");
             A.CallTo(() => _refreshTokenRepository.FindByTokenHash("hash", CancellationToken.None))
                 .Returns(Task.FromResult<RefreshTokenEntity?>(token));
 
-            _useCase.Handler("testuser", "rt-value");
+            await _useCase.Handler(Guid.Parse("11111111-1111-1111-1111-111111111111"), "rt-value");
 
             A.CallTo(() => _refreshTokenRepository.Delete(token.Id)).MustHaveHappened();
         }
 
         [Fact]
-        public void Handler_WhenRefreshTokenIsNull_DeletesAllUserTokens()
+        public async Task Handler_WhenRefreshTokenIsNull_DeletesAllUserTokens()
         {
-            var user = new UserEntity("testuser", "Test", "t@t.com", "hash", UserRole.CommonUser);
+            var user = new UserEntity("t@t.com", "hash", UserRole.CommonUser);
             typeof(ei_back.Core.Domain.Entity.Base).GetProperty("Id")!.SetValue(user, Guid.NewGuid());
 
-            A.CallTo(() => _userRepository.FindByUserName("testuser", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByIdAsync(Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(user));
 
-            _useCase.Handler("testuser", null);
+            await _useCase.Handler(Guid.Parse("11111111-1111-1111-1111-111111111111"), null);
 
             A.CallTo(() => _refreshTokenRepository.DeleteByUserId(user.Id)).MustHaveHappened();
         }

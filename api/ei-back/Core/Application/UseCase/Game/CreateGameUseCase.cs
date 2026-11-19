@@ -32,10 +32,10 @@ namespace ei_back.Core.Application.UseCase.Game
             _upsertWorldInfoService = upsertWorldInfoService;
         }
 
-        public async Task<GameDtoResponse> Handler(GameDtoRequest gameDtoRequest, string userName, CancellationToken cancellationToken)
+        public async Task<GameDtoResponse> Handler(GameDtoRequest gameDtoRequest, Guid userId, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.FindByUserName(userName) ??
-                throw new NotFoundException($"No user found to user name {userName}.");
+            var user = await _userRepository.FindByIdAsync(userId, cancellationToken) ??
+                throw new NotFoundException($"No user found to user ID {userId}.");
 
             var game = new Domain.Entity.Game(user, gameDtoRequest.Name);
             

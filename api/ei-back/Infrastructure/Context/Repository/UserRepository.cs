@@ -11,9 +11,12 @@ namespace ei_back.Infrastructure.Context.Repository
 
         public UserRepository(EIContext context) : base(context) { }
 
-        public User ValidateCredentials(string userName, string pass)
+        public async Task<User?> ReloadAsync(Guid userId, CancellationToken cancellationToken = default)
         {
-            return _context.Users.FirstOrDefault(u => u.UserName == userName && u.Password == pass);
+            var user = await _context.Users.FindAsync(new object[] { userId }, cancellationToken);
+            if (user == null) return null;
+            await _context.Entry(user).ReloadAsync(cancellationToken);
+            return user;
         }
 
         public User RefreshUserInfo(User user)
@@ -43,25 +46,19 @@ namespace ei_back.Infrastructure.Context.Repository
                 .SingleOrDefaultAsync(u => u.Id.Equals(userId), cancellationToken);
         }
 
-        public async Task<User?> FindByUserName(string userName, CancellationToken cancellationToken = default)
-        {
-            return await _context.Users
-                .SingleOrDefaultAsync(x => x.UserName.Equals(userName), cancellationToken);
-        }
-
         public async Task<User?> FindByEmail(string email, CancellationToken cancellationToken = default)
         {
             var normalized = EmailNormalizer.Normalize(email);
             return await _context.Users.SingleOrDefaultAsync(x => x.NormalizedEmail == normalized, cancellationToken);
         }
 
-        public async Task<Dictionary<UserRole, List<string>>> GetUsersNameGroupByRole()
+        public async Task<Dictionary<UserRole, List<string>>> GetUsersEmailGroupByRole()
         {
             return await _context.Users
                 .GroupBy(x => x.Role)
                 .ToDictionaryAsync(
                     group => group.Key,
-                    group => group.Select(x => x.UserName).ToList()  
+                    group => group.Select(x => x.Email).ToList()
                 );
         }
 
@@ -70,7 +67,7 @@ namespace ei_back.Infrastructure.Context.Repository
             IQueryable<User> query = _context.Users;
 
             if (!string.IsNullOrWhiteSpace(name))
-                query = query.Where(x => EF.Functions.ILike(x.UserName, $"%{name}%"));
+                query = query.Where(x => EF.Functions.ILike(x.Email, $"%{name}%"));
 
             query = sort == "desc"
                 ? query.OrderByDescending(x => x.UpdatedAt)
@@ -84,7 +81,7 @@ namespace ei_back.Infrastructure.Context.Repository
             IQueryable<User> query = _context.Users;
 
             if (!string.IsNullOrWhiteSpace(name))
-                query = query.Where(x => EF.Functions.ILike(x.UserName, $"%{name}%"));
+                query = query.Where(x => EF.Functions.ILike(x.Email, $"%{name}%"));
 
             return await query.CountAsync(cancellationToken);
         }

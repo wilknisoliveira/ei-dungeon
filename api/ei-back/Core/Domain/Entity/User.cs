@@ -8,21 +8,17 @@ namespace ei_back.Core.Domain.Entity
         {
         }
 
-        public User(string userName, string fullName, string email, string password, UserRole role)
+        public User(string email, string? password, UserRole role)
         {
-            UserName = userName;
-            FullName = fullName;
             Email = email;
             Password = password;
             Role = role;
         }
 
-        public string UserName { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
         public string NormalizedEmail { get; set; } = string.Empty;
         public DateTimeOffset? EmailVerifiedAt { get; set; }
-        public string Password { get; set; }
+        public string? Password { get; set; }
         public UserRole Role { get; set; }
 
         public List<Game> Games { get; set; } = new();

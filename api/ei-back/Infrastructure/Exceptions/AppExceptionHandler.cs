@@ -1,3 +1,6 @@
+using ei_back.Core.Domain.DomainExceptions;
+using Microsoft.Extensions.Localization;
+using ei_back.UserInterface.Api;
 using ei_back.Infrastructure.Exceptions.ExceptionTypes;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -7,16 +10,25 @@ namespace ei_back.Infrastructure.Exceptions
     public class AppExceptionHandler : IExceptionHandler
     {
         private readonly ILogger<AppExceptionHandler> _logger;
+        private readonly IStringLocalizer<AuthController> _localizer;
 
-        public AppExceptionHandler(ILogger<AppExceptionHandler> logger)
+        public AppExceptionHandler(ILogger<AppExceptionHandler> logger, IStringLocalizer<AuthController> localizer)
         {
             _logger = logger;
+            _localizer = localizer;
         }
 
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
             (int statusCode, string errorMessage) = exception switch
             {
+                GoogleAuthenticationException google => (google.Code switch
+                {
+                    "google_unavailable" => StatusCodes.Status503ServiceUnavailable,
+                    "google_registration_required" => StatusCodes.Status422UnprocessableEntity,
+                    "google_link_required" or "google_email_mismatch" or "google_link_conflict" or "password_already_exists" => StatusCodes.Status409Conflict,
+                    _ => StatusCodes.Status401Unauthorized
+                }, _localizer["AuthGoogleFailure"].Value),
                 ei_back.Core.Domain.DomainExceptions.EmailVerificationRequiredException => (StatusCodes.Status403Forbidden, "Email verification is required."),
                 ei_back.Core.Domain.DomainExceptions.RegistrationConflictException => (StatusCodes.Status400BadRequest, "Invalid registration data."),
                 BadGatewayException badGatewayException => (StatusCodes.Status502BadGateway, badGatewayException.Message),
@@ -35,6 +47,7 @@ namespace ei_back.Infrastructure.Exceptions
             
             if (exception is ei_back.Core.Domain.DomainExceptions.EmailVerificationRequiredException)
                 exceptionResponse.Code = "email_verification_required";
+            if (exception is GoogleAuthenticationException googleError) exceptionResponse.Code = googleError.Code;
             httpContext.Response.StatusCode = statusCode;
             await httpContext.Response.WriteAsJsonAsync(exceptionResponse, cancellationToken);
 

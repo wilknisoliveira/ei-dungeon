@@ -25,7 +25,7 @@ public class VerificationCodePersistenceTests
     public async Task ConcurrentIssuanceAndConfirmation_RespectCooldownAndSingleUse()
     {
         var email = $"{Guid.NewGuid():N}@verification.test".ToUpperInvariant();
-        var user = new User("test_" + Guid.NewGuid().ToString("N"), "Test", email, "hash", UserRole.CommonUser)
+        var user = new User(email, "hash", UserRole.CommonUser)
             { Id = Guid.NewGuid(), NormalizedEmail = email, CreatedAt = DateTimeOffset.UtcNow, UpdatedAt = DateTimeOffset.UtcNow };
         await using (var setup = Open()) { setup.Users.Add(user); await setup.SaveChangesAsync(); }
         var service = new VerificationCodeService();
@@ -61,7 +61,7 @@ public class VerificationCodePersistenceTests
     public async Task ConcurrentFailures_StayAtFive_AndUniqueEmailIsEnforced()
     {
         var email = $"{Guid.NewGuid():N}@verification.test".ToUpperInvariant();
-        var user = new User(Guid.NewGuid().ToString("N"), "Test", email, "hash", UserRole.CommonUser)
+        var user = new User(email, "hash", UserRole.CommonUser)
             { Id = Guid.NewGuid(), NormalizedEmail = email, CreatedAt = DateTimeOffset.UtcNow, UpdatedAt = DateTimeOffset.UtcNow };
         var service = new VerificationCodeService();
         await using (var setup = Open())
@@ -84,7 +84,7 @@ public class VerificationCodePersistenceTests
         var saved = await check.VerificationCodes.SingleAsync(x => x.UserId == user.Id);
         saved.FailedAttempts.Should().Be(5);
         saved.InvalidatedAt.Should().NotBeNull();
-        check.Users.Add(new User(Guid.NewGuid().ToString("N"), "Other", email.ToLowerInvariant(), "hash", UserRole.CommonUser)
+        check.Users.Add(new User(email.ToLowerInvariant(), "hash", UserRole.CommonUser)
             { Id = Guid.NewGuid(), NormalizedEmail = email });
         Func<Task> save = () => check.SaveChangesAsync();
         await save.Should().ThrowAsync<DbUpdateException>();

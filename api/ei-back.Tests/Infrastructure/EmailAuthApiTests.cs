@@ -36,13 +36,13 @@ public class EmailAuthApiTests
             .Returns(CodeConfirmationResult.Invalid);
         builder.Services.AddSingleton(recovery);
         var signin = A.Fake<ISignInUseCase>();
-        A.CallTo(() => signin.Handler(A<ei_back.Core.Application.UseCase.User.Dtos.LoginDtoRequest>._))
+        A.CallTo(() => signin.Handler(A<ei_back.Core.Application.UseCase.User.Dtos.LoginDtoRequest>._, A<CancellationToken>._))
             .Throws(new EmailVerificationRequiredException());
         builder.Services.AddSingleton(signin);
         builder.Services.AddSingleton(A.Fake<IRefreshTokenUseCase>());
         builder.Services.AddSingleton(A.Fake<ILogoutUseCase>());
         builder.Services.AddSingleton(A.Fake<IChangePasswordUseCase>());
-        builder.Services.AddSingleton(A.Fake<IGetUserNameUseCase>());
+        builder.Services.AddSingleton(A.Fake<IGetUserIdUseCase>());
         builder.Services.AddSingleton(A.Fake<IUnitOfWork>());
         await using var app = builder.Build();
         app.UseExceptionHandler(_ => { });
@@ -69,7 +69,7 @@ public class EmailAuthApiTests
         var badPayload = await client.PostAsJsonAsync("/api/user/auth/password-recovery/confirm", new { email = "test@example.com", code = "12345x", newPassword = "a" });
         badPayload.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         JsonDocument.Parse(await badPayload.Content.ReadAsStringAsync()).RootElement.GetProperty("errors").ValueKind.Should().Be(JsonValueKind.Object);
-        var login = await client.PostAsJsonAsync("/api/user/auth/signin", new { userName = "tester", password = "password" });
+        var login = await client.PostAsJsonAsync("/api/user/auth/signin", new { email = "tester@example.com", password = "password" });
         login.StatusCode.Should().Be(HttpStatusCode.Forbidden);
         JsonDocument.Parse(await login.Content.ReadAsStringAsync()).RootElement.GetProperty("code").GetString().Should().Be("email_verification_required");
         await app.StopAsync();

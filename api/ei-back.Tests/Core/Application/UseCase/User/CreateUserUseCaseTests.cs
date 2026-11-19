@@ -33,9 +33,8 @@ namespace ei_back.Tests.Core.Application.UseCase.User
             var mapper = A.Fake<IMapper>();
             var unitOfWork = A.Fake<IUnitOfWork>();
             var flow = A.Fake<IVerificationFlowService>();
-            var request = new UserDtoRequest { UserName = "newuser", FullName = "New User", Email = "new@example.com", Password = "password123" };
-            var user = new UserEntity("newuser", "New User", request.Email, request.Password, UserRole.CommonUser);
-            A.CallTo(() => users.FindByUserName(A<string>._, A<CancellationToken>._)).Returns((UserEntity?)null);
+            var request = new UserDtoRequest { Email = "new@example.com", Password = "password123" };
+            var user = new UserEntity(request.Email, request.Password, UserRole.CommonUser);
             A.CallTo(() => users.FindByEmail(A<string>._, A<CancellationToken>._)).Returns((UserEntity?)null);
             A.CallTo(() => mapper.Map<UserEntity>(request)).Returns(user);
             A.CallTo(() => users.CreateAsync(user, CancellationToken.None)).Returns(user);
@@ -65,18 +64,16 @@ namespace ei_back.Tests.Core.Application.UseCase.User
             FakeItEasy.Fake.GetCalls(unitOfWork).Should().NotContain(call => call.Method.Name == "ExecuteInTransactionAsync");
         }
         [Fact]
-        public async Task Handler_WhenUsernameAlreadyExists_ThrowsBadRequestException()
+        public async Task Handler_WhenEmailAlreadyExists_ThrowsBadRequestException()
         {
             var request = new UserDtoRequest
             {
-                UserName = "existing",
-                FullName = "Existing",
                 Password = "pass123",
                 Email = "e@e.com"
             };
-            var existingUser = new UserEntity("existing", "Existing", "e@e.com", "hash", UserRole.CommonUser);
+            var existingUser = new UserEntity("e@e.com", "hash", UserRole.CommonUser);
 
-            A.CallTo(() => _userRepository.FindByUserName("existing", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByEmail(request.Email.ToUpperInvariant(), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(existingUser));
 
             Func<Task> act = () => _useCase.Handler(request);
@@ -89,29 +86,24 @@ namespace ei_back.Tests.Core.Application.UseCase.User
         {
             var request = new UserDtoRequest
             {
-                UserName = "newuser",
-                FullName = "New User",
                 Password = "pass123",
                 Email = "new@test.com"
             };
 
-            var mappedUser = new UserEntity("newuser", "New User", "new@test.com", "pass123", UserRole.CommonUser);
-            var savedUser = new UserEntity("newuser", "New User", "new@test.com", "$2a$11$hashedpassword", UserRole.CommonUser);
+            var mappedUser = new UserEntity("new@test.com", "pass123", UserRole.CommonUser);
+            var savedUser = new UserEntity("new@test.com", "$2a$11$hashedpassword", UserRole.CommonUser);
             typeof(ei_back.Core.Domain.Entity.Base).GetProperty("Id")!.SetValue(savedUser, Guid.NewGuid());
 
             var response = new UserDtoResponse
             {
-                UserName = "newuser",
-                FullName = "New User",
                 Email = "new@test.com"
             };
 
-            A.CallTo(() => _userRepository.FindByUserName("newuser", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByEmail(request.Email, CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(null));
             A.CallTo(() => _mapper.Map<UserEntity>(request))
                 .Returns(mappedUser);
-            A.CallTo(() => _userRepository.CreateAsync(A<UserEntity>.That.Matches(u =>
-                u.UserName == "newuser" && u.Password.StartsWith("$2")), CancellationToken.None))
+            A.CallTo(() => _userRepository.CreateAsync(A<UserEntity>.That.Matches(u => u.Email == request.Email), CancellationToken.None))
                 .Returns(Task.FromResult(savedUser));
             A.CallTo(() => _mapper.Map<UserDtoResponse>(savedUser))
                 .Returns(response);

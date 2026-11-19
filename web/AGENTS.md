@@ -31,6 +31,10 @@ Follow existing Angular 22 and Angular Material patterns. Use four-space indenta
 
 Preserve the route policy in `src/app/pages/routing.modules.ts`: the landing page, signup, email verification, forgot-password, and reset-password remain public. Login retains its existing `AuthGuard` behavior; home/settings use both `AuthGuard` and `HasRoleGuard` with their configured role lists. Apply role restrictions where specified without turning the public recovery or landing pages into authenticated routes.
 
+### Google and account capabilities
+
+Login/signup use email and omit username/full name. Signup confirms the password client-side. Fetch /api/user/auth/account for hasPassword/googleLinked. First-password creation requires a new linked-Google proof. Use PUBLIC_AUTH for anonymous Google operations. Authenticated Google proofs keep Bearer tokens but must not be automatically replayed after a 401. Load GIS only in the browser through GoogleAuthService and render its official button. Configure the public googleClientId for development or GOOGLE_CLIENT_ID for production builds.
+
 ### Visual Identity and Theming
 
 - Maintain the Dark Fantasy / Gritty identity for solo RPG players: violet primary, orange tertiary, charcoal surfaces, and warm off-white text.

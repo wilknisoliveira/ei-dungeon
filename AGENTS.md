@@ -37,6 +37,8 @@ Run `docker compose up -d --build` separately from `api/` and `web/`; each has i
 
 Match nearby code. Use four-space indentation; `web/.editorconfig` specifies single-quoted TypeScript strings. Angular uses kebab-case filenames; C# uses PascalCase types and camelCase parameters. Preserve API layer boundaries and existing dependency-injection patterns. VS Code selects Prettier for web formatting; no npm lint script exists.
 
+Backend use cases follow one operation per class/interface, with a single public `Handler` entry method. Group them by feature and extract shared logic into Application services. See `api/AGENTS.md` for the complete backend conventions and transaction exceptions.
+
 ## Testing Guidelines
 
 Backend tests use xUnit, FakeItEasy, and FluentAssertions in `*Tests.cs`. Web tests use Jasmine/Karma in colocated `*.spec.ts`. Set `VERIFICATION_TEST_CONNECTION` only to a migrated, isolated PostgreSQL database to enable database tests. No coverage threshold is configured. Update all three translations when user-visible strings change.
@@ -50,3 +52,7 @@ Require Conventional Commits with short, imperative descriptions, such as `feat(
 Keep credentials in ignored `.env` files or .NET User Secrets. Commit environment examples only. Preserve Compose project names and existing database volumes; avoid destructive resets.
 
 Production deploys published commit tags resolved to digests. Manual dispatch is the default, with automatic deployment enabled only by `DUNGEON_AUTO_DEPLOY=true`. Follow `../infra/docs/VM-SETUP.md` for the shared `deploy` account, `../infra/docs/ADD-PROJECT.md` for per-project VM and GitHub onboarding, and `../infra/apps/dungeon/DEPLOYMENT.md` for Dungeon settings, operation and recovery. Maintain deployment documentation in English. Configure `DUNGEON_SSH_USER=deploy` explicitly and keep each repository's SSH key separate. Keep Dungeon-specific infrastructure scripts under its application directory. Preserve production project `dungeon-production` and volume `dungeon-production_postgres_data`.
+
+## Account identity
+
+Local authentication uses unique normalized email. Identify authorized users and game ownership by the existing internal GUID in application JWT sub. Google identities use a separate provider subject linked to that GUID. FullName/UserName are removed from active contracts and the users table. Google setup and environment configuration are documented in api/docs/google-auth-setup.md. The public GOOGLE_CLIENT_ID is compiled into web builds and mapped to GoogleAuth__ClientId for the API.

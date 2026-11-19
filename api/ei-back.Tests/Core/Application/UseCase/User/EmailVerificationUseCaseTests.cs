@@ -24,7 +24,7 @@ public class EmailVerificationUseCaseTests
         var codes = A.Fake<IVerificationCodeRepository>();
         var sender = A.Fake<IEmailSender>();
         var transaction = new TestUnitOfWork();
-        var user = new UserEntity("tester", "Tester", "test@example.com", "hash", UserRole.CommonUser) { Id = Guid.NewGuid() };
+        var user = new UserEntity("test@example.com", "hash", UserRole.CommonUser) { Id = Guid.NewGuid() };
         var history = new List<VerificationCode>();
         A.CallTo(() => users.FindByEmail(A<string>._, A<CancellationToken>._)).Returns(user);
         A.CallTo(() => codes.GetHistoryAsync(user.Id, A<VerificationCodePurpose>._, A<DateTimeOffset>._, A<CancellationToken>._)).Returns(history);

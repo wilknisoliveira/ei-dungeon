@@ -4,6 +4,6 @@ namespace ei_back.Core.Application.UseCase.Game.Interfaces
 {
     public interface ICreateGameUseCase
     {
-        Task<GameDtoResponse> Handler(GameDtoRequest gameDtoRequest, string userName, CancellationToken cancellationToken);
+        Task<GameDtoResponse> Handler(GameDtoRequest gameDtoRequest, Guid userId, CancellationToken cancellationToken);
     }
 }

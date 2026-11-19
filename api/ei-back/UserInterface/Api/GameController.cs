@@ -18,7 +18,7 @@ namespace ei_back.UserInterface.Api
         private readonly ILogger<GameController> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICreateGameUseCase _createGameUseCase;
-        private readonly IGetUserNameUseCase _getUserNameUseCase;
+        private readonly IGetUserIdUseCase _getUserIdUseCase;
         private readonly IGetGamesUseCase _getGamesUseCase;
         private readonly IGetGameByIdAndUserUseCase _getGameByIdAndUserUseCase;
         private readonly IDeleteGameUseCase _deleteGameUseCase;
@@ -28,7 +28,7 @@ namespace ei_back.UserInterface.Api
             ILogger<GameController> logger,
             IUnitOfWork unitOfWork,
             ICreateGameUseCase createGameUseCase,
-            IGetUserNameUseCase getUserNameUseCase,
+            IGetUserIdUseCase getUserIdUseCase,
             IGetGamesUseCase getGamesUseCase, 
             IGetGameByIdAndUserUseCase getGameByIdAndUserUseCase, 
             IDeleteGameUseCase deleteGameUseCase,
@@ -37,7 +37,7 @@ namespace ei_back.UserInterface.Api
             _logger = logger;
             _unitOfWork = unitOfWork;
             _createGameUseCase = createGameUseCase;
-            _getUserNameUseCase = getUserNameUseCase;
+            _getUserIdUseCase = getUserIdUseCase;
             _getGamesUseCase = getGamesUseCase;
             _getGameByIdAndUserUseCase = getGameByIdAndUserUseCase;
             _deleteGameUseCase = deleteGameUseCase;
@@ -50,18 +50,11 @@ namespace ei_back.UserInterface.Api
         [Authorize(Roles = "Admin, PremiumUser")]
         public async Task<IActionResult> Create([FromBody] GameDtoRequest gameDtoRequest, CancellationToken cancellationToken = default)
         {
-            var userName = _getUserNameUseCase.Handler(User);
+            var userId = _getUserIdUseCase.Handler(User);
 
-            if (userName.IsNullOrEmpty())
-            {
-                var errorMessage = "Something went wrong while attempting to get the user logged credential.";
-                _logger.LogError(errorMessage);
-                return StatusCode(StatusCodes.Status500InternalServerError, errorMessage);
-            }
+            _logger.LogInformation($"Creating {gameDtoRequest.Name} game to user {userId}...");
 
-            _logger.LogInformation($"Creating {gameDtoRequest.Name} game to user {userName}...");
-
-            var gameDtoResponse = await _createGameUseCase.Handler(gameDtoRequest, userName, cancellationToken);
+            var gameDtoResponse = await _createGameUseCase.Handler(gameDtoRequest, userId, cancellationToken);
             var changedItems = await _unitOfWork.CommitAsync(cancellationToken);
 
             if (changedItems == 0)
@@ -105,18 +98,11 @@ namespace ei_back.UserInterface.Api
             [FromQuery] int page,
             CancellationToken cancellationToken)
         {
-            var userName = _getUserNameUseCase.Handler(User);
+            var userId = _getUserIdUseCase.Handler(User);
 
-            if (userName.IsNullOrEmpty())
-            {
-                var errorMessage = "Something went wrong while attempting to get the user logged credential.";
-                _logger.LogError(errorMessage);
-                return StatusCode(StatusCodes.Status500InternalServerError, errorMessage);
-            }
+            _logger.LogInformation($"Get the list game to user {userId}");
 
-            _logger.LogInformation($"Get the list game to user {userName}");
-
-            var response = await _getGamesUseCase.Handler(sortDirection, pageSize, page, userName, cancellationToken);
+            var response = await _getGamesUseCase.Handler(sortDirection, pageSize, page, userId, cancellationToken);
 
             return Ok(response);
         }
@@ -127,11 +113,11 @@ namespace ei_back.UserInterface.Api
         [Authorize(Roles = "Admin, CommonUser, PremiumUser")]
         public async Task<IActionResult> GetById(Guid gameId, CancellationToken cancellationToken)
         {
-            var userName = _getUserNameUseCase.Handler(User);
+            var userId = _getUserIdUseCase.Handler(User);
             
             _logger.LogDebug("Get the info from game {gameId}", gameId);
             
-            GameDtoResponse response = await _getGameByIdAndUserUseCase.Handler(gameId, userName, cancellationToken);
+            GameDtoResponse response = await _getGameByIdAndUserUseCase.Handler(gameId, userId, cancellationToken);
             return Ok(response);
         }
 
@@ -141,11 +127,11 @@ namespace ei_back.UserInterface.Api
         [Authorize(Roles = "Admin, CommonUser, PremiumUser")]
         public async Task<IActionResult> Delete(Guid gameId, CancellationToken cancellationToken)
         {
-            var userName = _getUserNameUseCase.Handler(User);
+            var userId = _getUserIdUseCase.Handler(User);
             
             _logger.LogDebug("Delete the game '{gameId}'", gameId);
             
-            await _deleteGameUseCase.Handler(gameId, userName, cancellationToken);
+            await _deleteGameUseCase.Handler(gameId, userId, cancellationToken);
             
             var changedItems = await _unitOfWork.CommitAsync(cancellationToken);
             if (changedItems == 0)
@@ -180,18 +166,11 @@ namespace ei_back.UserInterface.Api
         [Authorize(Roles = "Admin, CommonUser, PremiumUser")]
         public async Task<IActionResult> Update(Guid gameId, [FromBody] UpdateGameDtoRequest request, CancellationToken cancellationToken)
         {
-            var userName = _getUserNameUseCase.Handler(User);
+            var userId = _getUserIdUseCase.Handler(User);
 
-            if (userName.IsNullOrEmpty())
-            {
-                var errorMessage = "Something went wrong while attempting to get the user logged credential.";
-                _logger.LogError(errorMessage);
-                return StatusCode(StatusCodes.Status500InternalServerError, errorMessage);
-            }
+            _logger.LogInformation("Updating game {gameId} for user {userId}...", gameId, userId);
 
-            _logger.LogInformation("Updating game {gameId} for user {userName}...", gameId, userName);
-
-            var gameDtoResponse = await _updateGameUseCase.Handler(gameId, request, userName, cancellationToken);
+            var gameDtoResponse = await _updateGameUseCase.Handler(gameId, request, userId, cancellationToken);
             var changedItems = await _unitOfWork.CommitAsync(cancellationToken);
 
             if (changedItems == 0)

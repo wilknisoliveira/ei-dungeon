@@ -33,13 +33,13 @@ describe('authInterceptor', () => {
     });
     afterEach(() => controller.verify());
     it('preserves public login failures without Authorization or refresh', async () => {
-        const result = auth.login({ userName: 'player', password: 'password' }).catch(e => e);
+        const result = auth.login({ email: 'player@example.com', password: 'password' }).catch(e => e);
         const req = controller.expectOne(environment.api + '/api/user/auth/signin');
         expect(req.request.headers.has('Authorization')).toBeFalse();
         req.flush({ code: 'email_verification_required' }, { status: 403, statusText: 'Forbidden' });
         expect((await result).error.code).toBe('email_verification_required');
         expect(router.navigate).not.toHaveBeenCalled();
-        const second = auth.login({ userName: 'player', password: 'wrong' }).catch(e => e);
+        const second = auth.login({ email: 'player@example.com', password: 'wrong' }).catch(e => e);
         controller.expectOne(environment.api + '/api/user/auth/signin').flush(null, { status: 401, statusText: 'Unauthorized' });
         expect((await second).status).toBe(401);
         expect(values.has('tokenInfo')).toBeTrue();
@@ -68,4 +68,16 @@ describe('authInterceptor', () => {
         retry.flush({ ok: true });
         expect(await result).toEqual({ ok: true });
     });
+
+    it('does not refresh or replay a rejected Google proof operation', () => {
+        const refresh = spyOn(auth, 'refreshToken');
+        let failed = false;
+        http.post(environment.api + '/api/user/auth/google/link', { credential: 'proof' }).subscribe({ error: () => failed = true });
+        const request = controller.expectOne(environment.api + '/api/user/auth/google/link');
+        expect(request.request.headers.get('Authorization')).toBe('Bearer old-token-string');
+        request.flush({ code: 'google_invalid_credential' }, { status: 401, statusText: 'Unauthorized' });
+        expect(failed).toBeTrue();
+        expect(refresh).not.toHaveBeenCalled();
+    });
+
 });

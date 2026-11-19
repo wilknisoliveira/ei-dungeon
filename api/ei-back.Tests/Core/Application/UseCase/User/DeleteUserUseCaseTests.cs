@@ -35,7 +35,7 @@ namespace ei_back.Tests.Core.Application.UseCase.User
         public async Task Handler_WhenUserExists_DeletesUser()
         {
             var userId = Guid.NewGuid();
-            var user = new UserEntity("testuser", "Test", "t@t.com", "hash", UserRole.CommonUser);
+            var user = new UserEntity("t@t.com", "hash", UserRole.CommonUser);
             typeof(ei_back.Core.Domain.Entity.Base).GetProperty("Id")!.SetValue(user, userId);
 
             A.CallTo(() => _userRepository.FindByIdAsync(userId, CancellationToken.None))

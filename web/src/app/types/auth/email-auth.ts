@@ -6,4 +6,4 @@ export type EmailAuthPurpose = 'verification' | 'recovery';
 export interface EmailRequest { email: string; }
 export interface EmailConfirmation extends EmailRequest { code: string; }
 export interface RecoveryConfirmation extends EmailConfirmation { newPassword: string; }
-export interface RegistrationResponse { userName: string; fullName: string; email: string; }
+export interface RegistrationResponse { email: string; }

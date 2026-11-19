@@ -2,5 +2,5 @@
 
 public interface IDeleteGameUseCase
 {
-    Task Handler(Guid gameId, string userName, CancellationToken cancellationToken);
+    Task Handler(Guid gameId, Guid userId, CancellationToken cancellationToken);
 }

@@ -9,10 +9,10 @@ public class GetGameByIdAndUserUseCase(IGameRepository gameRepository) : IGetGam
 {
     private readonly IGameRepository _gameRepository = gameRepository;
 
-    public async Task<GameDtoResponse> Handler(Guid gameId, string userName, CancellationToken cancellationToken)
+    public async Task<GameDtoResponse> Handler(Guid gameId, Guid userId, CancellationToken cancellationToken)
     {
-        Domain.Entity.Game game = await _gameRepository.GetGameByIdAndOwnerUserName(gameId, userName, cancellationToken) ??
-                   throw new NotFoundException($"No game with id '{gameId}' found to user name {userName}.");
+        Domain.Entity.Game game = await _gameRepository.GetGameByIdAndOwnerId(gameId, userId, cancellationToken) ??
+                   throw new NotFoundException($"No game with id '{gameId}' found to user ID {userId}.");
 
         return new GameDtoResponse
         {

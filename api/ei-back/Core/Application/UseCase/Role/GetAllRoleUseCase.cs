@@ -23,7 +23,7 @@ namespace ei_back.Core.Application.UseCase.Role
                 roles.Add((UserRole)role);
             }
 
-            Dictionary<UserRole, List<string>> usersByRole = await _userRepository.GetUsersNameGroupByRole();
+            Dictionary<UserRole, List<string>> usersByRole = await _userRepository.GetUsersEmailGroupByRole();
 
             var rolesResponse = roles.Select(role =>
             {

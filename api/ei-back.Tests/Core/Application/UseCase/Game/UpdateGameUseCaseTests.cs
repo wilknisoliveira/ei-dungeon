@@ -27,7 +27,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
         {
             var gameId = Guid.NewGuid();
             var userId = Guid.NewGuid();
-            var user = new UserEntity("testuser", "Test User", "test@test.com", "hash", UserRole.CommonUser);
+            var user = new UserEntity("test@test.com", "hash", UserRole.CommonUser);
             typeof(ei_back.Core.Domain.Entity.Base).GetProperty(nameof(ei_back.Core.Domain.Entity.Base.Id))!.SetValue(user, userId);
 
             var game = new ei_back.Core.Domain.Entity.Game(user, "Old Name");
@@ -48,12 +48,12 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
                 GameStatus = GameStatus.Active
             };
 
-            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerUserName(gameId, "testuser", CancellationToken.None))
+            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerId(gameId, Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Returns(Task.FromResult(game));
             A.CallTo(() => _mapper.Map<GameDtoResponse>(game))
                 .Returns(responseDto);
 
-            var result = await _useCase.Handler(gameId, request, "testuser", CancellationToken.None);
+            var result = await _useCase.Handler(gameId, request, Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None);
 
             result.Should().NotBeNull();
             result.Name.Should().Be("New Name");
@@ -65,7 +65,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
         {
             var gameId = Guid.NewGuid();
             var userId = Guid.NewGuid();
-            var user = new UserEntity("testuser", "Test User", "test@test.com", "hash", UserRole.CommonUser);
+            var user = new UserEntity("test@test.com", "hash", UserRole.CommonUser);
             typeof(ei_back.Core.Domain.Entity.Base).GetProperty(nameof(ei_back.Core.Domain.Entity.Base.Id))!.SetValue(user, userId);
 
             var game = new ei_back.Core.Domain.Entity.Game(user, "Original Name");
@@ -86,12 +86,12 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
                 GameStatus = GameStatus.Active
             };
 
-            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerUserName(gameId, "testuser", CancellationToken.None))
+            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerId(gameId, Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Returns(Task.FromResult(game));
             A.CallTo(() => _mapper.Map<GameDtoResponse>(game))
                 .Returns(responseDto);
 
-            var result = await _useCase.Handler(gameId, request, "testuser", CancellationToken.None);
+            var result = await _useCase.Handler(gameId, request, Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None);
 
             result.Should().NotBeNull();
             result.GameLanguage.Should().Be(GameLanguage.English);
@@ -102,7 +102,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
         {
             var gameId = Guid.NewGuid();
             var userId = Guid.NewGuid();
-            var user = new UserEntity("testuser", "Test User", "test@test.com", "hash", UserRole.CommonUser);
+            var user = new UserEntity("test@test.com", "hash", UserRole.CommonUser);
             typeof(ei_back.Core.Domain.Entity.Base).GetProperty(nameof(ei_back.Core.Domain.Entity.Base.Id))!.SetValue(user, userId);
 
             var game = new ei_back.Core.Domain.Entity.Game(user, "Existing Name");
@@ -122,12 +122,12 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
                 GameStatus = GameStatus.Active
             };
 
-            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerUserName(gameId, "testuser", CancellationToken.None))
+            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerId(gameId, Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Returns(Task.FromResult(game));
             A.CallTo(() => _mapper.Map<GameDtoResponse>(game))
                 .Returns(responseDto);
 
-            var result = await _useCase.Handler(gameId, request, "testuser", CancellationToken.None);
+            var result = await _useCase.Handler(gameId, request, Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None);
 
             result.Should().NotBeNull();
             result.Name.Should().Be("Existing Name");
@@ -139,10 +139,10 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
             var gameId = Guid.NewGuid();
             var request = new UpdateGameDtoRequest { Name = "New Name" };
 
-            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerUserName(gameId, "unknown", CancellationToken.None))
+            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerId(gameId, Guid.Parse("22222222-2222-2222-2222-222222222222"), CancellationToken.None))
                 .Returns(Task.FromResult<ei_back.Core.Domain.Entity.Game?>(null));
 
-            await _useCase.Invoking(x => x.Handler(gameId, request, "unknown", CancellationToken.None))
+            await _useCase.Invoking(x => x.Handler(gameId, request, Guid.Parse("22222222-2222-2222-2222-222222222222"), CancellationToken.None))
                 .Should().ThrowAsync<NotFoundException>();
         }
     }

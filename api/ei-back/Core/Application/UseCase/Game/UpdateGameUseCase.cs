@@ -20,11 +20,11 @@ namespace ei_back.Core.Application.UseCase.Game
         public async Task<GameDtoResponse> Handler(
             Guid gameId,
             UpdateGameDtoRequest request,
-            string userName,
+            Guid userId,
             CancellationToken cancellationToken)
         {
-            var game = await _gameRepository.GetGameByIdAndOwnerUserName(gameId, userName, cancellationToken)
-                ?? throw new NotFoundException($"No game found with id {gameId} for user {userName}.");
+            var game = await _gameRepository.GetGameByIdAndOwnerId(gameId, userId, cancellationToken)
+                ?? throw new NotFoundException($"No game found with id {gameId} for user {userId}.");
 
             if (request.Name is not null)
                 game.SetName(request.Name);

@@ -120,4 +120,5 @@
   <data name="AuthInvalidRequest">
     <value>Solicitação inválida</value>
   </data>
+  <data name="AuthGoogleFailure"><value>Não foi possível concluir a autenticação com Google. Tente novamente.</value></data>
 </root>

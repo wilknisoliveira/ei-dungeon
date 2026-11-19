@@ -33,7 +33,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Play
         {
             var userId = Guid.NewGuid();
             var gameId = Guid.NewGuid();
-            var user = new UserEntity("testuser", "Test User", "test@test.com", "hash", ei_back.Core.Domain.Enums.UserRole.CommonUser);
+            var user = new UserEntity("test@test.com", "hash", ei_back.Core.Domain.Enums.UserRole.CommonUser);
             typeof(ei_back.Core.Domain.Entity.Base).GetProperty(nameof(ei_back.Core.Domain.Entity.Base.Id))!.SetValue(user, userId);
 
             var game = new ei_back.Core.Domain.Entity.Game(gameId, "Test Game");
@@ -51,7 +51,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Play
                 CreatedAt = p.CreatedAt
             }).ToList();
 
-            A.CallTo(() => _userRepository.FindByUserName("testuser", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByIdAsync(Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(user));
             A.CallTo(() => _gameRepository.CheckIfExistGameByUser(gameId, userId, CancellationToken.None))
                 .Returns(Task.FromResult(true));
@@ -65,7 +65,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Play
             A.CallTo(() => _mapper.Map<PlayDtoResponse>(plays[1]))
                 .Returns(playDtos[1]);
 
-            var result = await _useCase.Handler(gameId, "asc", 10, 1, "testuser", CancellationToken.None);
+            var result = await _useCase.Handler(gameId, "asc", 10, 1, Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None);
 
             result.CurrentPage.Should().Be(1);
             result.PageSize.Should().Be(10);
@@ -77,10 +77,10 @@ namespace ei_back.Tests.Core.Application.UseCase.Play
         [Fact]
         public async Task Handler_WhenUserNotFound_ThrowsNotFoundException()
         {
-            A.CallTo(() => _userRepository.FindByUserName("unknown", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByIdAsync(Guid.Parse("22222222-2222-2222-2222-222222222222"), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(null));
 
-            await _useCase.Invoking(x => x.Handler(Guid.NewGuid(), "asc", 10, 1, "unknown", CancellationToken.None))
+            await _useCase.Invoking(x => x.Handler(Guid.NewGuid(), "asc", 10, 1, Guid.Parse("22222222-2222-2222-2222-222222222222"), CancellationToken.None))
                 .Should().ThrowAsync<NotFoundException>();
         }
 
@@ -89,15 +89,15 @@ namespace ei_back.Tests.Core.Application.UseCase.Play
         {
             var userId = Guid.NewGuid();
             var gameId = Guid.NewGuid();
-            var user = new UserEntity("testuser", "Test User", "test@test.com", "hash", ei_back.Core.Domain.Enums.UserRole.CommonUser);
+            var user = new UserEntity("test@test.com", "hash", ei_back.Core.Domain.Enums.UserRole.CommonUser);
             typeof(ei_back.Core.Domain.Entity.Base).GetProperty(nameof(ei_back.Core.Domain.Entity.Base.Id))!.SetValue(user, userId);
 
-            A.CallTo(() => _userRepository.FindByUserName("testuser", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByIdAsync(Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(user));
             A.CallTo(() => _gameRepository.CheckIfExistGameByUser(gameId, userId, CancellationToken.None))
                 .Returns(Task.FromResult(false));
 
-            await _useCase.Invoking(x => x.Handler(gameId, "asc", 10, 1, "testuser", CancellationToken.None))
+            await _useCase.Invoking(x => x.Handler(gameId, "asc", 10, 1, Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Should().ThrowAsync<NotFoundException>();
         }
     }

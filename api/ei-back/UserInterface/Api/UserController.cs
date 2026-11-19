@@ -5,7 +5,6 @@ using ei_back.Core.Application.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
-using System.Security.Claims;
 
 namespace ei_back.UserInterface.Api
 {
@@ -17,26 +16,23 @@ namespace ei_back.UserInterface.Api
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICreateUserUseCase _createUserUseCase;
         private readonly IGetUserUseCase _getUserUseCase;
-        private readonly ICheckUserInfoUseCase _checkUserInfoUseCase;
         private readonly IDeleteUserUseCase _deleteUserUseCase;
-        private readonly IGetUserNameUseCase _getUserNameUseCase;
+        private readonly IGetUserIdUseCase _getUserIdUseCase;
 
         public UserController(
             ILogger<UserController> logger,
             ICreateUserUseCase createUserUseCase,
             IUnitOfWork unitOfWork,
             IGetUserUseCase getUserUseCase,
-            ICheckUserInfoUseCase checkUserInfoUseCase,
             IDeleteUserUseCase deleteUserUseCase,
-            IGetUserNameUseCase getUserNameUseCase)
+            IGetUserIdUseCase getUserIdUseCase)
         {
             _logger = logger;
             _createUserUseCase = createUserUseCase;
             _unitOfWork = unitOfWork;
             _getUserUseCase = getUserUseCase;
-            _checkUserInfoUseCase = checkUserInfoUseCase;
             _deleteUserUseCase = deleteUserUseCase;
-            _getUserNameUseCase = getUserNameUseCase;
+            _getUserIdUseCase = getUserIdUseCase;
         }
 
         /// <summary>Creates a new user account</summary>
@@ -45,19 +41,15 @@ namespace ei_back.UserInterface.Api
         /// Registration endpoint. No authentication required.
         ///
         /// Request body (UserDtoRequest):
-        ///   - UserName (string, 4-20 characters, required)
-        ///   - FullName (string, 4-50 characters, required)
-        ///   - Password (string, 4-50 characters, required)
+        ///   - Password (string, 8-50 characters, required)
         ///   - Email (string, valid email format, required)
         ///
         /// Response 200 (UserDtoResponse):
-        ///   - UserName (string)
-        ///   - FullName (string)
         ///   - Email (string)
         ///
-        /// Response 400: Username already exists or validation fails.
+        /// Response 400: Email is already registered or validation fails.
         ///
-        /// Password is BCrypt-hashed server-side. Duplicate username returns
+        /// Password is BCrypt-hashed server-side. Duplicate email returns
         /// a generic "Invalid registration data." message to prevent user
         /// enumeration. New users default to CommonUser role.
         /// </remarks>
@@ -70,34 +62,9 @@ namespace ei_back.UserInterface.Api
             if (userDtoRequest == null) return BadRequest();
             var userDtoResponse = await _createUserUseCase.Handler(userDtoRequest);
 
-            _logger.LogInformation("API: New user created - " + userDtoRequest.UserName);
+            _logger.LogInformation("API: New user created - " + userDtoRequest.Email);
 
             return Ok(userDtoResponse);
-        }
-
-        /// <summary>Checks availability of username and/or email</summary>
-        /// <remarks>
-        /// Rate limited: 20 requests per minute sliding window (UsernameCheck policy).
-        /// No authentication required. Public endpoint.
-        ///
-        /// Query parameters (both optional):
-        ///   - username (string): checks if this username is taken
-        ///   - email (string): checks if this email is taken
-        ///
-        /// Response 200 (UserInfoCheckResponseDto):
-        ///   - UsernameAvailable (bool)
-        ///   - EmailAvailable (bool)
-        ///
-        /// Only checks parameters that are provided. Omitted parameters
-        /// default to available (true).
-        /// </remarks>
-        [EnableRateLimiting("UsernameCheck")]
-        [HttpGet("check-userinfo")]
-        [ProducesResponseType(typeof(UserInfoCheckResponseDto), StatusCodes.Status200OK)]
-        public async Task<IActionResult> CheckUserInfo([FromQuery] string? username, [FromQuery] string? email)
-        {
-            var result = await _checkUserInfoUseCase.Handler(username, email);
-            return Ok(result);
         }
 
         /// <summary>Lists users with paginated search (Admin only)</summary>
@@ -108,15 +75,14 @@ namespace ei_back.UserInterface.Api
         ///   - sortDirection (string): "asc" or "desc"
         ///   - pageSize (int): results per page
         ///   - page (int): page number (1-based)
-        ///   - name (string?, optional): filters results by username
+        ///   - name (string?, optional): filters results by email
         ///
         /// Response 200 (PagedSearchDto&lt;UserGetDtoResponse&gt;):
         ///   - CurrentPage (int)
         ///   - PageSize (int)
         ///   - TotalResults (int)
         ///   - SortDirection (string)
-        ///   - Items (UserGetDtoResponse[]): array of users with Id, UserName,
-        ///     FullName, Email
+        ///   - Items (UserGetDtoResponse[]): users with Id and Email
         ///
         /// Response 400: Invalid sort direction, page size, or page number.
         /// Sort direction defaults to "desc" if not "asc".
@@ -171,10 +137,7 @@ namespace ei_back.UserInterface.Api
         [Authorize(Roles = "Admin, CommonUser, PremiumUser")]
         public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
-            var requesterIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (string.IsNullOrEmpty(requesterIdClaim) || !Guid.TryParse(requesterIdClaim, out var requesterId))
-                return Forbid();
+            var requesterId = _getUserIdUseCase.Handler(User);
 
             var isAdmin = User.IsInRole("Admin");
 

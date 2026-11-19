@@ -20,12 +20,13 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     const snackbar = inject(SnackbarService);
     const storage = inject(LOCAL_STORAGE);
     const isRefresh = /\/api\/user\/auth\/refresh(?:\?|$)/i.test(req.url);
+    const isGoogleProof = /\/api\/user\/auth\/(?:google(?:\/(?:challenge|link))?|password)(?:\?|$)/i.test(req.url);
     const token = auth.getAuthToken();
     const request = token && !isRefresh
         ? req.clone({ setHeaders: { Authorization: 'Bearer ' + token } }) : req;
 
     return next(request).pipe(catchError((error: HttpErrorResponse) => {
-        if (error.status !== 401 || isRefresh) return throwError(() => error);
+        if (error.status !== 401 || isRefresh || isGoogleProof) return throwError(() => error);
         let pending = refreshes.get(auth);
         if (!pending) {
             pending = (async () => {

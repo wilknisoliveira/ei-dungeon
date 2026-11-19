@@ -20,10 +20,10 @@ namespace ei_back.Core.Application.UseCase.Game
             _userRepository = userRepository;
         }
 
-        public async Task<PagedSearchDto<GameDtoResponse>> Handler(string sortDirection, int pageSize, int page, string userName, CancellationToken cancellationToken)
+        public async Task<PagedSearchDto<GameDtoResponse>> Handler(string sortDirection, int pageSize, int page, Guid userId, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.FindByUserName(userName) ??
-                throw new NotFoundException($"No user found to user name {userName}.");
+            var user = await _userRepository.FindByIdAsync(userId, cancellationToken) ??
+                throw new NotFoundException($"No user found to user ID {userId}.");
 
             var sort = PaginationHelper.ValidateSort(sortDirection);
             var size = PaginationHelper.ValidateSize(pageSize);

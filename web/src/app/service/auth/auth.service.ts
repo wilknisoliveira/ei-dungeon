@@ -1,4 +1,5 @@
-import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
+import { CurrentAccount } from 'src/app/types/auth/google-auth';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { UserLogin } from 'src/app/types/auth/user-login';
 import { BehaviorSubject, Observable, lastValueFrom, tap } from 'rxjs';
@@ -6,7 +7,6 @@ import { TokenObject } from 'src/app/types/auth/token-object';
 import { environment } from 'src/environments/environment';
 import { jwtDecode } from 'jwt-decode';
 import { UserSignUp } from 'src/app/types/auth/user-signup';
-import { UserInfoCheckResponse } from 'src/app/types/auth/user-info-check-response';
 import { PUBLIC_AUTH, EmailRequest, EmailConfirmation, RecoveryConfirmation, RegistrationResponse } from 'src/app/types/auth/email-auth';
 import { LOCAL_STORAGE } from 'src/app/core/storage/app-storage';
 
@@ -158,28 +158,21 @@ export class AuthService {
         return lastValueFrom(result$);
     }
 
-    async checkAvailability(username?: string, email?: string): Promise<UserInfoCheckResponse> {
-        let params = new HttpParams();
-        if (username) params = params.set('username', username);
-        if (email) params = params.set('email', email);
-        const result$ = this.http.get<UserInfoCheckResponse>(
-            `${this.baseUrl}/api/user/check-userinfo`,
-            { params }
-        );
-        return lastValueFrom(result$);
-    }
-
-    getUserInfo(): { id: string; username: string; role: string; fullName: string; email: string } | null {
+    getUserInfo(): { id: string; role: string; email: string } | null {
         const token = this.getAuthToken();
         if (!token) return null;
         const decoded: any = jwtDecode(token);
         return {
             id: decoded.sub || '',
-            username: decoded.unique_name || decoded.sub || '',
             role: this.getRole(),
-            fullName: decoded.fullName || '',
             email: decoded.email || '',
         };
+    }
+
+    async getAccount(): Promise<CurrentAccount> {
+        return lastValueFrom(this.http.get<CurrentAccount>(
+            `${this.baseUrl}/api/user/auth/account`
+        ));
     }
 
     setTokens(tokenObject: TokenObject): void {

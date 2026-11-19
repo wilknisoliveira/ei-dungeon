@@ -27,7 +27,7 @@ namespace ei_back.Core.Application.UseCase.Play
 
         public async IAsyncEnumerable<StreamPlayDtoResponse> Handler(
             PlayDtoRequest playDtoRequest,
-            string userName,
+            Guid userId,
             [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             yield return new StreamPlayDtoResponse { EventType = EventType.Start };

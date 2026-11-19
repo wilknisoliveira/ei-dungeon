@@ -1,3 +1,6 @@
+using ei_back.Infrastructure.Authentication;
+using ei_back.Core.Application.Service.Auth;
+using ei_back.Core.Application.Service.Auth.Interfaces;
 using Resend;
 using ei_back.Core.Application.Service.Email;
 using ei_back.Core.Application.Service.Verification;
@@ -18,6 +21,8 @@ using ei_back.Core.Application.UseCase.Play;
 using ei_back.Core.Application.UseCase.Play.Interfaces;
 using ei_back.Core.Application.UseCase.Role;
 using ei_back.Core.Application.UseCase.Role.Interfaces;
+using ei_back.Core.Application.UseCase.GoogleAuth;
+using ei_back.Core.Application.UseCase.GoogleAuth.Interfaces;
 using ei_back.Core.Application.UseCase.User;
 using ei_back.Core.Application.UseCase.User.Interfaces;
 using ei_back.Infrastructure.Context;
@@ -40,6 +45,8 @@ namespace ei_back.Infrastructure.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IVerificationCodeRepository, VerificationCodeRepository>();
+            services.AddScoped<IExternalIdentityRepository, ExternalIdentityRepository>();
+            services.AddScoped<IGoogleAuthChallengeRepository, GoogleAuthChallengeRepository>();
 
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
@@ -52,6 +59,8 @@ namespace ei_back.Infrastructure.Extensions
 
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
+            services.AddOptions<GoogleAuthOptions>().BindConfiguration("GoogleAuth");
+            services.AddScoped<IGoogleIdentityVerifier, GoogleIdentityVerifier>();
             services.AddOptions<VerificationCodeOptions>()
                 .BindConfiguration("VerificationCode")
                 .Validate(o => System.Text.Encoding.UTF8.GetByteCount(o.HashKey) >= 32,
@@ -69,6 +78,8 @@ namespace ei_back.Infrastructure.Extensions
             services.AddScoped<IVerificationEmailComposer, VerificationEmailComposer>();
             services.AddScoped<IEmailSender, ResendEmailSender>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IApplicationSessionService, ApplicationSessionService>();
+            services.AddScoped<IGoogleAuthFlowService, GoogleAuthFlowService>();
             services.AddScoped<IEncryptionService, EncryptionService>();
             services.AddScoped<IGeneratePlaysSummaryService, GeneratePlaysSummaryService>();
             services.AddScoped<IInitialMasterPlayService, InitialMasterPlayService>();
@@ -85,14 +96,18 @@ namespace ei_back.Infrastructure.Extensions
             services.AddScoped<IRequestEmailVerificationUseCase, RequestEmailVerificationUseCase>();
             services.AddScoped<IConfirmEmailVerificationUseCase, ConfirmEmailVerificationUseCase>();
             services.AddScoped<ICreateUserUseCase, CreateUserUseCase>();
+            services.AddScoped<IIssueGoogleChallengeUseCase, IssueGoogleChallengeUseCase>();
+            services.AddScoped<IGoogleSigninUseCase, GoogleSigninUseCase>();
+            services.AddScoped<ILinkGoogleUseCase, LinkGoogleUseCase>();
+            services.AddScoped<ICreatePasswordUseCase, CreatePasswordUseCase>();
+            services.AddScoped<IGetCurrentAccountUseCase, GetCurrentAccountUseCase>();
             services.AddScoped<IGetUserUseCase, GetUserUseCase>();
-            services.AddScoped<ICheckUserInfoUseCase, CheckUserInfoUseCase>();
             services.AddScoped<ISignInUseCase, SigninUseCase>();
             services.AddScoped<IRefreshTokenUseCase, RefreshTokenUseCase>();
             services.AddScoped<ILogoutUseCase, LogoutUseCase>();
             services.AddScoped<IChangePasswordUseCase, ChangePasswordUseCase>();
             services.AddScoped<IDeleteUserUseCase, DeleteUserUseCase>();
-            services.AddScoped<IGetUserNameUseCase, GetUserNameUseCase>();
+            services.AddScoped<IGetUserIdUseCase, GetUserIdUseCase>();
             services.AddScoped<IApplyRolesUseCase, ApplyRolesUseCase>();
             services.AddScoped<IGetAllRoleUseCase, GetAllRoleUseCase>();
             services.AddScoped<ICreateGameUseCase, CreateGameUseCase>();
@@ -176,17 +191,6 @@ namespace ei_back.Infrastructure.Extensions
                         factory: _ => new SlidingWindowRateLimiterOptions
                         {
                             PermitLimit = 10,
-                            Window = TimeSpan.FromMinutes(1),
-                            SegmentsPerWindow = 6,
-                            QueueLimit = 0
-                        }));
-
-                options.AddPolicy("UsernameCheck", context =>
-                    RateLimitPartition.GetSlidingWindowLimiter(
-                        partitionKey: GetClientIp(context),
-                        factory: _ => new SlidingWindowRateLimiterOptions
-                        {
-                            PermitLimit = 20,
                             Window = TimeSpan.FromMinutes(1),
                             SegmentsPerWindow = 6,
                             QueueLimit = 0

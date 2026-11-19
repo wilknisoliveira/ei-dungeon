@@ -26,10 +26,10 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
             var game = new GameEntity(userId, "Test Game");
             typeof(ei_back.Core.Domain.Entity.Base).GetProperty(nameof(ei_back.Core.Domain.Entity.Base.Id))!.SetValue(game, gameId);
 
-            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerUserName(gameId, "testuser", CancellationToken.None))
+            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerId(gameId, Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Returns(Task.FromResult<GameEntity?>(game));
 
-            var result = await _useCase.Handler(gameId, "testuser", CancellationToken.None);
+            var result = await _useCase.Handler(gameId, Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None);
 
             result.Should().NotBeNull();
             result.Id.Should().Be(gameId);
@@ -42,10 +42,10 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
         {
             var gameId = Guid.NewGuid();
 
-            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerUserName(gameId, "unknown", CancellationToken.None))
+            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerId(gameId, Guid.Parse("22222222-2222-2222-2222-222222222222"), CancellationToken.None))
                 .Returns(Task.FromResult<GameEntity?>(null));
 
-            await _useCase.Invoking(x => x.Handler(gameId, "unknown", CancellationToken.None))
+            await _useCase.Invoking(x => x.Handler(gameId, Guid.Parse("22222222-2222-2222-2222-222222222222"), CancellationToken.None))
                 .Should().ThrowAsync<NotFoundException>();
         }
     }

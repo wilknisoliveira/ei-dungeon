@@ -4,5 +4,5 @@ namespace ei_back.Core.Application.UseCase.Game.Interfaces;
 
 public interface IGetGameByIdAndUserUseCase
 {
-    Task<GameDtoResponse> Handler(Guid gameId, string userName, CancellationToken cancellationToken);
+    Task<GameDtoResponse> Handler(Guid gameId, Guid userId, CancellationToken cancellationToken);
 }

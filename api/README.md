@@ -199,3 +199,13 @@ dotnet user-secrets set "Resend:From" "EI Dungeon <noreply@your-domain.com>" --p
 ```
 
 The sender/domain must be allowed by Resend; see [Resend's .NET setup](https://resend.com/docs/send-with-dotnet). API acceptance does not guarantee inbox delivery. Messages are localized using the request culture (frontend header Accept-Language: en, pt-BR or es), defaulting to English; the expiration wording comes from the issued code lifetime. Delivery failures do not undo registration or expose account existence through request responses. No automatic resend worker or delivery webhook is included.
+
+## Google authentication and account identity
+
+Local registration and sign-in use email. FullName and UserName are removed from active contracts and storage. JWT subjects and authorized game operations use the existing internal user GUID. The external Google subject is associated with that GUID. New Google users with authoritative verified email enter directly. Existing email requires explicit same-email linking from authenticated Settings. Other new addresses use traditional registration and email confirmation.
+
+Configure the public web client ID with GoogleAuth:ClientId in User Secrets or GoogleAuth__ClientId at runtime. Local Compose maps GOOGLE_CLIENT_ID from its environment. A missing value disables Google operations and preserves local credential access. Frontend and API must agree on the Client ID. See the [Google setup tutorial](docs/google-auth-setup.md) and [frontend integration conventions](../web/README.md#google-sign-in-and-simpler-registration). HTTP contracts are defined by controller actions, DTOs and Swagger.
+
+Password recovery applies only to verified accounts that already have a local password. Google-only users create their first password in authenticated Settings with a fresh linked-Google proof. New Google operations own their UnitOfWork transaction and do not receive a second controller commit.
+
+The SimplifyUserIdentityAndAddGoogleAuth migration drops the two profile columns and supports password-less local credential state. Back up before rollout and coordinate API/web versions. Old API images cannot query the new schema. The migration refuses schema-only rollback because removed usernames/full names cannot be reconstructed. Follow the Dungeon production runbook for backup-based recovery.

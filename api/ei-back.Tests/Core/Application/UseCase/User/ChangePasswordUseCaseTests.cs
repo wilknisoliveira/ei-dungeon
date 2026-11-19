@@ -30,26 +30,26 @@ namespace ei_back.Tests.Core.Application.UseCase.User
         {
             var request = new PasswordDtoRequest { CurrentPassword = "old", NewPassword = "new" };
 
-            A.CallTo(() => _userRepository.FindByUserName("unknown", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByIdAsync(Guid.Parse("22222222-2222-2222-2222-222222222222"), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(null));
 
-            Func<Task> act = () => _useCase.Handler("unknown", request);
+            Func<Task> act = () => _useCase.Handler(Guid.Parse("22222222-2222-2222-2222-222222222222"), request);
 
-            await act.Should().ThrowAsync<NotFoundException>().WithMessage("*unknown*");
+            await act.Should().ThrowAsync<NotFoundException>().WithMessage("*22222222*");
         }
 
         [Fact]
         public async Task Handler_WhenCurrentPasswordIsWrong_ThrowsBadRequestException()
         {
             var request = new PasswordDtoRequest { CurrentPassword = "wrong", NewPassword = "new" };
-            var user = new UserEntity("testuser", "Test", "t@t.com", "$2a$11$somehash", UserRole.CommonUser);
+            var user = new UserEntity("t@t.com", "$2a$11$somehash", UserRole.CommonUser);
 
-            A.CallTo(() => _userRepository.FindByUserName("testuser", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByIdAsync(Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(user));
             A.CallTo(() => _encryptionService.VerifyBcryptHash("wrong", user.Password))
                 .Returns(false);
 
-            Func<Task> act = () => _useCase.Handler("testuser", request);
+            Func<Task> act = () => _useCase.Handler(Guid.Parse("11111111-1111-1111-1111-111111111111"), request);
 
             await act.Should().ThrowAsync<BadRequestException>().WithMessage("Wrong password!");
         }
@@ -58,10 +58,10 @@ namespace ei_back.Tests.Core.Application.UseCase.User
         public async Task Handler_WhenBcryptPasswordValid_UpdatesAndReturnsUser()
         {
             var request = new PasswordDtoRequest { CurrentPassword = "old", NewPassword = "new" };
-            var user = new UserEntity("testuser", "Test", "t@t.com", "$2a$11$somehash", UserRole.CommonUser);
-            var response = new UserGetDtoResponse { Id = Guid.NewGuid(), UserName = "testuser", FullName = "Test", Email = "t@t.com" };
+            var user = new UserEntity("t@t.com", "$2a$11$somehash", UserRole.CommonUser);
+            var response = new UserGetDtoResponse { Id = Guid.NewGuid(), Email = "t@t.com" };
 
-            A.CallTo(() => _userRepository.FindByUserName("testuser", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByIdAsync(Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(user));
             A.CallTo(() => _encryptionService.VerifyBcryptHash("old", user.Password))
                 .Returns(true);
@@ -72,7 +72,7 @@ namespace ei_back.Tests.Core.Application.UseCase.User
             A.CallTo(() => _mapper.Map<UserGetDtoResponse>(user))
                 .Returns(response);
 
-            var result = await _useCase.Handler("testuser", request);
+            var result = await _useCase.Handler(Guid.Parse("11111111-1111-1111-1111-111111111111"), request);
 
             result.Should().Be(response);
             user.Password.Should().Be("$2a$11$newhash");
@@ -82,10 +82,10 @@ namespace ei_back.Tests.Core.Application.UseCase.User
         public async Task Handler_WhenSha256PasswordValid_UpdatesAndReturnsUser()
         {
             var request = new PasswordDtoRequest { CurrentPassword = "old", NewPassword = "new" };
-            var user = new UserEntity("testuser", "Test", "t@t.com", "OLD-SHA256-HASH", UserRole.CommonUser);
-            var response = new UserGetDtoResponse { Id = Guid.NewGuid(), UserName = "testuser", FullName = "Test", Email = "t@t.com" };
+            var user = new UserEntity("t@t.com", "OLD-SHA256-HASH", UserRole.CommonUser);
+            var response = new UserGetDtoResponse { Id = Guid.NewGuid(), Email = "t@t.com" };
 
-            A.CallTo(() => _userRepository.FindByUserName("testuser", CancellationToken.None))
+            A.CallTo(() => _userRepository.FindByIdAsync(Guid.Parse("11111111-1111-1111-1111-111111111111"), CancellationToken.None))
                 .Returns(Task.FromResult<UserEntity?>(user));
             A.CallTo(() => _encryptionService.ComputeSha256("old"))
                 .Returns("OLD-SHA256-HASH");
@@ -96,7 +96,7 @@ namespace ei_back.Tests.Core.Application.UseCase.User
             A.CallTo(() => _mapper.Map<UserGetDtoResponse>(user))
                 .Returns(response);
 
-            var result = await _useCase.Handler("testuser", request);
+            var result = await _useCase.Handler(Guid.Parse("11111111-1111-1111-1111-111111111111"), request);
 
             result.Should().Be(response);
             user.Password.Should().Be("$2a$11$newhash");

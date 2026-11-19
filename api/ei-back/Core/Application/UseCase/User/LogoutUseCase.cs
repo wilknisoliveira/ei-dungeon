@@ -21,17 +21,17 @@ namespace ei_back.Core.Application.UseCase.User
             _encryptionService = encryptionService;
         }
 
-        public void Handler(string userName, string? refreshToken)
+        public async Task Handler(Guid userId, string? refreshToken, CancellationToken cancellationToken = default)
         {
-            var user = _userRepository.FindByUserName(userName).Result;
+            var user = await _userRepository.FindByIdAsync(userId, cancellationToken);
             if (user == null)
-                throw new NotFoundException($"User '{userName}' not found.");
+                throw new NotFoundException($"User '{userId}' not found.");
 
             if (!string.IsNullOrEmpty(refreshToken))
             {
                 var tokenHash = _encryptionService.ComputeSha256Hash(refreshToken);
-                var storedToken = _refreshTokenRepository.FindByTokenHash(tokenHash).Result;
-                if (storedToken != null)
+                var storedToken = await _refreshTokenRepository.FindByTokenHash(tokenHash, cancellationToken);
+                if (storedToken != null && storedToken.UserId == user.Id)
                     _refreshTokenRepository.Delete(storedToken.Id);
             }
             else

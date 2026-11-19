@@ -15,8 +15,7 @@ namespace ei_back.Tests.Core.Application.UseCase.User;
 
 public class PasswordRecoveryUseCaseTests
 {
-    private static UserEntity User(bool verified = true) => new(Guid.NewGuid().ToString("N"), "Recovery Test",
-        $"{Guid.NewGuid():N}@example.com", BCrypt.Net.BCrypt.HashPassword("old-password"), UserRole.CommonUser)
+    private static UserEntity User(bool verified = true) => new($"{Guid.NewGuid():N}@example.com", BCrypt.Net.BCrypt.HashPassword("old-password"), UserRole.CommonUser)
     {
         Id = Guid.NewGuid(), EmailVerifiedAt = verified ? DateTimeOffset.UtcNow : null,
         CreatedAt = DateTimeOffset.UtcNow, UpdatedAt = DateTimeOffset.UtcNow
@@ -107,5 +106,28 @@ public class PasswordRecoveryUseCaseTests
         await request.Handler(new() { Email = $"{Guid.NewGuid():N}@example.com" });
         (await db.VerificationCodes.CountAsync(x => x.UserId == user.Id)).Should().Be(0);
         A.CallTo(() => sender.SendAsync(A<OutgoingEmail>._, A<CancellationToken>._)).MustNotHaveHappened();
+    }
+
+    [VerificationDatabaseFact]
+    public async Task Recovery_GoogleOnlyAccount_DoesNotIssueCodeOrEstablishFirstPassword()
+    {
+        var user = User();
+        user.Password = null;
+        user.NormalizedEmail = user.Email.ToUpperInvariant();
+        await using var db = VerificationTestSupport.Open();
+        db.Users.Add(user);
+        await db.SaveChangesAsync();
+        var sender = A.Fake<IEmailSender>();
+        var flow = VerificationTestSupport.Flow(db, sender);
+        await flow.RequestAsync(user.Email, VerificationCodePurpose.PasswordRecovery);
+        (await db.VerificationCodes.AnyAsync(x => x.UserId == user.Id)).Should().BeFalse();
+        FakeItEasy.Fake.GetCalls(sender).Should().BeEmpty();
+        // Simulate a previously issued challenge to ensure confirmation rechecks account capabilities.
+        var delivery = await flow.PrepareAsync(user, VerificationCodePurpose.PasswordRecovery);
+        await db.SaveChangesAsync();
+        var confirm = new ConfirmPasswordRecoveryUseCase(flow, new EncryptionService(), new RefreshTokenRepository(db));
+        (await confirm.Handler(new() { Email = user.Email, Code = delivery!.Code, NewPassword = "new-password" }))
+            .Should().Be(CodeConfirmationResult.Invalid);
+        (await db.Users.AsNoTracking().SingleAsync(x => x.Id == user.Id)).Password.Should().BeNull();
     }
 }

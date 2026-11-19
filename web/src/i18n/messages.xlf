@@ -31,7 +31,7 @@
         <source>Session expired. Please log in again.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/http-interceptors/auth-interceptor.ts</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="appWordmark" datatype="html">
@@ -80,8 +80,8 @@
           <context context-type="linenumber">16,18</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="usernameLabel" datatype="html">
-        <source>Username</source>
+      <trans-unit id="emailLabel" datatype="html">
+        <source>Email</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/auth/auth.component.html</context>
           <context context-type="linenumber">20,21</context>
@@ -89,6 +89,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
           <context context-type="linenumber">67,68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">20,21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="passwordLabel" datatype="html">
@@ -112,36 +116,58 @@
           <context context-type="linenumber">49,50</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="googleGoToSignup" datatype="html">
+        <source>Go to registration</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/auth/auth.component.html</context>
+          <context context-type="linenumber">55,56</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">79,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="googleGoToLogin" datatype="html">
+        <source>Sign in to your existing account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/auth/auth.component.html</context>
+          <context context-type="linenumber">56,58</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">80,82</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="noAccountPrompt" datatype="html">
         <source>Don&apos;t have an account?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/auth/auth.component.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="signUpLink" datatype="html">
         <source>Sign Up Now</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/auth/auth.component.html</context>
-          <context context-type="linenumber">56,58</context>
+          <context context-type="linenumber">59,61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="loginInvalidCredentials" datatype="html">
-        <source>Invalid username or password.</source>
+        <source>Invalid email or password.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/auth/auth.component.ts</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="emailAuthThrottled" datatype="html">
         <source>Too many requests. Please wait before trying again.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/auth/auth.component.ts</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">90</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="verifyEmailTitle" datatype="html">
@@ -258,7 +284,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.html</context>
-          <context context-type="linenumber">24,27</context>
+          <context context-type="linenumber">26,29</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.html</context>
@@ -281,7 +307,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="emailAuthCodeError" datatype="html">
@@ -296,7 +322,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="emailVerifiedSuccess" datatype="html">
@@ -331,11 +357,25 @@
           <context context-type="linenumber">65,66</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="googleRecoveryReminder" datatype="html">
+        <source>If you usually sign in with Google, use Continue with Google.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="googleContinueFromRecovery" datatype="html">
+        <source>Continue with Google</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="emailAuthHaveRecoveryCode" datatype="html">
         <source>I already have a recovery code</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.html</context>
-          <context context-type="linenumber">23,24</context>
+          <context context-type="linenumber">25,26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="gameOptionsTooltip" datatype="html">
@@ -1347,7 +1387,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="passwordRecoverySuccess" datatype="html">
@@ -1394,110 +1434,209 @@
           <context context-type="linenumber">65,66</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="fullNameLabel" datatype="html">
-        <source>Full Name</source>
+      <trans-unit id="roleLabel" datatype="html">
+        <source>Role</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
           <context context-type="linenumber">71,72</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="emailLabel" datatype="html">
-        <source>Email</source>
+      <trans-unit id="googleAccountHeading" datatype="html">
+        <source>Google Account</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">75,76</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">69,70</context>
+          <context context-type="linenumber">78,79</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="roleLabel" datatype="html">
-        <source>Role</source>
+      <trans-unit id="googleAccountConnected" datatype="html">
+        <source>Your Google Account is linked.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">79,80</context>
+          <context context-type="linenumber">80,81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="googleLinkExplanation" datatype="html">
+        <source>Link the Google Account with this email to sign in with Google.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">82,83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dangerZoneHeading" datatype="html">
         <source>Danger Zone</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">85,86</context>
+          <context context-type="linenumber">88,89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="deleteAccountWarning" datatype="html">
         <source>Permanently delete your account and all associated data. This action cannot be undone.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">86,87</context>
+          <context context-type="linenumber">89,90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="deleteAccountButton" datatype="html">
         <source> Delete Account </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">93,94</context>
+          <context context-type="linenumber">96,97</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="changePasswordHeading" datatype="html">
-        <source>Change Password</source>
+      <trans-unit id="createPasswordHeading" datatype="html">
+        <source>Create password</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">103,104</context>
+          <context context-type="linenumber">107,108</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="currentPasswordLabel" datatype="html">
-        <source>Current Password</source>
+      <trans-unit id="createPasswordExplanation" datatype="html">
+        <source>You sign in with Google. Confirm your Google Account to create a password and also sign in with your email.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">109,110</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="currentPasswordRequiredError" datatype="html">
-        <source> Current password is required </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">123,124</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="passwordMinLengthError" datatype="html">
-        <source> Minimum 4 characters </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">133</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">162</context>
+          <context context-type="linenumber">108,109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="newPasswordLabel" datatype="html">
         <source>New Password</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">138,139</context>
+          <context context-type="linenumber">114,115</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">166,167</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="newLocalPasswordHint" datatype="html">
+        <source>Use 8–50 characters.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">116,117</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="confirmPasswordLabel" datatype="html">
+        <source>Confirm password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">119,120</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="passwordMismatch" datatype="html">
+        <source>Passwords must match.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">123,124</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
+          <context context-type="linenumber">63,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createPasswordButton" datatype="html">
+        <source>Create password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">125,126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="changePasswordHeading" datatype="html">
+        <source>Change Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">131,133</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="currentPasswordLabel" datatype="html">
+        <source>Current Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">137,138</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="currentPasswordRequiredError" datatype="html">
+        <source> Current password is required </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">151,152</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="passwordMinLengthError" datatype="html">
+        <source> Minimum 4 characters </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">161,162</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
+          <context context-type="linenumber">190,191</context>
         </context-group>
       </trans-unit>
       <trans-unit id="newPasswordRequiredError" datatype="html">
         <source> New password is required </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">152,153</context>
+          <context context-type="linenumber">180,181</context>
         </context-group>
       </trans-unit>
       <trans-unit id="changePasswordButton" datatype="html">
         <source> Change Password </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">175</context>
+          <context context-type="linenumber">203</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accountLoadFailed" datatype="html">
+        <source>Could not load account settings. Please reload the page.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.ts</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="googleLinkedSuccess" datatype="html">
+        <source>Google Account linked successfully.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.ts</context>
+          <context context-type="linenumber">117</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="passwordCreated" datatype="html">
+        <source>Password created. You can now also sign in with email and password.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.ts</context>
+          <context context-type="linenumber">132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="passwordChangedSuccess" datatype="html">
+        <source>Password changed successfully.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.ts</context>
+          <context context-type="linenumber">158</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="currentPasswordIncorrect" datatype="html">
+        <source>Current password is incorrect.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.ts</context>
+          <context context-type="linenumber">162</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settingsFailure" datatype="html">
+        <source>Something went wrong. Please try again.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/settings/settings.component.ts</context>
+          <context context-type="linenumber">164</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6472107528361453618" datatype="html">
         <source>Are you sure you want to delete your account? This action is irreversible and all your data will be permanently lost.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.ts</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">175</context>
         </context-group>
       </trans-unit>
       <trans-unit id="signupDescription" datatype="html">
@@ -1507,204 +1646,165 @@
           <context context-type="linenumber">16,18</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="signupUsernameLabel" datatype="html">
-        <source>Username</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">20,21</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="usernameRequiredError" datatype="html">
-        <source> Username is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">27,28</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="usernameMinLengthError" datatype="html">
-        <source> Minimum 4 characters </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">30,31</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="usernameMaxLengthError" datatype="html">
-        <source> Maximum 20 characters </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">33,34</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="usernameTakenError" datatype="html">
-        <source> Username is already taken </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">41,42</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="checkingAvailability" datatype="html">
-        <source> Checking availability... </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">48,49</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">102,103</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="fullnameLabel" datatype="html">
-        <source>Fullname</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">52,53</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="fullnameRequiredError" datatype="html">
-        <source> Fullname is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">58,59</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="fullnameMinLengthError" datatype="html">
-        <source> Minimum 4 characters </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">61,62</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="fullnameMaxLengthError" datatype="html">
-        <source> Maximum 50 characters </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">64,65</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="emailInvalidError" datatype="html">
         <source>Please enter a valid email address</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">83,84</context>
+          <context context-type="linenumber">33,34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="emailRequiredError" datatype="html">
         <source>Email is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">86,87</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="emailTakenError" datatype="html">
-        <source> Email is already registered </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">95,96</context>
+          <context context-type="linenumber">36,37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="signupPasswordLabel" datatype="html">
         <source>Enter your password</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">106,107</context>
+          <context context-type="linenumber">41,42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="passwordRequiredError" datatype="html">
         <source> Password is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">113,114</context>
+          <context context-type="linenumber">48,49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="signupPasswordMinLengthError" datatype="html">
         <source> Minimum 8 characters </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">116,117</context>
+          <context context-type="linenumber">51,52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="passwordMaxLengthError" datatype="html">
         <source> Maximum 50 characters </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">119,120</context>
+          <context context-type="linenumber">54,55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="signupButton" datatype="html">
         <source> Sign Up </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">131,132</context>
+          <context context-type="linenumber">73,74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="alreadyHaveAccountPrompt" datatype="html">
         <source>Do you already have an account?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">138,139</context>
+          <context context-type="linenumber">83,84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="signInLink" datatype="html">
         <source>Sign In Now</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/signup/signup.component.html</context>
-          <context context-type="linenumber">139,141</context>
+          <context context-type="linenumber">84,86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="registrationFailure" datatype="html">
         <source>Could not create your account. Check your registration details and try again.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/signup/signup.component.ts</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="verificationAcknowledgement" datatype="html">
         <source>If this account needs verification, a code will be sent. Check your inbox and spam folder.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="recoveryAcknowledgement" datatype="html">
-        <source>If a verified account exists for this email, a recovery code will be sent. Check your inbox and spam folder.</source>
+        <source>If an eligible account with a password exists for this email, a recovery code will be sent. Check your inbox and spam folder.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="emailAuthUncertain" datatype="html">
         <source>We could not confirm the result. Try logging in, or request another code if needed.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="emailAuthNetwork" datatype="html">
         <source>Connection lost. Check your connection before requesting another code.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="emailAuthInvalidCode" datatype="html">
         <source>This code could not be confirmed. Check your email and code, or request another code.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="emailAuthCheckFields" datatype="html">
         <source>Check the highlighted fields and try again.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="emailAuthFailure" datatype="html">
         <source>Something went wrong. Please try again.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="googleRegistrationRequired" datatype="html">
+        <source>To use this email address, complete traditional registration and verify your email. You can then link Google in Settings.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/google-auth.service.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="googleLinkRequired" datatype="html">
+        <source>Sign in to your existing account, then link Google in Settings.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/google-auth.service.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="googleEmailMismatch" datatype="html">
+        <source>Select the Google Account with the same email as your EI Dungeon account.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/google-auth.service.ts</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="googleLinkConflict" datatype="html">
+        <source>This Google Account could not be linked. Check your connected account and try again.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/google-auth.service.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="passwordAlreadyExists" datatype="html">
+        <source>A password is already configured. Reload Settings to change it.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/google-auth.service.ts</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="googleAuthFailed" datatype="html">
+        <source>Google sign-in could not be completed. Please try again or use email and password.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/service/auth/google-auth.service.ts</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="confirmDialogYes" datatype="html">
@@ -1719,6 +1819,20 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/confirmation-dialog/confirmation-dialog.component.html</context>
           <context context-type="linenumber">6,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="authAlternativeOr" datatype="html">
+        <source>or</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/google-signin-button/google-signin-button.component.html</context>
+          <context context-type="linenumber">4,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="googleRetry" datatype="html">
+        <source>Try Google again</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/google-signin-button/google-signin-button.component.html</context>
+          <context context-type="linenumber">11,13</context>
         </context-group>
       </trans-unit>
     </body>

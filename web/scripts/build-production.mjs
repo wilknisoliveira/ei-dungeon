@@ -32,8 +32,13 @@ function normalizeSiteUrl(value) {
 
 let siteUrl;
 const apiDefines = [];
+const googleClientId = process.env.GOOGLE_CLIENT_ID?.trim() || "";
 try {
     siteUrl = normalizeSiteUrl(process.env.SITE_URL);
+    if (googleClientId && !/^[a-zA-Z0-9-]+\.apps\.googleusercontent\.com$/.test(googleClientId)) {
+        throw new Error("GOOGLE_CLIENT_ID must be a Google web OAuth client ID.");
+    }
+    apiDefines.push("--define", `GOOGLE_CLIENT_ID=${JSON.stringify(googleClientId)}`);
     if (process.env.API_URL) {
         const apiUrl = new URL(process.env.API_URL);
         const isLocal = ['localhost', '127.0.0.1', '[::1]'].includes(apiUrl.hostname);

@@ -35,7 +35,7 @@ namespace ei_back.UserInterface.Api
         ///
         /// Response 200 (RoleDtoResponse[]):
         ///   - Name (string): role name
-        ///   - Users (string[]): list of usernames assigned to this role
+        ///   - Users (string[]): list of email addresses assigned to this role
         ///
         /// No request body required.
         /// </remarks>
@@ -59,7 +59,6 @@ namespace ei_back.UserInterface.Api
         ///
         /// Response 200 (ApplyRoleDtoResponse):
         ///   - Id (Guid)
-        ///   - UserName (string)
         ///   - role (UserRole)
         ///
         /// Response 400: Invalid or missing request body.

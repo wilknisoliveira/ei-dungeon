@@ -17,10 +17,9 @@ describe('EmailAuthFlowService', () => {
         service = TestBed.inject(EmailAuthFlowService);
     });
     it('retains signup context and deadline through reload and email edits without secrets', () => {
-        service.registered('player', ' p@example.com ');
+        service.registered(' p@example.com ');
         const restored = create();
         expect(restored.context('verification').email).toBe('p@example.com');
-        expect(restored.context('verification').userName).toBe('player');
         expect(restored.remaining('verification')).toBe(60);
         restored.setEmail('verification', 'other@example.com');
         expect(restored.remaining('verification')).toBe(60);
@@ -28,12 +27,12 @@ describe('EmailAuthFlowService', () => {
         expect(values.get('email-auth-flow')).not.toContain('password');
         expect(values.get('email-auth-flow')).not.toContain('code');
     });
-    it('only reuses signup email for matching username', () => {
-        service.registered('player', 'p@example.com');
-        service.prepareVerification('player');
+    it('uses the submitted login email for verification', () => {
+        service.registered('p@example.com');
+        service.prepareVerification('p@example.com');
         expect(service.context('verification').email).toBe('p@example.com');
-        service.prepareVerification('someoneelse');
-        expect(service.context('verification').email).toBe('');
+        service.prepareVerification('other@example.com');
+        expect(service.context('verification').email).toBe('other@example.com');
     });
     it('shares request waits, preserves longer waits and does not block confirmation after signup', () => {
         service.requested('verification');
@@ -68,7 +67,7 @@ describe('EmailAuthFlowService', () => {
         expect(create().context('recovery').email).toBe('');
         const storage = TestBed.inject(SESSION_STORAGE);
         spyOn(storage, 'setItem').and.throwError('denied');
-        expect(() => service.registered('player', 'p@example.com')).not.toThrow();
+        expect(() => service.registered('p@example.com')).not.toThrow();
     });
     it('expires deadlines against absolute time', () => {
         service.requested('verification');

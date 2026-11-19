@@ -55,12 +55,12 @@ namespace ei_back.Tests.Core.Application.UseCase.Play
         {
             var gameId = Guid.NewGuid();
             var request = new PlayDtoRequest { GameId = gameId, Prompt = "I want to start playing" };
-            var userName = "testuser";
+            var userId = Guid.Parse("11111111-1111-1111-1111-111111111111");
             var cancellationToken = CancellationToken.None;
 
             var game = CreateGameWithPlayers(gameId);
 
-            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerUserName(gameId, userName, cancellationToken))
+            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerId(gameId, userId, cancellationToken))
                 .Returns(Task.FromResult(game));
             A.CallTo(() => _playRepository
                 .GetLastPlayByPlayTypeAndGameId(gameId, PlayType.Summary, cancellationToken))
@@ -77,7 +77,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Play
                 .Returns(Task.FromResult(2));
 
             var results = new List<StreamPlayDtoResponse>();
-            await foreach (var chunk in _useCase.Handler(request, userName, cancellationToken))
+            await foreach (var chunk in _useCase.Handler(request, userId, cancellationToken))
             {
                 results.Add(chunk);
             }
@@ -93,12 +93,12 @@ namespace ei_back.Tests.Core.Application.UseCase.Play
         {
             var gameId = Guid.NewGuid();
             var request = new PlayDtoRequest { GameId = gameId, Prompt = "Start" };
-            var userName = "testuser";
+            var userId = Guid.Parse("11111111-1111-1111-1111-111111111111");
             var cancellationToken = CancellationToken.None;
 
             var game = CreateGameWithPlayers(gameId);
 
-            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerUserName(gameId, userName, cancellationToken))
+            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerId(gameId, userId, cancellationToken))
                 .Returns(Task.FromResult(game));
             A.CallTo(() => _playRepository
                 .GetLastPlayByPlayTypeAndGameId(gameId, PlayType.Summary, cancellationToken))
@@ -112,7 +112,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Play
                 .Returns(serviceChunks);
 
             var results = new List<StreamPlayDtoResponse>();
-            await foreach (var chunk in _useCase.Handler(request, userName, cancellationToken))
+            await foreach (var chunk in _useCase.Handler(request, userId, cancellationToken))
             {
                 results.Add(chunk);
             }
@@ -125,12 +125,12 @@ namespace ei_back.Tests.Core.Application.UseCase.Play
         {
             var gameId = Guid.NewGuid();
             var request = new PlayDtoRequest { GameId = gameId, Prompt = "Start" };
-            var userName = "testuser";
+            var userId = Guid.Parse("11111111-1111-1111-1111-111111111111");
             var cancellationToken = CancellationToken.None;
 
             var game = CreateGameWithPlayers(gameId);
 
-            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerUserName(gameId, userName, cancellationToken))
+            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerId(gameId, userId, cancellationToken))
                 .Returns(Task.FromResult(game));
             A.CallTo(() => _playRepository
                 .GetLastPlayByPlayTypeAndGameId(gameId, PlayType.Summary, cancellationToken))
@@ -147,7 +147,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Play
                 .Returns(Task.FromResult(0));
 
             var results = new List<StreamPlayDtoResponse>();
-            await foreach (var chunk in _useCase.Handler(request, userName, cancellationToken))
+            await foreach (var chunk in _useCase.Handler(request, userId, cancellationToken))
             {
                 results.Add(chunk);
             }
@@ -160,13 +160,13 @@ namespace ei_back.Tests.Core.Application.UseCase.Play
         {
             var gameId = Guid.NewGuid();
             var request = new PlayDtoRequest { GameId = gameId, Prompt = "I attack the goblin" };
-            var userName = "testuser";
+            var userId = Guid.Parse("11111111-1111-1111-1111-111111111111");
             var cancellationToken = CancellationToken.None;
 
             var game = CreateGameWithPlayers(gameId);
             var systemSummary = new PlayEntity(game, PlayType.Summary, "summary");
 
-            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerUserName(gameId, userName, cancellationToken))
+            A.CallTo(() => _gameRepository.GetGameByIdAndOwnerId(gameId, userId, cancellationToken))
                 .Returns(Task.FromResult(game));
             A.CallTo(() => _playRepository
                 .GetLastPlayByPlayTypeAndGameId(gameId, PlayType.Summary, cancellationToken))
@@ -192,7 +192,7 @@ namespace ei_back.Tests.Core.Application.UseCase.Play
                 .Returns(Task.FromResult(2));
 
             var results = new List<StreamPlayDtoResponse>();
-            await foreach (var chunk in _useCase.Handler(request, userName, cancellationToken))
+            await foreach (var chunk in _useCase.Handler(request, userId, cancellationToken))
             {
                 results.Add(chunk);
             }

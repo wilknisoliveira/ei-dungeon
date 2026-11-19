@@ -1,3 +1,6 @@
+import { GoogleAuthService } from 'src/app/service/auth/google-auth.service';
+import { GoogleCredential } from 'src/app/types/auth/google-auth';
+import { GoogleSigninButtonComponent } from 'src/app/shared/google-signin-button/google-signin-button.component';
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +11,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EmailAuthFlowService } from 'src/app/service/auth/email-auth-flow.service';
 import { AuthService } from 'src/app/service/auth/auth.service';
-import { SnackbarService } from 'src/app/service/snackbar/snackbar.service';
 import { UserLogin } from 'src/app/types/auth/user-login';
 import { LoadingComponent } from 'src/app/shared/loading/loading.component';
 import { LanguageSelectorComponent } from 'src/app/shared/components/language-selector/language-selector.component';
@@ -16,6 +18,7 @@ import { ThemeToggleComponent } from 'src/app/shared/theme-toggle/theme-toggle.c
 @Component({
     standalone: true,
     imports: [
+        GoogleSigninButtonComponent,
         CommonModule,
         FormsModule,
         RouterModule,
@@ -31,12 +34,15 @@ import { ThemeToggleComponent } from 'src/app/shared/theme-toggle/theme-toggle.c
     styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent {
+    readonly google = inject(GoogleAuthService);
+    googleAction = '';
+
     private readonly flow = inject(EmailAuthFlowService);
     readonly error = signal('');
     private loginDeadline = 0;
     hide = signal(true);
     userLogin: UserLogin = {
-        userName: '',
+        email: '',
         password: '',
     };
 
@@ -45,11 +51,27 @@ export class AuthComponent {
     constructor(
         private authService: AuthService,
         private router: Router,
-        private snackBar: SnackbarService,
     ) {}
 
+    async onGoogle(credential: GoogleCredential): Promise<void> {
+        if (this.loading()) return;
+        this.loading.set(true);
+        this.googleAction = '';
+        try {
+            await this.google.signin(credential);
+            await this.router.navigate(['/home']);
+        } catch (error) {
+            this.error.set(this.google.message(error));
+            const code = error instanceof HttpErrorResponse ? error.error?.code : '';
+            this.googleAction = code === 'google_registration_required' ? 'signup' : code === 'google_link_required' ? 'login' : '';
+        } finally {
+            this.loading.set(false);
+        }
+    }
+
     async onSubmit() {
-        if (this.loading() || !this.userLogin.userName || !this.userLogin.password || this.loginDeadline > Date.now()) return;
+        this.userLogin.email = this.userLogin.email.trim();
+        if (this.loading() || !this.userLogin.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.userLogin.email) || !this.userLogin.password || this.loginDeadline > Date.now()) return;
         this.loading.set(true);
         this.error.set('');
         try {
@@ -57,11 +79,11 @@ export class AuthComponent {
             await this.router.navigate(['/home']);
         } catch (error) {
             if (error instanceof HttpErrorResponse && error.status === 403 && error.error?.code === 'email_verification_required') {
-                this.flow.prepareVerification(this.userLogin.userName);
+                this.flow.prepareVerification(this.userLogin.email);
                 this.userLogin.password = '';
                 await this.router.navigate(['/email-verification']);
             } else if (error instanceof HttpErrorResponse && error.status === 401) {
-                this.error.set($localize`:@@loginInvalidCredentials:Invalid username or password.`);
+                this.error.set($localize`:@@loginInvalidCredentials:Invalid email or password.`);
             } else if (error instanceof HttpErrorResponse && error.status === 429) {
                 const header = error.headers.get('Retry-After') || '';
                 this.loginDeadline = Date.now() + (/^\d+$/.test(header) && Number(header) > 0 && Number.isSafeInteger(Number(header)) ? Number(header) : 60) * 1000;

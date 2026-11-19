@@ -22,6 +22,49 @@ namespace ei_back.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.ExternalIdentity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id")
+                        .HasDefaultValueSql("uuid_generate_v4()");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Provider")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasColumnName("provider");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("subject");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Provider", "Subject")
+                        .IsUnique();
+
+                    b.HasIndex("UserId", "Provider")
+                        .IsUnique();
+
+                    b.ToTable("external_identities", (string)null);
+                });
+
             modelBuilder.Entity("ei_back.Core.Domain.Entity.Game", b =>
                 {
                     b.Property<Guid>("Id")
@@ -143,6 +186,59 @@ namespace ei_back.Infrastructure.Migrations
                     b.ToTable("game_infos", (string)null);
                 });
 
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.GoogleAuthChallenge", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id")
+                        .HasDefaultValueSql("uuid_generate_v4()");
+
+                    b.Property<string>("BrowserSecretHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("browser_secret_hash");
+
+                    b.Property<DateTimeOffset?>("ConsumedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("consumed_at");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTimeOffset>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("expires_at");
+
+                    b.Property<string>("NonceHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("nonce_hash");
+
+                    b.Property<int>("Purpose")
+                        .HasColumnType("integer")
+                        .HasColumnName("purpose");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExpiresAt");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("google_auth_challenges", (string)null);
+                });
+
             modelBuilder.Entity("ei_back.Core.Domain.Entity.Play", b =>
                 {
                     b.Property<Guid>("Id")
@@ -240,18 +336,12 @@ namespace ei_back.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("email_verified_at");
 
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("full_name");
-
                     b.Property<string>("NormalizedEmail")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("normalized_email");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("password");
 
@@ -263,17 +353,9 @@ namespace ei_back.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("user_name");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
-                        .IsUnique();
-
-                    b.HasIndex("UserName")
                         .IsUnique();
 
                     b.ToTable("users", (string)null);
@@ -337,6 +419,15 @@ namespace ei_back.Infrastructure.Migrations
                     b.ToTable("verification_codes", (string)null);
                 });
 
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.ExternalIdentity", b =>
+                {
+                    b.HasOne("ei_back.Core.Domain.Entity.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ei_back.Core.Domain.Entity.Game", b =>
                 {
                     b.HasOne("ei_back.Core.Domain.Entity.User", "OwnerUser")
@@ -346,6 +437,14 @@ namespace ei_back.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("OwnerUser");
+                });
+
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.GoogleAuthChallenge", b =>
+                {
+                    b.HasOne("ei_back.Core.Domain.Entity.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ei_back.Core.Domain.Entity.Play", b =>

@@ -39,20 +39,20 @@ describe('AuthComponent', () => {
         spyOn(auth, 'login').and.rejectWith(new HttpErrorResponse({ status: 403, error: { code: 'email_verification_required' } }));
         const router = TestBed.inject(Router);
         spyOn(router, 'navigate').and.resolveTo(true);
-        component.userLogin = { userName: 'player', password: 'password' };
+        component.userLogin = { email: 'player@example.com', password: 'password' };
         await component.onSubmit();
         expect(router.navigate).toHaveBeenCalledWith(['/email-verification']);
-        expect(TestBed.inject(EmailAuthFlowService).context('verification').email).toBe('');
+        expect(TestBed.inject(EmailAuthFlowService).context('verification').email).toBe('player@example.com');
         expect(component.userLogin.password).toBe('');
     });
     it('keeps incorrect credentials on login with localized error', async () => {
         spyOn(TestBed.inject(AuthService), 'login').and.rejectWith(new HttpErrorResponse({ status: 401 }));
         const router = TestBed.inject(Router);
         spyOn(router, 'navigate').and.resolveTo(true);
-        component.userLogin = { userName: 'player', password: 'wrong' };
+        component.userLogin = { email: 'player@example.com', password: 'wrong' };
         await component.onSubmit();
         expect(router.navigate).not.toHaveBeenCalled();
-        expect(component.error()).toContain('Invalid username or password');
+        expect(component.error()).toContain('Invalid email or password');
     });
 
     it('hides the spinner and renders the error after an asynchronous 401, allowing another attempt', async () => {
@@ -63,7 +63,7 @@ describe('AuthComponent', () => {
         spyOn(TestBed.inject(Router), 'navigate').and.resolveTo(true);
         const onSubmit = spyOn(component, 'onSubmit').and.callThrough();
         fixture.autoDetectChanges();
-        component.userLogin = { userName: 'player', password: 'wrong' };
+        component.userLogin = { email: 'player@example.com', password: 'wrong' };
         await fixture.whenStable();
 
         const submit = () => fixture.nativeElement.querySelector('form')
@@ -79,7 +79,7 @@ describe('AuthComponent', () => {
 
         expect(fixture.nativeElement.querySelector('mat-spinner')).toBeNull();
         expect(fixture.nativeElement.querySelector('[role="alert"]')?.textContent)
-            .toContain('Invalid username or password');
+            .toContain('Invalid email or password');
         expect(fixture.nativeElement.querySelector('form')).not.toBeNull();
 
         login.and.rejectWith(new HttpErrorResponse({ status: 401 }));

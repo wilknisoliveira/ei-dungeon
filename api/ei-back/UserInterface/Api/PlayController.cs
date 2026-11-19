@@ -18,7 +18,7 @@ namespace ei_back.UserInterface.Api
     {
         private readonly ILogger<PlayController> _logger;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IGetUserNameUseCase _getUserNameUseCase;
+        private readonly IGetUserIdUseCase _getUserIdUseCase;
         private readonly IGetPlaysUseCase _getPlaysUseCase;
         private readonly INewUserPlayUseCase _newUserPlayUseCase;
 
@@ -26,13 +26,13 @@ namespace ei_back.UserInterface.Api
         public PlayController(
             ILogger<PlayController> logger,
             IUnitOfWork unitOfWork,
-            IGetUserNameUseCase getUserNameUseCase,
+            IGetUserIdUseCase getUserIdUseCase,
             IGetPlaysUseCase getPlaysUseCase,
             INewUserPlayUseCase newUserPlayUseCase)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
-            _getUserNameUseCase = getUserNameUseCase;
+            _getUserIdUseCase = getUserIdUseCase;
             _getPlaysUseCase = getPlaysUseCase;
             _newUserPlayUseCase = newUserPlayUseCase;
         }
@@ -70,18 +70,11 @@ namespace ei_back.UserInterface.Api
             [FromQuery] int page,
             CancellationToken cancellationToken)
         {
-            var userName = _getUserNameUseCase.Handler(User);
+            var userId = _getUserIdUseCase.Handler(User);
 
-            if (userName.IsNullOrEmpty())
-            {
-                var errorMessage = "Something went wrong while attempting to get the user logged credential.";
-                _logger.LogError(errorMessage);
-                return StatusCode(StatusCodes.Status500InternalServerError, errorMessage);
-            }
+            _logger.LogInformation($"Get the play list of the game {gameId} to user {userId}");
 
-            _logger.LogInformation($"Get the play list of the game {gameId} to user {userName}");
-
-            var response = await _getPlaysUseCase.Handler(gameId, sortDirection, pageSize, page, userName, cancellationToken);
+            var response = await _getPlaysUseCase.Handler(gameId, sortDirection, pageSize, page, userId, cancellationToken);
 
             return Ok(response);
         }
@@ -92,21 +85,11 @@ namespace ei_back.UserInterface.Api
         [Authorize(Roles = "Admin, PremiumUser")]
         public async IAsyncEnumerable<StreamPlayDtoResponse> CreateUserPlay([FromBody] PlayDtoRequest playDtoRequest, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            var userName = _getUserNameUseCase.Handler(User);
+            var userId = _getUserIdUseCase.Handler(User);
 
-            if (userName.IsNullOrEmpty())
-            {
-                var errorMessage = "Something went wrong while attempting to get the user logged credential.";
-                _logger.LogError(errorMessage);
+            _logger.LogInformation($"New play by user {userId} to game {playDtoRequest.GameId}.");
 
-                yield return new StreamPlayDtoResponse { EventType = EventType.Error, Content = errorMessage };
-
-                yield break;
-            }
-
-            _logger.LogInformation($"New play by user {userName} to game {playDtoRequest.GameId}.");
-
-            await foreach (var chunk in _newUserPlayUseCase.Handler(playDtoRequest, userName, cancellationToken))
+            await foreach (var chunk in _newUserPlayUseCase.Handler(playDtoRequest, userId, cancellationToken))
             {
                 yield return chunk;
             }
