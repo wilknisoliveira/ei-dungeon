@@ -19,6 +19,20 @@ When the task matches a skill listed here or in an affected module's guide, read
 
 - [ci-cd-and-automation](.agents/skills/ci-cd-and-automation/SKILL.md) for changes to GitHub Actions, build and publish pipelines, automated quality gates, or deployment workflows.
 
+## Codex Subagents
+
+Use the repository's custom subagents when their expertise helps with investigation, implementation, or review:
+
+- [backend](.codex/agents/backend.toml) for API, game rules, AI game master behavior, persistence, and streaming.
+- [frontend](.codex/agents/frontend.toml) for the Angular application, API integration, landing pages, and SEO.
+- [deploy](.codex/agents/deploy.toml) for CI/CD, image publishing, and deployment configuration.
+
+Give each subagent a clear goal, the relevant repository guidance, and the paths it may edit. Run independent tasks in parallel when useful. For changes that span modules, agree on shared contracts before delegating edits, assign non-overlapping files, and verify the integrated result. Handle small, self-contained tasks directly when delegation adds little value.
+
+Select the matching custom agent type when delegating; a task label alone does not select its profile. Each profile maps its responsibilities to the repository skills and requires loading only the skills applicable to the assignment. Module guides remain the source of project conventions. Investigation and review assignments are read-only unless implementation is authorized. Subagents share the workspace and must preserve other agents' and users' edits.
+
+Require each handoff to summarize findings or changes, files changed, validation outcomes (including skipped checks and reasons), blockers, and cross-module follow-up. The parent agent owns integration and final verification. After changing a profile, validate its TOML and linked guidance, then exercise the custom agent with a small read-only task and inspect its evidence and tool activity; availability or a self-reported role alone does not validate behavior.
+
 ## Build, Test, and Development Commands
 
 From the repository root:
