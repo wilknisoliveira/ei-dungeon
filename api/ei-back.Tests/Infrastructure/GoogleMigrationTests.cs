@@ -24,8 +24,7 @@ public class GoogleMigrationTests
             source.Database = databaseName;
             await using var db = new EIContext(new DbContextOptionsBuilder<EIContext>().UseNpgsql(source.ConnectionString).Options);
             await db.Database.ExecuteSqlRawAsync("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"");
-            var migrations = db.Database.GetMigrations().ToArray();
-            await db.GetService<IMigrator>().MigrateAsync(migrations[^2]);
+            await db.GetService<IMigrator>().MigrateAsync("20261102183758_MarkSeededAdminEmailVerified");
             var id = Guid.NewGuid();
             var email = id.ToString("N") + "@example.com";
             var now = DateTimeOffset.UtcNow;

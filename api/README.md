@@ -152,7 +152,7 @@ Start the API:
 dotnet run --project .\ei-back\ei-back.csproj
 ```
 
-The default seeded login is `admin` / `admin123`. Change the password after the first login. Game information can be seeded through `POST /api/game/GameInfo` using `ei-back/Infrastructure/Utils/GameInfoSeeding.json` as an example request body.
+The default seeded login is `admin@ei-dungeon.invalid` / `admin123`. Change the password after the first login. This administrator is deliberately fictitious: its email is provisioned as verified, but the reserved `.invalid` domain cannot receive verification or password recovery email. The corrective migration updates only the known seeded administrator while it still uses the original Gmail address; customized addresses are preserved. Existing passwords, role, verification timestamp and game ownership are preserved. Game information can be seeded through `POST /api/game/GameInfo` using `ei-back/Infrastructure/Utils/GameInfoSeeding.json` as an example request body.
 
 ## Tests
 
