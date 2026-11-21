@@ -1,0 +1,58 @@
+<mat-drawer-container class="admin-shell">
+    <mat-drawer [mode]="isHandset() ? 'over' : 'side'" [opened]="drawerOpened()"
+        (openedChange)="drawerOpened.set($event)">
+        <div class="sidebar-heading">
+            <span class="wordmark">EI-DUNGEON</span>
+            <span>Administration</span>
+            @if (isHandset()) {
+                <button mat-icon-button (click)="drawerOpened.set(false)" aria-label="Close navigation">
+                    <mat-icon>close</mat-icon>
+                </button>
+            }
+        </div>
+        <mat-nav-list aria-label="Administration sections">
+            <a mat-list-item href="#users" (click)="$event.preventDefault(); selectSection('users')" [activated]="section() === 'users'">
+                <mat-icon matListItemIcon>people</mat-icon><span matListItemTitle>Users</span>
+            </a>
+            <a mat-list-item href="#roles" (click)="$event.preventDefault(); selectSection('roles')" [activated]="section() === 'roles'">
+                <mat-icon matListItemIcon>admin_panel_settings</mat-icon><span matListItemTitle>Permissions</span>
+            </a>
+        </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content>
+        <header class="admin-header">
+            <div class="header-navigation">
+                <button mat-icon-button (click)="drawerOpened.set(!drawerOpened())" aria-label="Toggle navigation">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <a mat-icon-button routerLink="/home" aria-label="Back to game"><mat-icon>arrow_back</mat-icon></a>
+                <span class="header-title">Administration</span>
+            </div>
+            <div class="header-preferences"><app-theme-toggle /></div>
+        </header>
+        <main>
+            <div class="page-heading">
+                <span class="eyebrow">Administration</span>
+                @if (section() === 'users') {
+                    <h1>Users</h1>
+                    <p>Find accounts and manage their access.</p>
+                } @else {
+                    <h1>Permissions</h1>
+                    <p>View the accounts assigned to each role.</p>
+                }
+            </div>
+            @if (rolesLoading()) {
+                <mat-progress-bar mode="indeterminate" aria-label="Loading permissions" />
+                <p class="status" role="status">Loading permissions. Account actions will be available when this finishes.</p>
+            }
+            @if (rolesError()) {
+                <div class="error-state" role="alert">
+                    <p>Permissions could not be loaded. Account actions are unavailable.</p>
+                    <button mat-button (click)="loadRoles()">Try again</button>
+                </div>
+            }
+            <app-admin-users [hidden]="section() !== 'users'" [roles]="roles()" [rolesReady]="rolesReady()" (changed)="loadRoles()" />
+            @if (section() === 'roles' && rolesReady()) { <app-admin-roles [roles]="roles()" /> }
+        </main>
+    </mat-drawer-content>
+</mat-drawer-container>

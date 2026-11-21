@@ -1,38 +1,57 @@
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthComponent } from './auth/auth.component';
 import { AuthGuard } from '../guards/auth.guard';
-import { HomeComponent } from './home/home.component';
 import { HasRoleGuard } from '../guards/has-role.guard';
-import { SignupComponent } from './signup/signup.component';
-import { SettingsComponent } from './settings/settings.component';
-import { LandingComponent } from './landing/landing.component';
 
 export const routes: Routes = [
-    { path: 'login', component: AuthComponent, canActivate: [AuthGuard] },
-    { path: 'forgot-password', component: ForgotPasswordComponent },
-    { path: 'reset-password', component: ResetPasswordComponent },
-    { path: 'email-verification', component: EmailVerificationComponent },
-    { path: 'signup', component: SignupComponent },
-    { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard, HasRoleGuard],
-        data: {
-            roles: ['Admin', 'CommonUser'],
-        },
+    {
+        path: 'login',
+        loadComponent: () => import('./auth/auth.component').then(module => module.AuthComponent),
+        canActivate: [AuthGuard],
     },
     {
-        path: 'home',
-        component: HomeComponent,
+        path: 'forgot-password',
+        loadComponent: () => import('./forgot-password/forgot-password.component').then(module => module.ForgotPasswordComponent),
+    },
+    {
+        path: 'reset-password',
+        loadComponent: () => import('./reset-password/reset-password.component').then(module => module.ResetPasswordComponent),
+    },
+    {
+        path: 'email-verification',
+        loadComponent: () => import('./email-verification/email-verification.component').then(module => module.EmailVerificationComponent),
+    },
+    {
+        path: 'signup',
+        loadComponent: () => import('./signup/signup.component').then(module => module.SignupComponent),
+    },
+    {
+        path: 'settings',
+        loadComponent: () => import('./settings/settings.component').then(module => module.SettingsComponent),
         canActivate: [AuthGuard, HasRoleGuard],
         data: {
             roles: ['Admin', 'CommonUser'],
         },
     },
     {
+        path: 'home',
+        loadComponent: () => import('./home/home.component').then(module => module.HomeComponent),
+        canActivate: [AuthGuard, HasRoleGuard],
+        data: {
+            roles: ['Admin', 'CommonUser'],
+        },
+    },
+    {
+        path: 'admin',
+        loadComponent: () => import('./admin/admin.component').then(module => module.AdminComponent),
+        canActivate: [AuthGuard, HasRoleGuard],
+        data: {
+            roles: ['Admin'],
+        },
+    },
+    {
         path: '',
-        component: LandingComponent,
+        loadComponent: () => import('./landing/landing.component').then(module => module.LandingComponent),
         pathMatch: 'full',
     },
 ];

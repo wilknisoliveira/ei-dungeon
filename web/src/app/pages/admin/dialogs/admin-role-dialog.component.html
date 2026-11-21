@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Change role</h2>
+<mat-dialog-content>
+    <p class="account-email">{{ data.user.email }}</p>
+    <p>Current role: {{ roleLabel(data.currentRole) }}</p>
+    <mat-form-field appearance="outline">
+        <mat-label>New role</mat-label>
+        <mat-select [formControl]="role">
+            @for (option of roles; track option) {
+                <mat-option [value]="option" [disabled]="!data.allowDemotion && option !== 'Admin'">{{ roleLabel(option) }}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <p class="renewal-note">Permissions change when the user's token is next renewed.</p>
+    @if (!data.allowDemotion) {
+        <p>The last administrator cannot be deleted or assigned another role.</p>
+    }
+    @if (error()) { <p class="error-message" role="alert">{{ error() }}</p> }
+    @if (pending()) { <mat-progress-bar mode="indeterminate" aria-label="Saving role" /> }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button type="button" [disabled]="pending()" (click)="cancel()">Cancel</button>
+    <button mat-flat-button type="button" [disabled]="!canSave()" (click)="save()">Save</button>
+</mat-dialog-actions>

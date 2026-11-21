@@ -25,6 +25,23 @@ npm audit --audit-level=high
 
 Tests use Jasmine/Karma and require Chrome. There is no npm lint command or enforced coverage threshold. After a production build, run `node scripts/verify-seo-output.mjs` with the same `SITE_URL` used for that build.
 
+## Administration and page loading
+
+Administrators can open **Administration** from the Home profile menu or navigate directly to `/admin`. The existing frontend, build and deployment serve the page. Both route guards require the `Admin` role; API authorization remains enforced by the existing controllers. Administration content, dialogs and pagination are English-only, including under `/pt-BR/admin` and `/es/admin`. The page has no language selector and its content is excluded from translation catalogs; other pages retain their existing localization.
+
+The page exposes only these existing operations:
+
+| Operation | Endpoint | Behavior |
+|---|---|---|
+| Find accounts | `GET /api/user` | Server-side partial-email search, update-time order, pagination and matching total. |
+| Read permissions | `GET /api/user/role` | All email memberships grouped by role; filtering/pagination happen locally. |
+| Assign a role | `PUT /api/user/role/apply` | Assign one of Admin, CommonUser or PremiumUser to an internal user GUID. |
+| Delete an account | `DELETE /api/user/{id}` | Explicit email-confirmed deletion, including associated data. |
+
+The user directory returns only ID and email. There is no administrative user-detail endpoint, audit dashboard, privacy-request workflow or global game/AI metrics view in this feature. The UI prevents deleting or demoting the last Admin according to loaded memberships and disables writes if membership cannot be determined. This protection exists only in the frontend; it does not prevent direct API calls or concurrent changes. Role changes take effect on subsequent JWT renewal, without forcing immediate logout or revocation.
+
+Each page is loaded through its own route using `loadComponent`, without background preloading. `PagesModule` only organizes the routes. Visiting the landing page no longer loads Home, Settings and Admin implementations together; shared dependencies can still be shared. The landing remains prerendered, while authenticated routes render in the browser. Build size budgets are unchanged; code splitting is not a guarantee that every preexisting warning disappears.
+
 ## Internationalization
 
 The application supports three languages: English, Portuguese (Brazil), and Spanish.

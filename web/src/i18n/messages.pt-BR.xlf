@@ -956,6 +956,10 @@
         <source>or</source>
         <target>ou</target>
       </trans-unit>
+      <trans-unit id="adminMenuItem" datatype="html">
+        <source>Administration</source>
+        <target>Administração</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

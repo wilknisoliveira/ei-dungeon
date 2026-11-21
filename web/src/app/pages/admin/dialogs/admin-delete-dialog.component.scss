@@ -1,0 +1,32 @@
+@use '@angular/material' as mat;
+
+:host {
+    display: block;
+    max-width: 100%;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.account-email {
+    overflow-wrap: anywhere;
+    font-weight: 600;
+}
+
+.warning,
+.error-message {
+    color: var(--mat-sys-error);
+}
+
+.delete-button {
+    @include mat.button-overrides((
+        filled-container-color: var(--mat-sys-error),
+        filled-label-text-color: var(--mat-sys-on-error),
+    ));
+}
+
+mat-dialog-actions {
+    gap: 8px;
+    flex-wrap: wrap;
+}

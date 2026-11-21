@@ -1,0 +1,60 @@
+<section aria-label="User directory">
+    <form class="directory-controls" (submit)="$event.preventDefault(); search()">
+        <mat-form-field class="search-field">
+            <mat-label>Search by email</mat-label>
+            <input matInput type="search" [value]="searchText()" (input)="searchText.set($any($event.target).value)" />
+            @if (searchText()) {
+                <button mat-icon-button matSuffix type="button" (click)="clearSearch()" aria-label="Clear search"><mat-icon>close</mat-icon></button>
+            }
+        </mat-form-field>
+        <button mat-flat-button type="submit">Search</button>
+        <mat-form-field class="sort-field">
+            <mat-label>Update order</mat-label>
+            <mat-select [value]="query().sortDirection" (selectionChange)="sort($event.value)">
+                <mat-option value="desc">Most recently updated</mat-option>
+                <mat-option value="asc">Least recently updated</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+    <div class="table-panel" [attr.aria-busy]="loading()">
+        @if (loading()) { <mat-progress-bar mode="indeterminate" aria-label="Loading users" /> }
+        @if (failed()) {
+            <div class="table-state" role="alert">
+                <p>Users could not be loaded. If you just saved a change, it was completed; retrying only reloads the list.</p>
+                <button mat-button (click)="load()">Try again</button>
+            </div>
+        } @else {
+            <table mat-table [dataSource]="users()" aria-label="User directory">
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef>Email</th>
+                    <td mat-cell *matCellDef="let user">
+                        <span class="email">{{ user.email }}</span>
+                        @if (blockReason(user)) { <small class="block-reason">{{ blockReason(user) }}</small> }
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef>ID</th>
+                    <td mat-cell *matCellDef="let user" class="user-id">{{ user.id }}</td>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef>Actions</th>
+                    <td mat-cell *matCellDef="let user">
+                        <button mat-icon-button [matMenuTriggerFor]="actions" [disabled]="loading() || dialogOpen()" aria-label="Account actions">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #actions="matMenu">
+                            <button mat-menu-item [disabled]="!!blockReason(user)" (click)="changeRole(user)"><mat-icon>manage_accounts</mat-icon><span>Change role</span></button>
+                            <button mat-menu-item [disabled]="!!blockReason(user)" (click)="deleteUser(user)"><mat-icon>delete_outline</mat-icon><span>Delete account</span></button>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                <tr mat-row *matRowDef="let row; columns: columns"></tr>
+            </table>
+            @if (!loading() && users().length === 0) { <p class="table-state" role="status">No users found.</p> }
+        }
+        <mat-paginator [length]="total()" [pageIndex]="query().page - 1" [pageSize]="query().pageSize"
+            [pageSizeOptions]="[10, 25, 50]" [showFirstLastButtons]="true" [disabled]="loading() || failed()"
+            (page)="paginate($event)" aria-label="User directory pages" />
+    </div>
+</section>

@@ -1,0 +1,24 @@
+:host { display: block; }
+:host([hidden]) { display: none; }
+.directory-controls { display: flex; flex-wrap: wrap; align-items: baseline; gap: 16px; }
+.search-field { flex: 1 1 240px; }
+.sort-field { flex: 0 1 320px; }
+.table-panel { overflow: hidden; border: 1px solid var(--mat-sys-outline-variant); border-radius: 16px; background: var(--mat-sys-surface); }
+table { width: 100%; table-layout: fixed; }
+.mat-column-email { width: 45%; }
+.mat-column-id { width: auto; }
+.mat-column-actions { width: 92px; text-align: center; }
+td, th { padding: 16px; overflow-wrap: anywhere; }
+.email { display: block; }
+.user-id { font-size: 0.8rem; color: var(--mat-sys-on-surface-variant); }
+.block-reason { display: block; margin-top: 8px; color: var(--mat-sys-on-surface-variant); line-height: 1.5; }
+.table-state { padding: 24px; text-align: center; color: var(--mat-sys-on-surface-variant); }
+mat-paginator { border-top: 1px solid var(--mat-sys-outline-variant); }
+@media (max-width: 600px) {
+    .directory-controls { gap: 8px; }
+    .search-field, .sort-field { flex-basis: 100%; }
+    .directory-controls > button { margin-bottom: 16px; }
+    td, th { padding: 12px 8px; }
+    .mat-column-email { width: 43%; }
+    .mat-column-actions { width: 80px; }
+}

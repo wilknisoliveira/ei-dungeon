@@ -238,6 +238,16 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['settings']);
     }
 
+    get isAdmin(): boolean {
+        return this.authService.getRole() === 'Admin';
+    }
+
+    navigateToAdmin(): void {
+        if (this.isAdmin) {
+            this.router.navigate(['admin']);
+        }
+    }
+
     onGamePlayed(gameId: string): void {
         const items = this.gamePagedSearch()?.items;
         if (!items) return;

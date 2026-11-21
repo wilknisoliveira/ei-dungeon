@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Delete account</h2>
+<mat-dialog-content>
+    <p class="account-email">{{ data.user.email }}</p>
+    <p class="warning">This permanently deletes the account and all associated data, including games and conversations. This action cannot be undone.</p>
+    <mat-form-field appearance="outline">
+        <mat-label>Type the account's email to confirm</mat-label>
+        <input matInput type="text" [formControl]="confirmation" [readonly]="pending()" autocomplete="off" spellcheck="false" />
+    </mat-form-field>
+    @if (error()) { <p class="error-message" role="alert">{{ error() }}</p> }
+    @if (pending()) { <mat-progress-bar mode="indeterminate" aria-label="Deleting account" /> }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button type="button" [disabled]="pending()" (click)="cancel()">Cancel</button>
+    <button mat-flat-button type="button" class="delete-button" [disabled]="!canDelete()" (click)="deleteAccount()">Delete account</button>
+</mat-dialog-actions>

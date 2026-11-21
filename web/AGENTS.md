@@ -29,7 +29,15 @@ Follow existing Angular 22 and Angular Material patterns. Use four-space indenta
 
 ### Authentication and Public Routes
 
-Preserve the route policy in `src/app/pages/routing.modules.ts`: the landing page, signup, email verification, forgot-password, and reset-password remain public. Login retains its existing `AuthGuard` behavior; home/settings use both `AuthGuard` and `HasRoleGuard` with their configured role lists. Apply role restrictions where specified without turning the public recovery or landing pages into authenticated routes.
+Preserve the route policy in `src/app/pages/routing.modules.ts`: the landing page, signup, email verification, forgot-password, and reset-password remain public. Login retains its existing `AuthGuard` behavior; home/settings use both `AuthGuard` and `HasRoleGuard` with their configured `Admin`/`CommonUser` role lists. Admin uses both guards with only `Admin` permitted. Apply role restrictions where specified without turning the public recovery or landing pages into authenticated routes.
+
+Load each page with `loadComponent`. Keep `PagesModule` as a routing wrapper without static imports of page implementations or their feature components; do not introduce route preloading. Admin-specific imports remain within the Admin lazy dependency graph. Shared dependencies may be shared between chunks. Preserve the landing-only prerender and client rendering for authenticated routes.
+
+### Administration
+
+The `/admin` page is part of the existing app and deployment, reached from the Home profile menu only for Admin. Its Users section calls existing `/api/user` server-side search/pagination; `name` filters email and `sortDirection` orders by update time, not a selectable table column. Permissions uses the complete `/api/user/role` response and filters/pages each role locally. Do not add account fields, detail navigation, metrics or private-game access that these endpoints do not supply.
+
+Role assignment uses `PUT /api/user/role/apply` and deletion uses `DELETE /api/user/{id}`, always identifying the target by internal GUID. Block deleting/demoting the last Admin in the frontend using loaded role membership, and disable writes when membership is unavailable. This UI block does not enforce concurrency or prevent direct API requests. Preserve existing JWT renewal semantics: a role change does not immediately invalidate issued tokens. Keep user directories in memory rather than browser storage, and never add credential or private-content exposure to Admin.
 
 ### Google and account capabilities
 
@@ -69,7 +77,9 @@ Preserve production budgets: initial bundle 500 kB warning / 1 MB error, and com
 
 ## Internationalization
 
-Every user-visible string addition, removal, or change requires an i18n update:
+Administration pages are English-only, including their dialogs, role labels, feedback, accessibility labels and pagination. Do not add language selectors, i18n markers, `$localize` calls or translation catalog entries for administrative content. Keep English text and number formatting even when an administration page is opened under `/pt-BR/` or `/es/`; mark its content and dialog hosts with `lang="en"`. Shared navigation outside administration follows the language of its containing page.
+
+For all other pages, every user-visible string addition, removal, or change requires an i18n update:
 
 Use `$localize` for TypeScript messages and Angular i18n markers for template strings.
 

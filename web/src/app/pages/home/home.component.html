@@ -155,6 +155,12 @@
                             ></mat-icon>
                         </button>
                         <mat-menu #profileMenu="matMenu">
+                            @if (isAdmin) {
+                                <button mat-menu-item (click)="navigateToAdmin()" data-testid="admin-navigation">
+                                    <mat-icon fontIcon="admin_panel_settings"></mat-icon>
+                                    <span i18n="@@adminMenuItem">Administration</span>
+                                </button>
+                            }
                             <button
                                 mat-menu-item
                                 (click)="navigateToSettings()"

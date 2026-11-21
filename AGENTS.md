@@ -55,7 +55,7 @@ Backend use cases follow one operation per class/interface, with a single public
 
 ## Testing Guidelines
 
-Backend tests use xUnit, FakeItEasy, and FluentAssertions in `*Tests.cs`. Web tests use Jasmine/Karma in colocated `*.spec.ts`. Set `VERIFICATION_TEST_CONNECTION` only to a migrated, isolated PostgreSQL database to enable database tests. No coverage threshold is configured. Update all three translations when user-visible strings change.
+Backend tests use xUnit, FakeItEasy, and FluentAssertions in `*Tests.cs`. Web tests use Jasmine/Karma in colocated `*.spec.ts`. Set `VERIFICATION_TEST_CONNECTION` only to a migrated, isolated PostgreSQL database to enable database tests. No coverage threshold is configured. Update all three translations when user-visible strings change, except on administration pages. Administration pages are English-only: do not add language selectors, Angular i18n markers, `$localize` messages or translation catalog entries for their content, dialogs, feedback or pagination.
 
 ## Commit & Pull Request Guidelines
 

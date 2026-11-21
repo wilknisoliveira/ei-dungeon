@@ -8,6 +8,14 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { routes } from './routing.modules';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { SESSION_STORAGE } from 'src/app/core/storage/app-storage';
+import { Component } from '@angular/core';
+import { AuthService } from 'src/app/service/auth/auth.service';
+import { SnackbarService } from 'src/app/service/snackbar/snackbar.service';
+import { AuthGuard } from 'src/app/guards/auth.guard';
+import { HasRoleGuard } from 'src/app/guards/has-role.guard';
+
+@Component({ standalone: true, template: '<p>Route destination</p>' })
+class RouteDestinationComponent {}
 
 describe('Public email routes', () => {
     beforeEach(() => TestBed.configureTestingModule({ providers: [provideRouter(routes), provideHttpClient(), provideNoopAnimations(),
@@ -27,4 +35,60 @@ describe('Public email routes', () => {
         await harness.navigateByUrl('/reset-password', ResetPasswordComponent);
         expect(harness.routeNativeElement?.textContent).toContain('Reset your password');
     });
+});
+
+describe('Page loading and access policy', () => {
+    it('defines one lazy loader per page without direct component references', () => {
+        expect(routes.map(route => route.path)).toEqual([
+            'login', 'forgot-password', 'reset-password', 'email-verification',
+            'signup', 'settings', 'home', 'admin', '',
+        ]);
+        for (const route of routes) {
+            expect(route.component).toBeUndefined();
+            expect(typeof route.loadComponent).toBe('function');
+        }
+        expect(routes.find(route => route.path === '')?.pathMatch).toBe('full');
+    });
+
+    it('preserves existing public routes and Home/Settings role policy', () => {
+        for (const path of ['', 'signup', 'email-verification', 'forgot-password', 'reset-password']) {
+            expect(routes.find(route => route.path === path)?.canActivate).toBeUndefined();
+        }
+        expect(routes.find(route => route.path === 'login')?.canActivate).toEqual([AuthGuard]);
+        for (const path of ['home', 'settings']) {
+            expect(routes.find(route => route.path === path)?.canActivate).toEqual([AuthGuard, HasRoleGuard]);
+            expect(routes.find(route => route.path === path)?.data?.['roles']).toEqual(['Admin', 'CommonUser']);
+        }
+    });
+
+    for (const role of ['Admin', 'CommonUser', 'PremiumUser', 'anonymous']) {
+        it(`allows only Admin to activate the admin page (${role})`, async () => {
+            const admin = routes.find(route => route.path === 'admin')!;
+            const loadAdmin = jasmine.createSpy('loadAdmin').and.callFake(async () => RouteDestinationComponent);
+            const auth = jasmine.createSpyObj<AuthService>('AuthService', ['getRole', 'isUserLoggedIn']);
+            auth.getRole.and.returnValue(role);
+            auth.isUserLoggedIn.and.returnValue(role !== 'anonymous');
+            TestBed.configureTestingModule({
+                providers: [
+                    provideRouter([
+                        { ...admin, loadComponent: loadAdmin },
+                        { path: 'home', component: RouteDestinationComponent },
+                        { path: 'login', component: RouteDestinationComponent },
+                    ]),
+                    { provide: AuthService, useValue: auth },
+                    { provide: SnackbarService, useValue: jasmine.createSpyObj('SnackbarService', ['addError']) },
+                ],
+            });
+            expect(admin.data?.['roles']).toEqual(['Admin']);
+            const harness = await RouterTestingHarness.create();
+            await harness.navigateByUrl('/admin');
+            await harness.fixture.whenStable();
+            if (role === 'Admin') {
+                expect(loadAdmin).toHaveBeenCalledTimes(1);
+                expect(harness.routeNativeElement?.textContent).toContain('Route destination');
+            } else {
+                expect(loadAdmin).not.toHaveBeenCalled();
+            }
+        });
+    }
 });

@@ -754,18 +754,25 @@
           <context context-type="linenumber">118,119</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="adminMenuItem" datatype="html">
+        <source>Administration</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
+          <context context-type="linenumber">161,162</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="settingsMenuItem" datatype="html">
         <source>Settings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
-          <context context-type="linenumber">163,164</context>
+          <context context-type="linenumber">169,170</context>
         </context-group>
       </trans-unit>
       <trans-unit id="logoutMenuItem" datatype="html">
         <source>Logout</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
-          <context context-type="linenumber">167,168</context>
+          <context context-type="linenumber">173,174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7752330587380687192" datatype="html">
@@ -1548,7 +1555,7 @@
         <source>Change Password</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">131,133</context>
+          <context context-type="linenumber">131,132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="currentPasswordLabel" datatype="html">
@@ -1569,11 +1576,11 @@
         <source> Minimum 4 characters </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">161,162</context>
+          <context context-type="linenumber">161</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/settings/settings.component.html</context>
-          <context context-type="linenumber">190,191</context>
+          <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
       <trans-unit id="newPasswordRequiredError" datatype="html">
@@ -1769,42 +1776,42 @@
         <source>To use this email address, complete traditional registration and verify your email. You can then link Google in Settings.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/google-auth.service.ts</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="googleLinkRequired" datatype="html">
         <source>Sign in to your existing account, then link Google in Settings.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/google-auth.service.ts</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="googleEmailMismatch" datatype="html">
         <source>Select the Google Account with the same email as your EI Dungeon account.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/google-auth.service.ts</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="googleLinkConflict" datatype="html">
         <source>This Google Account could not be linked. Check your connected account and try again.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/google-auth.service.ts</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="passwordAlreadyExists" datatype="html">
         <source>A password is already configured. Reload Settings to change it.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/google-auth.service.ts</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
       <trans-unit id="googleAuthFailed" datatype="html">
         <source>Google sign-in could not be completed. Please try again or use email and password.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/google-auth.service.ts</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="confirmDialogYes" datatype="html">

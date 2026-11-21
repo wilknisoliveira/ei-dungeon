@@ -1,0 +1,26 @@
+:host {
+    display: block;
+    max-width: 100%;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.account-email {
+    overflow-wrap: anywhere;
+    font-weight: 600;
+}
+
+.renewal-note {
+    color: var(--mat-sys-on-surface-variant);
+}
+
+.error-message {
+    color: var(--mat-sys-error);
+}
+
+mat-dialog-actions {
+    gap: 8px;
+    flex-wrap: wrap;
+}
