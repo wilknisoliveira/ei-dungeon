@@ -33,16 +33,10 @@ describe('LandingCtaComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should send the final call to action to signup', () => {
+        it('should send the final call to action to login with Sparks intent', () => {
             expect(
                 host().querySelector('.cta-primary')?.getAttribute('href'),
-            ).toBe('/signup');
-        });
-
-        it('should offer returning players a link to login', () => {
-            expect(
-                host().querySelector('.cta-login')?.getAttribute('href'),
-            ).toBe('/login');
+            ).toBe('/login?sparks=1');
         });
     });
 
@@ -52,14 +46,10 @@ describe('LandingCtaComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should send the final call to action to home', () => {
+        it('should send the final call to action to the Sparks panel on Home', () => {
             expect(
                 host().querySelector('.cta-primary')?.getAttribute('href'),
-            ).toBe('/home');
-        });
-
-        it('should not show the sign-in link', () => {
-            expect(host().querySelector('.cta-login')).toBeNull();
+            ).toBe('/home?sparks=1');
         });
     });
 });

@@ -77,11 +77,11 @@
             </form>
             <app-google-signin-button (credential)="onGoogle($event)" [disabled]="loading" [showSeparator]="true" />
             @if (googleAction === 'signup') { <a routerLink="/signup" i18n="@@googleGoToSignup">Go to registration</a> }
-            @if (googleAction === 'login') { <a routerLink="/login" i18n="@@googleGoToLogin">Sign in to your existing account</a> }
+            @if (googleAction === 'login') { <a routerLink="/login" [queryParams]="sparksIntent" i18n="@@googleGoToLogin">Sign in to your existing account</a> }
         </div>
         <div class="sign-up">
             <span i18n="@@alreadyHaveAccountPrompt">Do you already have an account?</span>&nbsp;
-<a [routerLink]="['/login']" i18n="@@signInLink">Sign In Now</a>
+<a [routerLink]="['/login']" [queryParams]="sparksIntent" i18n="@@signInLink">Sign In Now</a>
         </div>
     </div>
 </section>

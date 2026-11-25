@@ -1,10 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ei_back.Core.Domain.Enums;
+using System.Text.Json.Serialization;
 
 namespace ei_back.Core.Application.UseCase.Game.Dtos
 {
     public record GameDtoRequest
     {
+        public Guid? OperationId { get; set; }
+        [JsonIgnore]
+        public bool UsesSparks { get; set; }
+
         [Required]
         [StringLength(50, MinimumLength = 4)]
         public required string ProtagonistName { get; set; }

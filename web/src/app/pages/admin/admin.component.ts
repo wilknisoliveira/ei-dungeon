@@ -15,13 +15,14 @@ import { AdminUsersComponent } from './users/admin-users.component';
 import { AdminRolesComponent } from './roles/admin-roles.component';
 import { AdminPaginatorIntl } from './admin-paginator-intl';
 import { Subscription } from 'rxjs';
+import { AdminSparksComponent } from './sparks/admin-sparks.component';
 
 @Component({
     selector: 'app-admin',
     standalone: true,
     imports: [RouterLink, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule,
         MatProgressBarModule, ThemeToggleComponent,
-        AdminUsersComponent, AdminRolesComponent],
+        AdminUsersComponent, AdminRolesComponent, AdminSparksComponent],
     providers: [{ provide: MatPaginatorIntl, useClass: AdminPaginatorIntl }],
     host: { lang: 'en' },
     templateUrl: './admin.component.html',
@@ -33,7 +34,7 @@ export class AdminComponent implements OnInit {
     private roleRequest?: Subscription;
     readonly isHandset = inject(IsHandsetService).isHandset;
     readonly drawerOpened = signal(true);
-    readonly section = signal<'users' | 'roles'>('users');
+    readonly section = signal<'users' | 'roles' | 'sparks'>('users');
     readonly roles = signal<RoleMembership[]>([]);
     readonly rolesLoading = signal(false);
     readonly rolesError = signal(false);
@@ -47,7 +48,7 @@ export class AdminComponent implements OnInit {
         this.loadRoles();
     }
 
-    selectSection(section: 'users' | 'roles'): void {
+    selectSection(section: 'users' | 'roles' | 'sparks'): void {
         this.section.set(section);
         if (this.isHandset()) this.drawerOpened.set(false);
     }

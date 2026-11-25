@@ -21,50 +21,15 @@
         </p>
 
         <div class="hero-actions">
-            @if (isInDevelopment()) {
-                <button mat-flat-button color="primary" class="cta-primary" disabled i18n="@@landingComingSoon">
-                    Coming soon
-                </button>
-                <!-- Current account-action labels, restored once MVP features are ready.
-                @if (isLoggedIn()) {
-                    Continue your adventure
-                } @else {
-                    Create your character
-                    I already have an account
-                }
-                -->
-            } @else if (isLoggedIn()) {
-                <a
-                    mat-flat-button
-                    color="primary"
-                    routerLink="/home"
-                    class="cta-primary"
-                    i18n="@@landingContinueAdventure"
-                    >Continue your adventure</a
-                >
-            } @else {
-                <a
-                    mat-flat-button
-                    color="primary"
-                    routerLink="/signup"
-                    class="cta-primary"
-                    i18n="@@landingHeroCta"
-                    >Create your character</a
-                >
-                <a
-                    mat-stroked-button
-                    routerLink="/login"
-                    class="cta-secondary"
-                    i18n="@@landingHeroSecondary"
-                    >I already have an account</a
-                >
+            <a mat-flat-button color="primary" class="cta-primary"
+                [routerLink]="isLoggedIn() ? '/home' : '/login'"
+                [queryParams]="{ sparks: '1' }" i18n="@@landingRequestSparks">Request free Sparks</a>
+            @if (!isLoggedIn()) {
+                <a mat-stroked-button class="cta-secondary" routerLink="/signup"
+                    [queryParams]="{ sparks: '1' }" i18n="@@landingCreateSparkAccount">Create an account</a>
             }
         </div>
 
-        @if (!isLoggedIn()) {
-            <p class="hero-note" i18n="@@landingHeroNote">
-                Free to start · Play in Portuguese, English or Spanish
-            </p>
-        }
+        <p class="hero-note" i18n="@@landingSparksNote">Get up to {{ initialGrant() }} Sparks for your first adventure, subject to availability.</p>
     </div>
 </section>

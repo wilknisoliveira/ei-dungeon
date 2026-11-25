@@ -44,20 +44,23 @@ namespace ei_back.UserInterface.Api
             _updateGameUseCase = updateGameUseCase;
         }
 
+        /// <summary>Creates an adventure and consumes one Spark for Free players when it is saved.</summary>
+        /// <remarks>Free requests supply a stable operation ID so an interrupted response can be retried.</remarks>
         [HttpPost]
-        [ProducesResponseType(typeof(GameDtoResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(GameDtoResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Roles = "Admin, PremiumUser")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [Authorize(Roles = "Admin, CommonUser, PremiumUser")]
         public async Task<IActionResult> Create([FromBody] GameDtoRequest gameDtoRequest, CancellationToken cancellationToken = default)
         {
             var userId = _getUserIdUseCase.Handler(User);
+            gameDtoRequest.UsesSparks = !User.IsInRole("Admin") && !User.IsInRole("PremiumUser");
 
             _logger.LogInformation($"Creating {gameDtoRequest.Name} game to user {userId}...");
 
             var gameDtoResponse = await _createGameUseCase.Handler(gameDtoRequest, userId, cancellationToken);
-            var changedItems = await _unitOfWork.CommitAsync(cancellationToken);
-
-            if (changedItems == 0)
+            if (!gameDtoRequest.UsesSparks && await _unitOfWork.CommitAsync(cancellationToken) == 0)
             {
                 var errorMessage = "Something went wrong while attempting to create game.";
                 _logger.LogError(errorMessage);

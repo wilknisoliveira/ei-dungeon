@@ -168,21 +168,31 @@
                 </mat-card-content>
             </mat-card>
             <div class="form-actions full-width">
-                <button
-                    mat-raised-button
-                    color="primary"
-                    type="submit"
-                    [disabled]="
-                        gameFormGroup.invalid ||
-                        loading ||
-                        isCommonUser ||
-                        currentSkillPointsDistributed >
-                            maxSkillPointsToDistribute
-                    "
-                    i18n="@@startGameButton"
-                >
-                    Start game
-                </button>
+                @let showSparkCost = isCommonUser;
+                @let startDisabled = gameFormGroup.invalid || loading || creationBlocked ||
+                    currentSkillPointsDistributed > maxSkillPointsToDistribute;
+                <div class="start-game-actions">
+                    <span
+                        [matTooltip]="createCostTooltip"
+                        [matTooltipDisabled]="!showSparkCost || !startDisabled"
+                        [attr.tabindex]="showSparkCost && startDisabled ? 0 : null"
+                    >
+                        <button
+                            mat-raised-button
+                            color="primary"
+                            type="submit"
+                            [disabled]="startDisabled"
+                            [matTooltip]="createCostTooltip"
+                            [matTooltipDisabled]="!showSparkCost || startDisabled"
+                            i18n="@@startGameButton"
+                        >
+                            Start game
+                        </button>
+                    </span>
+                    @if (showSparkCost && creationBlocked) {
+                        <button mat-stroked-button type="button" (click)="sparksRequested.emit()" i18n="@@sparksOpenFromGame">View Sparks</button>
+                    }
+                </div>
             </div>
         </div>
     </form>

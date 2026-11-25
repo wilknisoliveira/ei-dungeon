@@ -13,6 +13,7 @@ using ei_back.Core.Application.Service.Encryption;
 using ei_back.Core.Application.Service.Encryption.Interfaces;
 using ei_back.Core.Application.Service.Play;
 using ei_back.Core.Application.Service.Play.Interfaces;
+using ei_back.Core.Application.Service.Sparks;
 using ei_back.Core.Application.UseCase.Game;
 using ei_back.Core.Application.UseCase.Game.Interfaces;
 using ei_back.Core.Application.UseCase.GameInfo;
@@ -53,12 +54,26 @@ namespace ei_back.Infrastructure.Extensions
             services.AddScoped<IGameRepository, GameRepository>();
             services.AddScoped<IPlayRepository, PlayRepository>();
             services.AddScoped<IGameInfoRepository, GameInfoRepository>();
+            services.AddScoped<ISparkRepository, SparkRepository>();
 
             return services;
         }
 
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
+            services.AddSingleton(TimeProvider.System);
+            services.AddOptions<SparkOptions>()
+                .BindConfiguration("Sparks")
+                .PostConfigure<IConfiguration>((options, configuration) =>
+                {
+                    var recipients = configuration["Sparks:AdministrativeRecipientsCsv"];
+                    if (!string.IsNullOrWhiteSpace(recipients))
+                        options.AdministrativeRecipients = recipients.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                });
+            services.AddScoped<SparkAllocationService>();
+            services.AddScoped<SparkReservationService>();
+            services.AddSparkOperations();
+
             services.AddOptions<GoogleAuthOptions>().BindConfiguration("GoogleAuth");
             services.AddScoped<IGoogleIdentityVerifier, GoogleIdentityVerifier>();
             services.AddOptions<VerificationCodeOptions>()

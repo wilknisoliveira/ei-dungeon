@@ -15,7 +15,7 @@ interface FaqEntry {
     styleUrls: ['./landing-faq.component.scss'],
 })
 export class LandingFaqComponent {
-    entries: FaqEntry[] = [
+    readonly entries: FaqEntry[] = [
         {
             question: $localize`:@@landingFaqSoloQ:Do I need other players?`,
             answer: $localize`:@@landingFaqSoloA:No. EI-DUNGEON is built for solo play. The AI Game Master runs the world, the characters in it, and everything that happens to you.`,
@@ -26,7 +26,7 @@ export class LandingFaqComponent {
         },
         {
             question: $localize`:@@landingFaqPriceQ:What does it cost?`,
-            answer: $localize`:@@landingFaqPriceA:It is free to start. A paid tier is planned for later, but nothing is behind a paywall today.`,
+            answer: $localize`:@@landingFaqSparkPrice:On the Free plan, creating a game costs 1 Spark, starting the first scene costs 1 more, and each turn costs 1. Your Sparks last 24 hours from the time you receive them. If none are available, you can join the waitlist and receive an email when your grant is ready.`,
         },
         {
             question: $localize`:@@landingFaqLanguageQ:What language is the story told in?`,

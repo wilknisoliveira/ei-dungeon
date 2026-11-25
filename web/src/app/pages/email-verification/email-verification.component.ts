@@ -1,7 +1,7 @@
 import { Component, DestroyRef, NgZone, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,6 +23,7 @@ export class EmailVerificationComponent {
     private readonly auth = inject(AuthService);
     readonly flow = inject(EmailAuthFlowService);
     private readonly router = inject(Router);
+    private readonly route = inject(ActivatedRoute);
     private readonly snackbar = inject(SnackbarService);
     private readonly fb = inject(NonNullableFormBuilder);
     readonly emailError = $localize`:@@emailAuthEmailError:Enter a valid email address.`;
@@ -38,6 +39,10 @@ export class EmailVerificationComponent {
         email: [this.flow.context('verification').email, [Validators.required, Validators.email]],
         code: ['', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]],
     });
+
+    get sparksIntent(): Record<string, string> | null {
+        return this.route.snapshot.queryParamMap.get('sparks') === '1' ? { sparks: '1' } : null;
+    }
 
     constructor() {
         const destroy = inject(DestroyRef);
@@ -89,7 +94,9 @@ export class EmailVerificationComponent {
             this.form.controls.code.reset();
             this.flow.complete('verification');
             this.snackbar.addSuccess($localize`:@@emailVerifiedSuccess:Email verified. You can now log in.`);
-            await this.router.navigate(['/login']);
+            const queryParams = this.sparksIntent;
+            if (queryParams) await this.router.navigate(['/login'], { queryParams });
+            else await this.router.navigate(['/login']);
         } catch (error) {
             this.handleError(error, true);
         } finally {

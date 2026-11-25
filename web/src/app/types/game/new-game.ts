@@ -1,4 +1,5 @@
 export interface NewGame {
+    operationId?: string;
     protagonistName: string;
     protagonistDescription: string;
     name: string;

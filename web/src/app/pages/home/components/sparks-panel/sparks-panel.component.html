@@ -1,0 +1,48 @@
+<h2 mat-dialog-title i18n="@@sparksPanelTitle">Sparks</h2>
+<mat-dialog-content>
+    @if (sparks.status(); as status) {
+        <div class="balance">
+            <mat-icon aria-hidden="true">auto_awesome</mat-icon>
+            <div>
+                <strong i18n="@@sparksPanelBalance">{{ clock?.balance() ?? status.balance }} available</strong>
+                @if (status.expiresAt) {
+                    @if (clock?.minutes(); as minutes) {
+                        <span i18n="@@sparksPanelRemaining">{{ minutes }} min left</span>
+                    }
+                    <span i18n="@@sparksPanelExpiry">Ends {{ status.expiresAt | date: 'medium' }}</span>
+                }
+            </div>
+        </div>
+
+        <div class="grant-state" aria-live="polite">
+            @if (status.queueState === 'Waiting') {
+                <p i18n="@@sparksQueueWaiting">You’re on the waitlist. We’ll email you when your Sparks are ready.</p>
+            } @else if (status.queueState === 'Offered') {
+                <p i18n="@@sparksQueueOffer">Sparks aren’t available right now. Join the waitlist to get an email when your grant is issued.</p>
+                <div class="panel-actions">
+                    <button mat-flat-button type="button" (click)="sparks.decide(true)" [disabled]="sparks.busy()" i18n="@@sparksJoinQueue">Join waitlist</button>
+                    <button mat-button type="button" (click)="sparks.decide(false)" [disabled]="sparks.busy()" i18n="@@sparksDeclineQueue">No thanks</button>
+                </div>
+            } @else if (status.canRequest) {
+                <button mat-flat-button type="button" (click)="sparks.request()" [disabled]="sparks.busy()">
+                    @if (status.requestKind === 'Refill') {
+                        <span i18n="@@sparksRequestRefill">Request a refill</span>
+                    } @else {
+                        <span i18n="@@sparksRequestInitial">Request free Sparks</span>
+                    }
+                </button>
+            } @else if (status.balance === 0) {
+                <p i18n="@@sparksNoSpendableBalance">You don’t have any Sparks available right now.</p>
+            }
+        </div>
+    } @else if (sparks.busy()) {
+        <p role="status" i18n="@@sparksLoading">Loading your Sparks…</p>
+    }
+    @if (sparks.error()) {
+        <p role="alert" i18n="@@sparksLoadError">Your Sparks could not be updated.</p>
+        <button mat-button type="button" (click)="sparks.refresh()" i18n="@@sparksTryAgain">Try again</button>
+    }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button type="button" mat-dialog-close i18n="@@sparksClosePanel">Close</button>
+</mat-dialog-actions>

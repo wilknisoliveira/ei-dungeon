@@ -6,6 +6,7 @@ import { DOCUMENT } from '@angular/common';
 
 import { LandingComponent } from './landing.component';
 import { AuthService } from 'src/app/service/auth/auth.service';
+import { SparksService } from 'src/app/service/sparks/sparks.service';
 import {
     DARK_THEME,
     LIGHT_THEME,
@@ -16,6 +17,7 @@ describe('LandingComponent', () => {
     let fixture: ComponentFixture<LandingComponent>;
     let document: Document;
     let authService: AuthService;
+    let initialGrant: jasmine.Spy;
 
     const create = (loggedIn: boolean): ComponentFixture<LandingComponent> => {
         spyOn(authService, 'isUserLoggedIn').and.returnValue(loggedIn);
@@ -38,6 +40,7 @@ describe('LandingComponent', () => {
 
         document = TestBed.inject(DOCUMENT);
         authService = TestBed.inject(AuthService);
+        initialGrant = spyOn(TestBed.inject(SparksService), 'getInitialGrant').and.resolveTo(15);
 
         localStorage.removeItem(THEME_STORAGE_KEY);
         document.body.classList.remove(DARK_THEME, LIGHT_THEME);
@@ -51,6 +54,17 @@ describe('LandingComponent', () => {
     it('should create', () => {
         fixture = create(false);
         expect(fixture.componentInstance).toBeTruthy();
+    });
+
+    it('shows the initial grant amount returned by the backend', async () => {
+        initialGrant.and.resolveTo(20);
+        fixture = create(false);
+        await fixture.whenStable();
+        fixture.detectChanges();
+        const link = fixture.nativeElement.querySelector('app-landing-hero a.cta-primary') as HTMLAnchorElement;
+        expect(link.getAttribute('href')).toBe('/login?sparks=1');
+        expect(link.textContent).toContain('Request free Sparks');
+        expect(fixture.nativeElement.querySelector('.hero-note').textContent).toContain('20 Sparks');
     });
 
     it('should start with the anonymous state before the first render', () => {
@@ -94,19 +108,18 @@ describe('LandingComponent', () => {
     });
 
     [false, true].forEach((loggedIn) => {
-        it(`should disable account actions during development for ${loggedIn ? 'a logged-in' : 'an anonymous'} visitor`, () => {
+        it(`should offer Sparks to ${loggedIn ? 'a logged-in' : 'an anonymous'} visitor`, () => {
             fixture = create(loggedIn);
             const host: HTMLElement = fixture.nativeElement;
-            const actions = Array.from(
-                host.querySelectorAll<HTMLButtonElement>('button.cta-primary, button.signin'),
-            );
+            const actions = host.querySelectorAll<HTMLAnchorElement>('a.cta-primary');
+            const destination = loggedIn ? '/home' : '/login';
 
-            expect(actions.length).toBe(3);
-            actions.forEach((button) => {
-                expect(button.disabled).toBeTrue();
-                expect(button.textContent?.trim()).toBe('Coming soon');
+            expect(actions.length).toBe(2);
+            actions.forEach((link) => {
+                expect(link.getAttribute('href')).toBe(`${destination}?sparks=1`);
+                expect(link.textContent?.trim()).toBe('Request free Sparks');
             });
-            expect(host.querySelector('a.cta-primary, a.signin')).toBeNull();
+            expect(host.querySelector('a.signin')?.getAttribute('href')).toBe(destination);
         });
     });
 

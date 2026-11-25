@@ -1,7 +1,9 @@
-import { Component, OnInit, effect, inject, signal } from '@angular/core';
+import { Component, DestroyRef, NgZone, OnInit, computed, effect, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { timer } from 'rxjs';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,6 +21,8 @@ import { LanguageSelectorComponent } from 'src/app/shared/components/language-se
 import { ThemeToggleComponent } from 'src/app/shared/theme-toggle/theme-toggle.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { FirstStepsComponent } from './components/first-steps/first-steps.component';
+import { SparksPanelComponent } from './components/sparks-panel/sparks-panel.component';
+import { SparksService } from 'src/app/service/sparks/sparks.service';
 
 @Component({
     standalone: true,
@@ -41,6 +45,34 @@ import { FirstStepsComponent } from './components/first-steps/first-steps.compon
     styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+    readonly sparks = inject(SparksService);
+    private readonly destroyRef = inject(DestroyRef);
+    private readonly route = inject(ActivatedRoute);
+    private readonly zone = inject(NgZone);
+    private readonly now = signal(Date.now());
+    private lastExpiredGrant: string | null = null;
+    private lastSparkRefresh = 0;
+    private sparksDialogOpen = false;
+    readonly secondsRemaining = computed(() => {
+        const expiresAt = this.sparks.status()?.expiresAt;
+        return expiresAt ? Math.max(0, Math.ceil((Date.parse(expiresAt) - this.now() - this.sparks.serverOffset()) / 1000)) : 0;
+    });
+    readonly minutesRemaining = computed(() => Math.ceil(this.secondsRemaining() / 60));
+    readonly sparkTimerText = computed(() => {
+        const totalMinutes = this.minutesRemaining();
+        if (totalMinutes === 0) return '';
+        if (totalMinutes <= 60) return $localize`:@@sparksMinutesRemaining:${totalMinutes} min left`;
+
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+        return minutes === 0
+            ? $localize`:@@sparksHoursRemaining:${hours} h left`
+            : $localize`:@@sparksHoursAndMinutesRemaining:${hours} h ${minutes} min left`;
+    });
+    readonly sparkBalance = computed(() => this.secondsRemaining() > 0 ? this.sparks.status()?.balance ?? 0 : 0);
+    readonly sparkBalanceLabel = computed(() =>
+        $localize`:@@sparksOpenBalance:Open Sparks balance, ${this.sparkBalance()} available`,
+    );
     gameSelected = signal<string>('');
     pageSize = 0;
     enableShowMoreBtn = signal<boolean>(true);
@@ -70,6 +102,7 @@ export class HomeComponent implements OnInit {
                 this.drawerOpened.set(true);
             }
         });
+        this.destroyRef.onDestroy(() => this.sparks.clear());
     }
 
     /** Closes the overlay drawer when a campaign is picked on a handset. */
@@ -81,6 +114,57 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         this.showMore();
+        if (this.isCommonUser) this.initializeSparks();
+    }
+
+    get isCommonUser(): boolean {
+        return this.authService.getRole() === 'CommonUser';
+    }
+
+    private initializeSparks(): void {
+        this.route.queryParamMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
+            if (params.get('sparks') === '1') {
+                this.openSparks();
+                void this.router.navigate([], {
+                    relativeTo: this.route,
+                    queryParams: { sparks: null },
+                    queryParamsHandling: 'merge',
+                    replaceUrl: true,
+                });
+            } else {
+                this.refreshSparks();
+            }
+        });
+        this.zone.runOutsideAngular(() => timer(0, 1000).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+            this.now.set(Date.now());
+            const status = this.sparks.status();
+            if (status?.expiresAt && this.secondsRemaining() === 0 && this.lastExpiredGrant !== status.expiresAt) {
+                this.lastExpiredGrant = status.expiresAt;
+                this.refreshSparks();
+            } else if (status?.queueState === 'Waiting' && this.now() - this.lastSparkRefresh >= 60_000) {
+                this.refreshSparks();
+            }
+        }));
+    }
+
+    openSparks(): void {
+        if (!this.isCommonUser || this.sparksDialogOpen) return;
+        this.refreshSparks();
+        this.sparksDialogOpen = true;
+        const ref = this.dialog.open(SparksPanelComponent, {
+            width: '26rem',
+            maxWidth: 'calc(100vw - 2rem)',
+            data: { balance: this.sparkBalance, minutes: this.minutesRemaining },
+        });
+        ref.afterClosed().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+            this.sparksDialogOpen = false;
+        });
+    }
+
+    refreshSparks(): void {
+        if (!this.isCommonUser) return;
+        this.lastSparkRefresh = Date.now();
+        void this.sparks.refresh();
     }
 
     async getGames(listSize: number): Promise<PagedSearch<Game> | null> {
@@ -123,18 +207,10 @@ export class HomeComponent implements OnInit {
         this.closeDrawerIfHandset();
     }
 
-    async gameCreated(gameName: string): Promise<void> {
+    async gameCreated(gameId: string): Promise<void> {
+        this.refreshSparks();
         await this.showMore();
-
-        if (gameName) {
-            this.gameSelected.set(
-                this.gamePagedSearch()?.items.find(
-                    (game) => game.name === gameName,
-                )?.id ??
-                this.gamePagedSearch()?.items[0].id ??
-                '',
-            );
-        }
+        if (gameId) this.gameSelected.set(gameId);
     }
 
     async deleteGame(gameId: string): Promise<void> {
@@ -249,6 +325,7 @@ export class HomeComponent implements OnInit {
     }
 
     onGamePlayed(gameId: string): void {
+        this.refreshSparks();
         const items = this.gamePagedSearch()?.items;
         if (!items) return;
 

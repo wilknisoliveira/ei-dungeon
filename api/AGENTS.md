@@ -32,6 +32,7 @@ Use four-space indentation and descriptive dependency names. Follow nearby const
 
 - Normally, the controller calls `IUnitOfWork.Commit()` or `CommitAsync()` after its use case finishes.
 - Preserve `NewUserPlayUseCase`'s internal commit for streaming atomicity.
+- Free gameplay reserves Spark capacity before AI and commits the result and debit together in Application. The game controller keeps the existing commit for Admin and Premium creation.
 - Registration saves the user and initial verification code with one Application-owned `CommitAsync()`; do not add another controller commit.
 - Existing-account verification/recovery flows use `ExecuteInTransactionAsync` and acquire the email lock before querying challenge state. The transaction owns saving/committing; do not nest transactions or manually commit/rollback inside it.
 - Google registration, linking and first-password creation own a single Application transaction. Atomically consume the browser/user/purpose-bound challenge with the protected change. Use the normalized-email lock for first-password creation and reload after the lock. Do not add a controller commit.
@@ -73,6 +74,8 @@ The build and existing test suite must pass before work is considered done. Cove
 Require atomic Conventional Commits with an optional scope, for example `feat(api): add game export`. The API's existing type vocabulary includes `feat`, `fix`, `config`, `refac`, and `doc`. Follow the root guide for PR descriptions and validation evidence.
 
 ## Configuration and Containers
+
+Whenever a backend environment variable is added, update the applicable `.env.example` files and add the corresponding ASP.NET Core configuration key to both [appsettings.json](ei-back/appsettings.json) and [appsettings.Development.json](ei-back/appsettings.Development.json). Use consistent defaults unless development requires an override. Leave credentials and private values empty in tracked files.
 
 Use .NET User Secrets or runtime environment variables for PostgreSQL, `keys:OpenRouterApiKey`, `GenAISettings:AiModel`, `TokenConfigurations:Secret`, `Resend:ApiToken`, `Resend:From`, and `VerificationCode:HashKey`. See [README.md](README.md) for mappings and setup. Preserve the project UserSecretsId. Never log tokens, verification codes, passwords, or provider error bodies.
 

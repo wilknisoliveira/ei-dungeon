@@ -98,7 +98,7 @@
                             [disabled]="
                                 newPlayFormGroup.get('newPlayControl')?.value ==
                                     '' ||
-                                isCommonUser ||
+                                playBlocked ||
                                 game()?.gameStatus === 'PlayerDied' ||
                                 initialLoading()
                             "
@@ -111,21 +111,37 @@
                         </button>
                     }
                 </form>
+                @if (playBlocked && !isDisabled) {
+                    <button mat-stroked-button type="button" (click)="sparksRequested.emit()" i18n="@@sparksOpenFromGame">View Sparks</button>
+                }
             </div>
         </div>
     </section>
 } @else if (!loadFailed()) {
     <section class="game-ready atmospheric-bg">
         <p i18n="@@chatGameReady">Your new game is ready!</p>
-        <button
-            type="submit"
-            mat-flat-button
-            color="primary"
-            (click)="onSubmit(true)"
-            [disabled]="isCommonUser"
-            i18n="@@chatStartButton"
+        @let showSparkCost = isCommonUser;
+        @let startDisabled = playBlocked || loading() || initialLoading();
+        <span
+            [matTooltip]="openingCostTooltip"
+            [matTooltipDisabled]="!showSparkCost || !startDisabled"
+            [attr.tabindex]="showSparkCost && startDisabled ? 0 : null"
         >
-            Start
-        </button>
+            <button
+                type="submit"
+                mat-flat-button
+                color="primary"
+                (click)="onSubmit(true)"
+                [disabled]="startDisabled"
+                [matTooltip]="openingCostTooltip"
+                [matTooltipDisabled]="!showSparkCost || startDisabled"
+                i18n="@@chatStartButton"
+            >
+                Start
+            </button>
+        </span>
+        @if (showSparkCost && playBlocked) {
+            <button mat-stroked-button type="button" (click)="sparksRequested.emit()" i18n="@@sparksOpenFromGame">View Sparks</button>
+        }
     </section>
 }

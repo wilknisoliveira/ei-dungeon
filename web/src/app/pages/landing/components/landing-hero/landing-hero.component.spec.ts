@@ -33,20 +33,20 @@ describe('LandingHeroComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should send the primary call to action to signup', () => {
+        it('should send the primary call to action to login with Sparks intent', () => {
             expect(
                 host().querySelector('.cta-primary')?.getAttribute('href'),
-            ).toBe('/signup');
+            ).toBe('/login?sparks=1');
         });
 
-        it('should offer a secondary route to login', () => {
+        it('should offer a secondary route to sign up with Sparks intent', () => {
             expect(
                 host().querySelector('.cta-secondary')?.getAttribute('href'),
-            ).toBe('/login');
+            ).toBe('/signup?sparks=1');
         });
 
-        it('should show the free-to-start note', () => {
-            expect(host().querySelector('.hero-note')).toBeTruthy();
+        it('should show the amount of the initial grant', () => {
+            expect(host().querySelector('.hero-note')?.textContent).toContain('15 Sparks');
         });
     });
 
@@ -56,10 +56,10 @@ describe('LandingHeroComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should send the primary call to action to home', () => {
+        it('should send the primary call to action to the Sparks panel on Home', () => {
             expect(
                 host().querySelector('.cta-primary')?.getAttribute('href'),
-            ).toBe('/home');
+            ).toBe('/home?sparks=1');
         });
 
         it('should not offer signup or login', () => {
@@ -67,12 +67,11 @@ describe('LandingHeroComponent', () => {
                 host().querySelectorAll<HTMLAnchorElement>('.hero-actions a'),
             ).map((anchor) => anchor.getAttribute('href'));
 
-            expect(hrefs).not.toContain('/signup');
-            expect(hrefs).not.toContain('/login');
+            expect(hrefs).toEqual(['/home?sparks=1']);
         });
 
-        it('should drop the signup note', () => {
-            expect(host().querySelector('.hero-note')).toBeNull();
+        it('should show the amount of the initial grant', () => {
+            expect(host().querySelector('.hero-note')?.textContent).toContain('15 Sparks');
         });
     });
 

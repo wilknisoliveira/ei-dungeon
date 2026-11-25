@@ -38,6 +38,22 @@ describe('HomeComponent', () => {
         expect(component).toBeTruthy();
     });
 
+    for (const [minutes, expected] of [[60, '60 min left'], [61, '1 h 1 min left'], [120, '2 h left']] as const) {
+        it(`formats ${minutes} remaining minutes as "${expected}" in the Sparks toolbar`, () => {
+            fixture.destroy();
+            spyOn(TestBed.inject(AuthService), 'getRole').and.returnValue('CommonUser');
+            fixture = TestBed.createComponent(HomeComponent);
+            component = fixture.componentInstance;
+            spyOn(component, 'minutesRemaining').and.returnValue(minutes);
+            spyOn(component, 'isHandset').and.returnValue(false);
+            fixture.detectChanges();
+
+            const timer = fixture.nativeElement.querySelector('.spark-timer');
+            expect(timer?.textContent.trim()).toBe(`· ${expected}`);
+            expect(timer?.closest('button')?.getAttribute('aria-label')).toBe('Open Sparks balance, 0 available');
+        });
+    }
+
     it('offers administration in the profile menu only to Admin', async () => {
         const role = spyOn(TestBed.inject(AuthService), 'getRole').and.returnValue('Admin');
         fixture.detectChanges();

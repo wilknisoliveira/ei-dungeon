@@ -136,6 +136,21 @@
                     </button>
                 </div>
                 <div class="header-actions">
+                    @if (isCommonUser) {
+                        <button type="button" mat-stroked-button class="spark-button"
+                            [attr.aria-label]="sparkBalanceLabel()"
+                            (click)="openSparks()">
+                            <mat-icon aria-hidden="true">auto_awesome</mat-icon>
+                            @if (isHandset()) {
+                                <span>{{ sparkBalance() }}</span>
+                            } @else {
+                                <span i18n="@@sparksToolbarBalance">{{ sparkBalance() }} Sparks</span>
+                            }
+                            @if (!isHandset() && sparkTimerText(); as timerText) {
+                                <span class="spark-timer"> · {{ timerText }}</span>
+                            }
+                        </button>
+                    }
                     <div class="language-button">
                         <app-language-selector></app-language-selector>
                     </div>
@@ -182,10 +197,16 @@
                     *ngIf="gameSelected()"
                     [gameId]="gameSelected()"
                     (gamePlayed)="onGamePlayed($event)"
+                    [sparkBalance]="sparkBalance()"
+                    (sparksRequested)="openSparks()"
+                    (sparkStateChanged)="refreshSparks()"
                 ></app-chat>
                 <app-first-steps
                     *ngIf="!gameSelected()"
                     (gameCreated)="gameCreated($event)"
+                    [sparkBalance]="sparkBalance()"
+                    (sparksRequested)="openSparks()"
+                    (sparkStateChanged)="refreshSparks()"
                 ></app-first-steps>
             </div>
         </mat-drawer-content>

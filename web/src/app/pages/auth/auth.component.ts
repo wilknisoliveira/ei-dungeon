@@ -4,7 +4,7 @@ import { GoogleSigninButtonComponent } from 'src/app/shared/google-signin-button
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -38,6 +38,7 @@ export class AuthComponent {
     googleAction = '';
 
     private readonly flow = inject(EmailAuthFlowService);
+    private readonly route = inject(ActivatedRoute);
     readonly error = signal('');
     private loginDeadline = 0;
     hide = signal(true);
@@ -47,6 +48,10 @@ export class AuthComponent {
     };
 
     readonly loading = signal(false);
+
+    get sparksIntent(): Record<string, string> | null {
+        return this.route.snapshot.queryParamMap.get('sparks') === '1' ? { sparks: '1' } : null;
+    }
 
     constructor(
         private authService: AuthService,
@@ -59,7 +64,7 @@ export class AuthComponent {
         this.googleAction = '';
         try {
             await this.google.signin(credential);
-            await this.router.navigate(['/home']);
+            await this.continueTo('/home');
         } catch (error) {
             this.error.set(this.google.message(error));
             const code = error instanceof HttpErrorResponse ? error.error?.code : '';
@@ -76,12 +81,12 @@ export class AuthComponent {
         this.error.set('');
         try {
             await this.authService.login(this.userLogin);
-            await this.router.navigate(['/home']);
+            await this.continueTo('/home');
         } catch (error) {
             if (error instanceof HttpErrorResponse && error.status === 403 && error.error?.code === 'email_verification_required') {
                 this.flow.prepareVerification(this.userLogin.email);
                 this.userLogin.password = '';
-                await this.router.navigate(['/email-verification']);
+                await this.continueTo('/email-verification');
             } else if (error instanceof HttpErrorResponse && error.status === 401) {
                 this.error.set($localize`:@@loginInvalidCredentials:Invalid email or password.`);
             } else if (error instanceof HttpErrorResponse && error.status === 429) {
@@ -94,5 +99,10 @@ export class AuthComponent {
         } finally {
             this.loading.set(false);
         }
+    }
+
+    private continueTo(path: string): Promise<boolean> {
+        const queryParams = this.sparksIntent;
+        return queryParams ? this.router.navigate([path], { queryParams }) : this.router.navigate([path]);
     }
 }

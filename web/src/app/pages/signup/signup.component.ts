@@ -4,7 +4,7 @@ import { GoogleSigninButtonComponent } from 'src/app/shared/google-signin-button
 import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -38,10 +38,15 @@ export class SignupComponent {
     googleAction = '';
 
     private readonly flow = inject(EmailAuthFlowService);
+    private readonly route = inject(ActivatedRoute);
     error = '';
     hide = signal(true);
     formGroup: FormGroup;
     loading: boolean = false;
+
+    get sparksIntent(): Record<string, string> | null {
+        return this.route.snapshot.queryParamMap.get('sparks') === '1' ? { sparks: '1' } : null;
+    }
 
     constructor(
         private fb: FormBuilder,
@@ -68,7 +73,7 @@ export class SignupComponent {
         this.googleAction = '';
         try {
             await this.google.signin(credential);
-            await this.router.navigate(['/home']);
+            await this.continueTo('/home');
         } catch (error) {
             this.error = this.google.message(error);
             const code = error instanceof HttpErrorResponse ? error.error?.code : '';
@@ -89,7 +94,7 @@ export class SignupComponent {
         try {
             const result = await this.authService.signup({ email: this.formGroup.value.email.trim(), password: this.formGroup.value.password });
             this.flow.registered(result.email);
-            await this.router.navigate(['/email-verification']);
+            await this.continueTo('/email-verification');
         } catch (error) {
             this.error = error instanceof HttpErrorResponse && error.status === 400
                 ? $localize`:@@registrationFailure:Could not create your account. Check your registration details and try again.`
@@ -100,4 +105,8 @@ export class SignupComponent {
         }
     }
 
+    private continueTo(path: string): Promise<boolean> {
+        const queryParams = this.sparksIntent;
+        return queryParams ? this.router.navigate([path], { queryParams }) : this.router.navigate([path]);
+    }
 }

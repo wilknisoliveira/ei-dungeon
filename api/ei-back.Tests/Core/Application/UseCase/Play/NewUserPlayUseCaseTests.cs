@@ -1,6 +1,7 @@
 using AutoMapper;
 using ei_back.Core.Application.Interfaces;
 using ei_back.Core.Application.Service.Play.Interfaces;
+using ei_back.Core.Application.Service.Sparks;
 using ei_back.Core.Application.UseCase.Play;
 using ei_back.Core.Application.UseCase.Play.Dtos;
 using ei_back.Core.Application.UseCase.Play.Interfaces;
@@ -8,6 +9,7 @@ using ei_back.Core.Domain.Enums;
 using ei_back.Core.Application.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using PlayEntity = ei_back.Core.Domain.Entity.Play;
 
 namespace ei_back.Tests.Core.Application.UseCase.Play
@@ -36,6 +38,8 @@ namespace ei_back.Tests.Core.Application.UseCase.Play
             var configuration = A.Fake<IConfiguration>();
 
             A.CallTo(() => configuration["PlayOptions:LimitTokens"]).Returns("10000");
+            var reservations = new SparkReservationService(A.Fake<ISparkRepository>(), _unitOfWork,
+                TimeProvider.System, Options.Create(new SparkOptions()));
 
             _useCase = new NewUserPlayUseCase(
                 mapper,
@@ -47,7 +51,8 @@ namespace ei_back.Tests.Core.Application.UseCase.Play
                 configuration,
                 _genAi,
                 _playAnalyzerService,
-                _initialMasterPlayService);
+                _initialMasterPlayService,
+                reservations);
         }
 
         [Fact]

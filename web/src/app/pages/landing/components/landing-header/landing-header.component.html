@@ -7,18 +7,7 @@
         <nav class="actions" i18n-aria-label="@@landingHeaderActionsLabel" aria-label="Account navigation">
             <app-language-selector></app-language-selector>
 
-            @if (isInDevelopment()) {
-                <button mat-stroked-button class="signin" disabled i18n="@@landingComingSoon">
-                    Coming soon
-                </button>
-                <!-- Current account-action labels, restored once MVP features are ready.
-                @if (isLoggedIn()) {
-                    Go to my games
-                } @else {
-                    Sign in
-                }
-                -->
-            } @else if (isLoggedIn()) {
+            @if (isLoggedIn()) {
                 <a
                     mat-flat-button
                     color="primary"

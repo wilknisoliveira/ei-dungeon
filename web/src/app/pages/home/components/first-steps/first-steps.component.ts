@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
     FormBuilder,
@@ -44,6 +44,11 @@ import { AuthService } from 'src/app/service/auth/auth.service';
 })
 export class FirstStepsComponent {
     @Output() gameCreated = new EventEmitter<string>();
+    readonly createCostTooltip = $localize`:@@sparksCreateCost:Creating the game costs 1 Spark. Starting the first scene costs 1 more.`;
+    readonly sparkBalance = input(0);
+    readonly sparksRequested = output<void>();
+    readonly sparkStateChanged = output<void>();
+    private pendingCreation?: { fingerprint: string; id: string };
 
     @ViewChild('gameNgForm') gameNgForm!: NgForm;
 
@@ -112,6 +117,10 @@ export class FirstStepsComponent {
         return this.authService.getRole() === 'CommonUser';
     }
 
+    get creationBlocked(): boolean {
+        return this.isCommonUser && this.sparkBalance() < 1 && !this.pendingCreation;
+    }
+
     constructor(
         private _formBuilder: FormBuilder,
         private gameService: GameService,
@@ -147,10 +156,10 @@ export class FirstStepsComponent {
     }
 
     onSubmit(): void {
-        if (this.isCommonUser) return;
+        if (this.loading || this.creationBlocked || this.gameFormGroup.invalid ||
+            this.currentSkillPointsDistributed > this.maxSkillPointsToDistribute) return;
 
-        this.loading = true;
-        let newGame: NewGame = {
+        const newGame: NewGame = {
             protagonistDescription: this.gameFormGroup.get(
                 'characterDescriptionControl',
             )?.value,
@@ -173,19 +182,37 @@ export class FirstStepsComponent {
             },
         };
 
+        if (this.isCommonUser) {
+            const fingerprint = JSON.stringify(newGame);
+            if (this.pendingCreation?.fingerprint !== fingerprint) {
+                if (this.sparkBalance() < 1) {
+                    this.sparksRequested.emit();
+                    return;
+                }
+                this.pendingCreation = { fingerprint, id: crypto.randomUUID() };
+            }
+            newGame.operationId = this.pendingCreation.id;
+        }
+        this.loading = true;
         this.gameService.newGame(newGame).subscribe({
-            next: () => {
-                this.gameCreated.emit(newGame.name);
+            next: game => {
+                this.pendingCreation = undefined;
+                this.gameCreated.emit(game.id);
                 this.loading = false;
                 this.snackBar.addSuccess(
                     $localize`Game '${newGame.name}' created!`,
                 );
             },
             error: (error: HttpErrorResponse) => {
-                //TODO: Exibir erro e tratar
                 this.loading = false;
+                this.sparkStateChanged.emit();
+                if (error.error?.code === 'sparks_insufficient') {
+                    this.pendingCreation = undefined;
+                    this.sparksRequested.emit();
+                    return;
+                }
                 this.snackBar.addError(
-                    $localize`Something went wrong while attempting to create the game. Verify with the admin if you have the permissions.`,
+                    $localize`:@@sparksCreateFailed:The game could not be created. Please try again.`,
                 );
             },
         });

@@ -156,14 +156,14 @@
         <source>Invalid email or password.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/auth/auth.component.ts</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="emailAuthThrottled" datatype="html">
         <source>Too many requests. Please wait before trying again.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/auth/auth.component.ts</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
@@ -295,7 +295,7 @@
         <source>Enter a valid email address.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.ts</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">29</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.ts</context>
@@ -314,7 +314,7 @@
         <source>Enter exactly six digits.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.ts</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">30</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.ts</context>
@@ -329,7 +329,7 @@
         <source>Email verified. You can now log in.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.ts</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="forgotPasswordTitle" datatype="html">
@@ -399,114 +399,143 @@
           <context context-type="linenumber">24,25</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="sparksOpenFromGame" datatype="html">
+        <source>View Sparks</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.html</context>
+          <context context-type="linenumber">115,117</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.html</context>
+          <context context-type="linenumber">144,146</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.html</context>
+          <context context-type="linenumber">193,194</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="chatGameReady" datatype="html">
         <source>Your new game is ready!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.html</context>
-          <context context-type="linenumber">119,121</context>
+          <context context-type="linenumber">122,123</context>
         </context-group>
       </trans-unit>
       <trans-unit id="chatStartButton" datatype="html">
         <source> Start </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.html</context>
-          <context context-type="linenumber">128,129</context>
+          <context context-type="linenumber">140,141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksOpeningCost" datatype="html">
+        <source>Starting the first scene costs 1 Spark.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="153799456510623899" datatype="html">
         <source>Portuguese</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
-          <context context-type="linenumber">108</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5866254605255506989" datatype="html">
-        <source>English</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
-          <context context-type="linenumber">109</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5190825892106392539" datatype="html">
-        <source>Spanish</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">115</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
           <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="5866254605255506989" datatype="html">
+        <source>English</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5190825892106392539" datatype="html">
+        <source>Spanish</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">117</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="3084566329643999642" datatype="html">
         <source>What do you do?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6900473553536680806" datatype="html">
         <source>This game has been finished, create a new one to start a new adventure!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="334139479101771120" datatype="html">
         <source>Game language updated.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
-          <context context-type="linenumber">157</context>
+          <context context-type="linenumber">168</context>
         </context-group>
       </trans-unit>
       <trans-unit id="394543175828208356" datatype="html">
         <source>Something went wrong while attempting to update the game language.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
-          <context context-type="linenumber">167</context>
+          <context context-type="linenumber">178</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7683705529753923369" datatype="html">
         <source>Player</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
-          <context context-type="linenumber">174</context>
+          <context context-type="linenumber">185</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7910849620457936504" datatype="html">
         <source>Game Master</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
-          <context context-type="linenumber">176</context>
+          <context context-type="linenumber">187</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3338122603397139235" datatype="html">
         <source>Something went wrong while attempting to get the play list.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
-          <context context-type="linenumber">351</context>
+          <context context-type="linenumber">396</context>
         </context-group>
       </trans-unit>
       <trans-unit id="883225603593837541" datatype="html">
         <source>Something went wrong. Please try again.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
-          <context context-type="linenumber">470</context>
+          <context context-type="linenumber">520</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksPlayFailed" datatype="html">
+        <source>The game could not confirm this turn. Try again to send the same turn.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
+          <context context-type="linenumber">573</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6081488370267137537" datatype="html">
         <source>The gods have not answered your call. Speak again, brave adventurer!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/chat/chat.component.ts</context>
-          <context context-type="linenumber">561</context>
+          <context context-type="linenumber">659</context>
         </context-group>
       </trans-unit>
       <trans-unit id="firstStepsHeading" datatype="html">
@@ -597,126 +626,238 @@
         <source> Start game </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.html</context>
-          <context context-type="linenumber">184,185</context>
+          <context context-type="linenumber">189,190</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksCreateCost" datatype="html">
+        <source>Creating the game costs 1 Spark. Starting the first scene costs 1 more.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7800061171704298797" datatype="html">
         <source>Human</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4895190846964146304" datatype="html">
         <source>Elf</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6487984047699114430" datatype="html">
         <source>Dwarf</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1148914934735638586" datatype="html">
         <source>Half Elf</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6003309338635897937" datatype="html">
         <source>Halfling</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5931157710888126589" datatype="html">
         <source>Tiefling</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6984581431061216462" datatype="html">
         <source>Dragonborn</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1956337344618882908" datatype="html">
         <source>Half Orc</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4019184240939181903" datatype="html">
         <source>Gnome</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6632040223751981101" datatype="html">
         <source>Strength</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5465529649433457628" datatype="html">
         <source>Dexterity</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8489670130200267808" datatype="html">
         <source>Intelligence</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1632323077493059273" datatype="html">
         <source>Constitution</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6828638344650593860" datatype="html">
         <source>Charisma</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6753176961354636644" datatype="html">
         <source>Wisdom</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2549518094568275321" datatype="html">
         <source>Game &apos;<x id="PH" equiv-text="newGame.name"/>&apos; created!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">203</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3688639030371133915" datatype="html">
-        <source>Something went wrong while attempting to create the game. Verify with the admin if you have the permissions.</source>
+      <trans-unit id="sparksCreateFailed" datatype="html">
+        <source>The game could not be created. Please try again.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/components/first-steps/first-steps.component.ts</context>
-          <context context-type="linenumber">188</context>
+          <context context-type="linenumber">215</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksPanelTitle" datatype="html">
+        <source>Sparks</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/sparks-panel/sparks-panel.component.html</context>
+          <context context-type="linenumber">1,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksPanelBalance" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ clock?.balance() ?? status.balance }}"/> available</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/sparks-panel/sparks-panel.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksPanelRemaining" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ minutes }}"/> min left</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/sparks-panel/sparks-panel.component.html</context>
+          <context context-type="linenumber">10,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksPanelExpiry" datatype="html">
+        <source>Ends <x id="INTERPOLATION" equiv-text="{{ status.expiresAt | date: &apos;medium&apos; }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/sparks-panel/sparks-panel.component.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksQueueWaiting" datatype="html">
+        <source>You’re on the waitlist. We’ll email you when your Sparks are ready.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/sparks-panel/sparks-panel.component.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksQueueOffer" datatype="html">
+        <source>Sparks aren’t available right now. Join the waitlist to get an email when your grant is issued.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/sparks-panel/sparks-panel.component.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksJoinQueue" datatype="html">
+        <source>Join waitlist</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/sparks-panel/sparks-panel.component.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksDeclineQueue" datatype="html">
+        <source>No thanks</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/sparks-panel/sparks-panel.component.html</context>
+          <context context-type="linenumber">24,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksRequestRefill" datatype="html">
+        <source>Request a refill</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/sparks-panel/sparks-panel.component.html</context>
+          <context context-type="linenumber">29,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksRequestInitial" datatype="html">
+        <source>Request free Sparks</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/sparks-panel/sparks-panel.component.html</context>
+          <context context-type="linenumber">31,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksNoSpendableBalance" datatype="html">
+        <source>You don’t have any Sparks available right now.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/sparks-panel/sparks-panel.component.html</context>
+          <context context-type="linenumber">35,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksLoading" datatype="html">
+        <source>Loading your Sparks…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/sparks-panel/sparks-panel.component.html</context>
+          <context context-type="linenumber">39,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksLoadError" datatype="html">
+        <source>Your Sparks could not be updated.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/sparks-panel/sparks-panel.component.html</context>
+          <context context-type="linenumber">42,43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksTryAgain" datatype="html">
+        <source>Try again</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/sparks-panel/sparks-panel.component.html</context>
+          <context context-type="linenumber">43,45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksClosePanel" datatype="html">
+        <source>Close</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/components/sparks-panel/sparks-panel.component.html</context>
+          <context context-type="linenumber">47,48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="homeSubtitle" datatype="html">
@@ -754,67 +895,102 @@
           <context context-type="linenumber">118,119</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="sparksToolbarBalance" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ sparkBalance() }}"/> Sparks</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
+          <context context-type="linenumber">147,148</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="adminMenuItem" datatype="html">
         <source>Administration</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
-          <context context-type="linenumber">161,162</context>
+          <context context-type="linenumber">176,177</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settingsMenuItem" datatype="html">
         <source>Settings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
-          <context context-type="linenumber">169,170</context>
+          <context context-type="linenumber">184,185</context>
         </context-group>
       </trans-unit>
       <trans-unit id="logoutMenuItem" datatype="html">
         <source>Logout</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
-          <context context-type="linenumber">173,174</context>
+          <context context-type="linenumber">188,189</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksMinutesRemaining" datatype="html">
+        <source><x id="PH" equiv-text="totalMinutes"/> min left</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksHoursRemaining" datatype="html">
+        <source><x id="PH" equiv-text="hours"/> h left</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksHoursAndMinutesRemaining" datatype="html">
+        <source><x id="PH" equiv-text="hours"/> h <x id="PH_1" equiv-text="minutes"/> min left</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sparksOpenBalance" datatype="html">
+        <source>Open Sparks balance, <x id="PH" equiv-text="this.sparkBalance()"/> available</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7752330587380687192" datatype="html">
         <source>Something went wrong while attempting to get the game list.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">177</context>
         </context-group>
       </trans-unit>
       <trans-unit id="269149994023386814" datatype="html">
         <source>Game deleted successfully.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
-          <context context-type="linenumber">155</context>
+          <context context-type="linenumber">231</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5244014636631739754" datatype="html">
         <source>Something went wrong while attempting to delete the game.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
-          <context context-type="linenumber">159</context>
+          <context context-type="linenumber">235</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1620894741817105195" datatype="html">
         <source>Are you sure you want to delete the game &apos;<x id="PH" equiv-text="gameName"/>&apos;?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
-          <context context-type="linenumber">169</context>
+          <context context-type="linenumber">245</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1026218475958861845" datatype="html">
         <source>Game renamed successfully.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
-          <context context-type="linenumber">206</context>
+          <context context-type="linenumber">282</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9132426788094363683" datatype="html">
         <source>Something went wrong while attempting to rename the game.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
-          <context context-type="linenumber">210</context>
+          <context context-type="linenumber">286</context>
         </context-group>
       </trans-unit>
       <trans-unit id="landingCtaHeading" datatype="html">
@@ -824,62 +1000,15 @@
           <context context-type="linenumber">4,7</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="landingCtaBody" datatype="html">
-        <source> Make a character and be in your first scene in a couple of minutes. </source>
+      <trans-unit id="landingRequestSparks" datatype="html">
+        <source>Request free Sparks</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/landing/components/landing-cta/landing-cta.component.html</context>
-          <context context-type="linenumber">9,10</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/landing/components/landing-cta/landing-cta.component.html</context>
-          <context context-type="linenumber">40,41</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="landingComingSoon" datatype="html">
-        <source> Coming soon </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/landing/components/landing-cta/landing-cta.component.html</context>
-          <context context-type="linenumber">15,16</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/landing/components/landing-header/landing-header.component.html</context>
-          <context context-type="linenumber">12,13</context>
+          <context context-type="linenumber">10,13</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/landing/components/landing-hero/landing-hero.component.html</context>
           <context context-type="linenumber">26,27</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="landingCtaBodyLoggedIn" datatype="html">
-        <source> Your world is where you left it. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/landing/components/landing-cta/landing-cta.component.html</context>
-          <context context-type="linenumber">25,27</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="landingContinueAdventure" datatype="html">
-        <source>Continue your adventure</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/landing/components/landing-cta/landing-cta.component.html</context>
-          <context context-type="linenumber">35,37</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/landing/components/landing-hero/landing-hero.component.html</context>
-          <context context-type="linenumber">43,45</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="landingCtaButton" datatype="html">
-        <source>Create your character</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/landing/components/landing-cta/landing-cta.component.html</context>
-          <context context-type="linenumber">51,53</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="landingCtaLoginLink" datatype="html">
-        <source>Already playing? Sign in</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/landing/components/landing-cta/landing-cta.component.html</context>
-          <context context-type="linenumber">57,59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="landingDevBadge" datatype="html">
@@ -966,8 +1095,8 @@
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="landingFaqPriceA" datatype="html">
-        <source>It is free to start. A paid tier is planned for later, but nothing is behind a paywall today.</source>
+      <trans-unit id="landingFaqSparkPrice" datatype="html">
+        <source>On the Free plan, creating a game costs 1 Spark, starting the first scene costs 1 more, and each turn costs 1. Your Sparks last 24 hours from the time you receive them. If none are available, you can join the waitlist and receive an email when your grant is ready.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/landing/components/landing-faq/landing-faq.component.ts</context>
           <context context-type="linenumber">29</context>
@@ -1138,14 +1267,14 @@
         <source>Go to my games</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/landing/components/landing-header/landing-header.component.html</context>
-          <context context-type="linenumber">28,30</context>
+          <context context-type="linenumber">17,19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="landingSignIn" datatype="html">
         <source>Sign in</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/landing/components/landing-header/landing-header.component.html</context>
-          <context context-type="linenumber">36,38</context>
+          <context context-type="linenumber">25,27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="landingHeroHeadline" datatype="html">
@@ -1162,32 +1291,25 @@
           <context context-type="linenumber">18,20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="landingHeroCta" datatype="html">
-        <source>Create your character</source>
+      <trans-unit id="landingCreateSparkAccount" datatype="html">
+        <source>Create an account</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/landing/components/landing-hero/landing-hero.component.html</context>
-          <context context-type="linenumber">52,54</context>
+          <context context-type="linenumber">29,33</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="landingHeroSecondary" datatype="html">
-        <source>I already have an account</source>
+      <trans-unit id="landingSparksNote" datatype="html">
+        <source>Get up to <x id="INTERPOLATION" equiv-text="{{ initialGrant() }}"/> Sparks for your first adventure, subject to availability.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/landing/components/landing-hero/landing-hero.component.html</context>
-          <context context-type="linenumber">59,61</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="landingHeroNote" datatype="html">
-        <source> Free to start · Play in Portuguese, English or Spanish </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/landing/components/landing-hero/landing-hero.component.html</context>
-          <context context-type="linenumber">66,67</context>
+          <context context-type="linenumber">33,34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="landingLogoCompletedAlt" datatype="html">
         <source>EI-DUNGEON — an A.I. driven RPG simulator</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/landing/components/landing-hero/landing-hero.component.ts</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="landingHowEyebrow" datatype="html">
@@ -1720,7 +1842,7 @@
         <source>Could not create your account. Check your registration details and try again.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/signup/signup.component.ts</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="verificationAcknowledgement" datatype="html">

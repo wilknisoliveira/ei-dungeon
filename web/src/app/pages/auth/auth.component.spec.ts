@@ -2,7 +2,7 @@ import { AuthService } from 'src/app/service/auth/auth.service';
 import { EmailAuthFlowService } from 'src/app/service/auth/email-auth-flow.service';
 import { SESSION_STORAGE } from 'src/app/core/storage/app-storage';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -32,6 +32,23 @@ describe('AuthComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('preserves the Sparks panel intent through email and Google sign-in', async () => {
+        const route = TestBed.inject(ActivatedRoute);
+        spyOnProperty(route.snapshot, 'queryParamMap').and.returnValue(convertToParamMap({ sparks: '1' }));
+        const navigate = spyOn(TestBed.inject(Router), 'navigate').and.resolveTo(true);
+        spyOn(TestBed.inject(AuthService), 'login').and.resolveTo({
+            authenticated: true, created: '', expiration: '', accessToken: 'access', refreshToken: 'refresh',
+        });
+        spyOn(component.google, 'signin').and.resolveTo();
+        component.userLogin = { email: 'player@example.com', password: 'password' };
+        await component.onSubmit();
+        await component.onGoogle({ challengeId: 'challenge', credential: 'credential' });
+        expect(navigate.calls.allArgs()).toEqual([
+            [['/home'], { queryParams: { sparks: '1' } }],
+            [['/home'], { queryParams: { sparks: '1' } }],
+        ]);
     });
 
     it('routes only the specific unverified response to verification without inferring email', async () => {

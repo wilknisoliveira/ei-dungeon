@@ -17,6 +17,12 @@ namespace ei_back.Infrastructure.Context
         public DbSet<Game> Games { get; set; }
         public DbSet<Play> Plays { get; set; }
         public DbSet<GameInfo> GameInfos { get; set; }
+        public DbSet<SparkCycle> SparkCycles { get; set; }
+        public DbSet<SparkGrant> SparkGrants { get; set; }
+        public DbSet<SparkQueueRequest> SparkQueueRequests { get; set; }
+        public DbSet<SparkSettings> SparkSettings { get; set; }
+        public DbSet<SparkDailySnapshot> SparkDailySnapshots { get; set; }
+        public DbSet<SparkCycleChange> SparkCycleChanges { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

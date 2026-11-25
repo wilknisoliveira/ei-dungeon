@@ -79,15 +79,18 @@ namespace ei_back.UserInterface.Api
             return Ok(response);
         }
 
+        /// <summary>Streams a first scene or game master turn.</summary>
+        /// <remarks>Free requests supply an operation ID and opening flag. Committed confirms persistence and the debit.</remarks>
         [HttpPost]
         [ProducesResponseType(typeof(IAsyncEnumerable<StreamPlayDtoResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Roles = "Admin, PremiumUser")]
+        [Authorize(Roles = "Admin, CommonUser, PremiumUser")]
         public async IAsyncEnumerable<StreamPlayDtoResponse> CreateUserPlay([FromBody] PlayDtoRequest playDtoRequest, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var userId = _getUserIdUseCase.Handler(User);
 
             _logger.LogInformation($"New play by user {userId} to game {playDtoRequest.GameId}.");
+            playDtoRequest.UsesSparks = !User.IsInRole("Admin") && !User.IsInRole("PremiumUser");
 
             await foreach (var chunk in _newUserPlayUseCase.Handler(playDtoRequest, userId, cancellationToken))
             {

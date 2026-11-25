@@ -13,6 +13,7 @@ import {
     signal,
     viewChild,
 } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -64,6 +65,12 @@ const STICK_TO_BOTTOM_THRESHOLD_PX = 100;
 export class ChatComponent implements OnChanges {
     gameId = input<string>('');
     gamePlayed = output<string>();
+    readonly openingCostTooltip = $localize`:@@sparksOpeningCost:Starting the first scene costs 1 Spark.`;
+    readonly sparkBalance = input(0);
+    readonly sparksRequested = output<void>();
+    readonly sparkStateChanged = output<void>();
+    private readonly retry = signal<NewPlay | null>(null);
+    private sparkSequence = 0;
 
     messagesContainer = viewChild<ElementRef<HTMLDivElement>>('messagesContainer');
     messagesList = viewChild<ElementRef<HTMLDivElement>>('messagesList');
@@ -124,6 +131,10 @@ export class ChatComponent implements OnChanges {
 
     get isCommonUser(): boolean {
         return this.authService.getRole() === 'CommonUser';
+    }
+
+    get playBlocked(): boolean {
+        return this.isCommonUser && this.sparkBalance() < 1 && this.retry()?.gameId !== this.gameId();
     }
 
     get currentGameLanguage(): string {
@@ -201,12 +212,41 @@ export class ChatComponent implements OnChanges {
 
     private saveDraft(gameId: string): void {
         this.saveGameCache(gameId, {
+            ...this.getGameCache(gameId),
             textbox: this.newPlayFormGroup.get('newPlayControl')?.value ?? '',
         });
     }
 
+    private rememberSparkPlay(play: NewPlay): void {
+        if (!play.operationId) return;
+        this.retry.set(play);
+        this.saveGameCache(play.gameId, {
+            ...this.getGameCache(play.gameId),
+            sparkOperationId: play.operationId,
+            sparkPrompt: play.prompt,
+            sparkOpening: String(play.opening),
+        });
+    }
+
+    private forgetSparkPlay(play: NewPlay): void {
+        const cache = this.getGameCache(play.gameId);
+        if (cache?.['sparkOperationId'] === play.operationId && cache) {
+            delete cache['sparkOperationId'];
+            delete cache['sparkPrompt'];
+            delete cache['sparkOpening'];
+            this.saveGameCache(play.gameId, cache);
+        }
+        if (this.retry()?.operationId === play.operationId) this.retry.set(null);
+    }
+
     private restoreDraft(gameId: string): void {
         const cache = this.getGameCache(gameId);
+        this.retry.set(cache?.['sparkOperationId'] && cache['sparkPrompt'] ? {
+            gameId,
+            prompt: cache['sparkPrompt'],
+            operationId: cache['sparkOperationId'],
+            opening: cache['sparkOpening'] === 'true',
+        } : null);
         this.newPlayFormGroup
             .get('newPlayControl')
             ?.setValue(cache?.['textbox'] ?? '');
@@ -308,6 +348,11 @@ export class ChatComponent implements OnChanges {
         this.openingGameId = gameId;
         this.stickToBottom = true;
         this.pendingPrepend = null;
+        if (this.isCommonUser) {
+            this.sparkSequence++;
+            this.loading.set(false);
+            this.streamedPlaysStartIndex = null;
+        }
 
         if (!this.loading()) {
             this.initialLoading.set(true);
@@ -441,7 +486,7 @@ export class ChatComponent implements OnChanges {
     }
 
     async onSubmit(initialPlay: boolean = false): Promise<void> {
-        if (this.isCommonUser) return;
+        if (this.loading() || this.playBlocked) return;
 
         const prompt: string = (
             this.newPlayFormGroup.get('newPlayControl')?.value ?? ''
@@ -449,11 +494,16 @@ export class ChatComponent implements OnChanges {
 
         if (!initialPlay && !prompt) return;
 
-        this.loading.set(true);
         const newPlay: NewPlay = {
             gameId: this.gameId(),
             prompt: prompt || INITIAL_PLAY_PROMPT,
         };
+        if (this.isCommonUser) {
+            newPlay.opening = initialPlay;
+            await this.submitSparkPlay(newPlay, prompt, initialPlay);
+            return;
+        }
+        this.loading.set(true);
 
         try {
             await this.playService.streamNewPlay(newPlay, (chunk: StreamPlay) =>
@@ -468,6 +518,59 @@ export class ChatComponent implements OnChanges {
                 this.loading.set(false);
                 this.snackBar.addError(
                     $localize`Something went wrong. Please try again.`,
+                );
+            }
+        }
+    }
+
+    private async submitSparkPlay(play: NewPlay, prompt: string, opening: boolean): Promise<void> {
+        const previous = this.retry();
+        if (previous?.gameId === play.gameId && previous.prompt === play.prompt && previous.opening === opening) {
+            play.operationId = previous.operationId;
+        } else {
+            if (this.sparkBalance() < 1) {
+                this.sparksRequested.emit();
+                return;
+            }
+            play.operationId = crypto.randomUUID();
+            this.rememberSparkPlay(play);
+        }
+
+        const sequence = ++this.sparkSequence;
+        this.loading.set(true);
+        let committed = false;
+        let failureCode: string | undefined;
+        try {
+            await this.playService.streamNewPlay(play, chunk => {
+                if (chunk.eventType === 'Committed') committed = true;
+                if (sequence !== this.sparkSequence || this.gameId() !== play.gameId) return;
+                if (chunk.eventType === 'Error') failureCode = chunk.code ?? 'unknown';
+                if (chunk.eventType === 'Start' || chunk.eventType === 'Chunk') {
+                    this.handleStreamEvent(chunk, prompt, opening);
+                }
+            });
+        } catch (error) {
+            if (error instanceof HttpErrorResponse) failureCode = error.error?.code;
+        } finally {
+            this.sparkStateChanged.emit();
+        }
+
+        if (committed || failureCode === 'sparks_insufficient') this.forgetSparkPlay(play);
+        if (sequence !== this.sparkSequence || this.gameId() !== play.gameId) return;
+        if (committed) {
+            if (this.streamedPlaysStartIndex === null) {
+                await this.loadInitialPlays(play.gameId);
+                if (sequence !== this.sparkSequence || this.gameId() !== play.gameId) return;
+            }
+            this.handleStreamEnd();
+        } else {
+            this.discardStreamedPlays();
+            this.loading.set(false);
+            if (failureCode === 'sparks_insufficient') {
+                this.sparksRequested.emit();
+            } else {
+                this.snackBar.addError(
+                    $localize`:@@sparksPlayFailed:The game could not confirm this turn. Try again to send the same turn.`,
                 );
             }
         }
@@ -549,17 +652,21 @@ export class ChatComponent implements OnChanges {
     }
 
     private handleStreamError(): void {
+        this.discardStreamedPlays();
+        this.streamFailed = true;
+        this.loading.set(false);
+        this.snackBar.addError(
+            $localize`The gods have not answered your call. Speak again, brave adventurer!`,
+        );
+    }
+
+    private discardStreamedPlays(): void {
         if (this.streamedPlaysStartIndex !== null) {
             const startIndex = this.streamedPlaysStartIndex;
             this.plays.update((current) => current.slice(0, startIndex));
             this.streamedPlaysStartIndex = null;
         }
 
-        this.streamFailed = true;
-        this.loading.set(false);
-        this.snackBar.addError(
-            $localize`The gods have not answered your call. Speak again, brave adventurer!`,
-        );
     }
 
     /** A play that only exists in the browser until the server sends the real one. */

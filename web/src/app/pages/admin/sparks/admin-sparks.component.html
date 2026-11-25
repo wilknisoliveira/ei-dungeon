@@ -1,0 +1,138 @@
+@if (busy()) {
+    <mat-progress-bar mode="indeterminate" aria-label="Updating Sparks dashboard" />
+}
+@if (error()) {
+    <p class="error" role="alert">{{ error() }}</p>
+    <button mat-button type="button" (click)="load(dashboard()?.cycle?.id)" [disabled]="busy()">Refresh dashboard</button>
+}
+@if (feedback()) { <p role="status">{{ feedback() }}</p> }
+@if (dashboard(); as data) {
+    <div class="dashboard">
+        <div class="cycle-heading">
+            @if (data.cycles.length) {
+                <mat-form-field appearance="outline">
+                    <mat-label>Cycle</mat-label>
+                    <mat-select [value]="data.cycle?.id" (selectionChange)="load($event.value)" [disabled]="busy()">
+                        @for (item of data.cycles; track item.id) {
+                            <mat-option [value]="item.id">{{ date(item.startsAt) }} · {{ item.state }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            }
+            @if (data.cycle; as cycle) {
+                <p class="cycle-state">{{ cycle.state }} · {{ cycle.capacity | number: '' : 'en-US' }} Sparks capacity</p>
+            }
+        </div>
+        @if (data.cycle?.blockReason === 'InsufficientCredits') {
+            <p class="error">The cycle was blocked due to insufficient OpenRouter coverage. A manual reset checks the current control line plus commitments from earlier cycles.</p>
+        } @else if (data.cycle?.blockReason === 'ProviderUnavailable') {
+            <p class="error">OpenRouter coverage could not be verified. The system will check again automatically.</p>
+        }
+        <dl class="metrics">
+            @if (data.cycle; as cycle) {
+                <div><dt>Available Sparks</dt><dd>{{ cycle.available | number: '' : 'en-US' }}</dd></div>
+                <div><dt>Control line</dt><dd>{{ cycle.controlLine | number: '1.0-2' : 'en-US' }}</dd></div>
+            }
+            <div>
+                <dt>Waiting requests</dt>
+                <dd>{{ data.queue.initialWaiting + data.queue.refillWaiting | number: '' : 'en-US' }}</dd>
+                <small>{{ data.queue.initialWaiting | number: '' : 'en-US' }} initial · {{ data.queue.refillWaiting | number: '' : 'en-US' }} refill</small>
+            </div>
+            <div>
+                <dt>Declined requests</dt>
+                <dd>{{ data.queue.declined | number: '' : 'en-US' }}</dd>
+                <small>{{ data.queue.declinedDate }}</small>
+            </div>
+            <div>
+                <dt>OpenRouter credits</dt>
+                @if (data.openRouter?.observedAt; as observedAt) {
+                    <dd>{{ data.openRouter.dollars | currency: 'USD' : 'symbol' : '1.2-4' : 'en-US' }}</dd>
+                    <small>{{ data.openRouter.estimatedSparks | number: '' : 'en-US' }} estimated Sparks</small>
+                    <small>{{ dateTime(observedAt) }} (São Paulo)</small>
+                    @if (data.openRouter.stale) { <small class="error">Latest check failed. Showing the last verified balance.</small> }
+                } @else {
+                    <dd>Unavailable</dd>
+                    <small>No verified observation.</small>
+                }
+            </div>
+        </dl>
+
+        @if (data.cycle; as cycle) {
+            <section class="dashboard-section">
+                <h2>Capacity over time</h2>
+                @if (data.snapshots.length || data.changes.length) {
+                    <figure>
+                        <canvas #chart width="840" height="290" role="img" aria-label="Daily available Sparks and control line"></canvas>
+                        <figcaption>
+                            <span class="legend available">Available Sparks</span>
+                            <span class="legend control">Control line</span>
+                            @if (increases().length) { <span class="legend capacity">Capacity increase</span> }
+                        </figcaption>
+                    </figure>
+                    @if (increases().length) {
+                        <ul class="capacity-history" aria-label="Capacity increases on the chart">
+                            @for (change of increases(); track $index) {
+                                <li>{{ dateTime(change.occurredAt) }} · {{ change.previousCapacity | number: '' : 'en-US' }} → {{ change.capacity | number: '' : 'en-US' }} Sparks</li>
+                            }
+                        </ul>
+                    }
+                    <details>
+                        <summary>Daily snapshots and resets</summary>
+                        @if (data.snapshots.length) {
+                            <div class="table-scroll">
+                                <table>
+                                    <thead><tr><th scope="col">Date</th><th scope="col">Capacity</th><th scope="col">Available</th><th scope="col">Control line</th></tr></thead>
+                                    <tbody>
+                                        @for (item of data.snapshots; track item.date) {
+                                            <tr><th scope="row">{{ item.date }}</th><td>{{ item.capacity | number: '' : 'en-US' }}</td><td>{{ item.available | number: '' : 'en-US' }}</td><td>{{ item.controlLine | number: '1.0-2' : 'en-US' }}</td></tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        <ul>
+                            @for (change of data.changes; track $index) {
+                                @if (change.capacity === null) {
+                                    <li>{{ dateTime(change.occurredAt) }} · {{ change.previousState }} → {{ change.state }}</li>
+                                }
+                            }
+                        </ul>
+                    </details>
+                } @else {
+                    <p>Daily snapshots will appear after the first reporting run.</p>
+                }
+            </section>
+
+            @if (cycle.state !== 'Closed') {
+                <section class="dashboard-section">
+                    <h2>Current cycle</h2>
+                    <form class="increase-form" (ngSubmit)="increase()">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Sparks to add</mat-label>
+                            <input matInput type="number" step="1" min="1" [formControl]="addedCapacity" />
+                        </mat-form-field>
+                        <button mat-stroked-button type="submit" [disabled]="busy() || addedCapacity.invalid">Increase capacity</button>
+                    </form>
+                    @if (cycle.state === 'Blocked' && cycle.blockReason === 'InsufficientCredits') {
+                        <button mat-stroked-button type="button" [disabled]="busy()" (click)="reset()">Check coverage and reset cycle</button>
+                    }
+                </section>
+            }
+        }
+        <section class="dashboard-section">
+            <h2>Pilot defaults</h2>
+            <p>Monthly capacity applies to future cycles.</p>
+            <form [formGroup]="settings" (ngSubmit)="saveSettings()">
+                <div class="settings-fields">
+                    @for (field of fields; track field.key) {
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ field.label }}</mat-label>
+                            <input matInput type="number" [step]="field.step" [formControlName]="field.key" />
+                        </mat-form-field>
+                    }
+                </div>
+                <button mat-flat-button type="submit" [disabled]="busy() || settings.invalid || settings.pristine">Save defaults</button>
+            </form>
+        </section>
+    </div>
+}

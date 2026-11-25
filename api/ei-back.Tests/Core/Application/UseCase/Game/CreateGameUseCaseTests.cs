@@ -2,11 +2,13 @@ using AutoMapper;
 using ei_back.Core.Application.Interfaces;
 using ei_back.Core.Application.Repository;
 using ei_back.Core.Application.Service.Play.Interfaces;
+using ei_back.Core.Application.Service.Sparks;
 using ei_back.Core.Application.UseCase.Game;
 using ei_back.Core.Application.UseCase.Game.Dtos;
 using ei_back.Core.Application.UseCase.Game.Interfaces;
 using ei_back.Core.Domain.Enums;
 using ei_back.Infrastructure.Exceptions.ExceptionTypes;
+using Microsoft.Extensions.Options;
 using UserEntity = ei_back.Core.Domain.Entity.User;
 
 namespace ei_back.Tests.Core.Application.UseCase.Game
@@ -27,7 +29,9 @@ namespace ei_back.Tests.Core.Application.UseCase.Game
             _mapper = A.Fake<IMapper>();
             _genAi = A.Fake<IGenAi>();
             _upsertWorldInfoService = A.Fake<IUpsertWorldInfoService>();
-            _useCase = new CreateGameUseCase(_mapper, _gameRepository, _userRepository, _genAi, _upsertWorldInfoService);
+            var reservations = new SparkReservationService(A.Fake<ISparkRepository>(), A.Fake<IUnitOfWork>(),
+                TimeProvider.System, Options.Create(new SparkOptions()));
+            _useCase = new CreateGameUseCase(_mapper, _gameRepository, _userRepository, _genAi, _upsertWorldInfoService, reservations);
         }
 
         [Fact]

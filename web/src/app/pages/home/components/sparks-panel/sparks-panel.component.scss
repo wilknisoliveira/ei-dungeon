@@ -1,0 +1,42 @@
+:host {
+    display: block;
+}
+
+.balance {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 1rem;
+    background: var(--mat-sys-surface-container);
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: var(--mat-sys-corner-medium);
+
+    mat-icon {
+        color: var(--mat-sys-tertiary);
+    }
+
+    strong,
+    span {
+        display: block;
+    }
+
+    strong {
+        color: var(--mat-sys-on-surface);
+        font: var(--mat-sys-title-medium);
+    }
+
+    span {
+        color: var(--mat-sys-on-surface-variant);
+        font: var(--mat-sys-body-small);
+    }
+}
+
+.grant-state {
+    margin-block-start: 1rem;
+}
+
+.panel-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}

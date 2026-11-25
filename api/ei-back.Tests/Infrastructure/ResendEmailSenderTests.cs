@@ -18,12 +18,14 @@ public class ResendEmailSenderTests
     {
         public string? Body { get; private set; }
         public string? Token { get; private set; }
+        public string? IdempotencyKey { get; private set; }
         public int Calls { get; private set; }
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             Calls++;
             Body = await request.Content!.ReadAsStringAsync(cancellationToken);
             Token = request.Headers.Authorization?.Parameter;
+            IdempotencyKey = request.Headers.TryGetValues("Idempotency-Key", out var keys) ? keys.Single() : null;
             return new HttpResponseMessage(status)
             {
                 Content = new StringContent(status == HttpStatusCode.OK
@@ -46,6 +48,25 @@ public class ResendEmailSenderTests
         services.AddServices();
         services.AddResend(o => o.ThrowExceptions = false).ConfigurePrimaryHttpMessageHandler(() => handler);
         return services.BuildServiceProvider();
+    }
+
+    [Fact]
+    public async Task ConsolidatedReport_WithStableKey_SendsOneRequestToAllRecipients()
+    {
+        using var handler = new CaptureHandler(HttpStatusCode.OK);
+        using var provider = Provider(handler);
+        using var scope = provider.CreateScope();
+        var email = new OutgoingEmail("primary@example.com", "Report", "Summary", "<p>Summary</p>")
+        {
+            IdempotencyKey = "spark-daily/report",
+            BlindCopyRecipients = ["other@example.com"]
+        };
+        await scope.ServiceProvider.GetRequiredService<IEmailSender>().SendAsync(email);
+
+        handler.Calls.Should().Be(1);
+        handler.IdempotencyKey.Should().Be(email.IdempotencyKey);
+        using var json = JsonDocument.Parse(handler.Body!);
+        json.RootElement.GetProperty("bcc")[0].GetString().Should().Be("other@example.com");
     }
 
     [Fact]

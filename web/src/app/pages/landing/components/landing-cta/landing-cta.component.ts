@@ -12,7 +12,4 @@ import { MatButtonModule } from '@angular/material/button';
 export class LandingCtaComponent {
     /** A signed-in player is sent to their games rather than to a signup form. */
     isLoggedIn = input<boolean>(false);
-
-    /** Disables account and game navigation while MVP features are unfinished. */
-    isInDevelopment = input<boolean>(false);
 }

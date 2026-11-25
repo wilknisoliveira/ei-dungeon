@@ -154,6 +154,14 @@ dotnet run --project .\ei-back\ei-back.csproj
 
 The default seeded login is `admin@ei-dungeon.invalid` / `admin123`. Change the password after the first login. This administrator is deliberately fictitious: its email is provisioned as verified, but the reserved `.invalid` domain cannot receive verification or password recovery email. The corrective migration updates only the known seeded administrator while it still uses the original Gmail address; customized addresses are preserved. Existing passwords, role, verification timestamp and game ownership are preserved. Game information can be seeded through `POST /api/game/GameInfo` using `ei-back/Infrastructure/Utils/GameInfoSeeding.json` as an example request body.
 
+## Free Sparks
+
+The Sparks worker starts with the API. Configure `SPARKS_OPENROUTER_MANAGEMENT_KEY` with the OpenRouter management key and `SPARKS_ADMINISTRATIVE_RECIPIENTS` with a comma-separated list of operational email addresses. The inference key continues to use `OPENROUTER_API_KEY`. The `Sparks` section in [appsettings.json](ei-back/appsettings.json) and [appsettings.Development.json](ei-back/appsettings.Development.json) lists the defaults for direct ASP.NET Core runs. Override them with `Sparks__*` environment variables or .NET User Secrets.
+
+The environment provides initial defaults for cycle capacity, grant amounts, estimated unit cost, closing day and renewal lead. After initialization, use the Admin Sparks page to update those defaults for future cycles. The current-cycle capacity increase is a separate action. The queue interval stays in the environment. See [.env.example](.env.example) for the starter values.
+
+Renewal and reporting use `America/Sao_Paulo`. Rollover requires provider credits for the full new cycle capacity plus outstanding commitments from earlier cycles. A failed check pauses new grants until a successful automatic check. A confirmed deficit requires a manual reset, which checks coverage against the current control line rounded up to whole Sparks, plus commitments from earlier cycles. Previously issued grants retain their original expiration.
+
 ## Tests
 
 ```powershell

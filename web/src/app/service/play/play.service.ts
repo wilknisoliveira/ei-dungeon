@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
@@ -85,6 +85,10 @@ export class PlayService {
         }
 
         if (!response.ok) {
+            if (newPlay.operationId) {
+                const error = await response.json().catch(() => null);
+                throw new HttpErrorResponse({ error, status: response.status, statusText: response.statusText });
+            }
             return Promise.reject(
                 new Error(`Request failed with status ${response.status}`),
             );

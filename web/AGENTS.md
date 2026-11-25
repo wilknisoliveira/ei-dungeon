@@ -39,6 +39,8 @@ The `/admin` page is part of the existing app and deployment, reached from the H
 
 Role assignment uses `PUT /api/user/role/apply` and deletion uses `DELETE /api/user/{id}`, always identifying the target by internal GUID. Block deleting/demoting the last Admin in the frontend using loaded role membership, and disable writes when membership is unavailable. This UI block does not enforce concurrency or prevent direct API requests. Preserve existing JWT renewal semantics: a role change does not immediately invalidate issued tokens. Keep user directories in memory rather than browser storage, and never add credential or private-content exposure to Admin.
 
+Sparks settings and reporting live in the English-only Admin area. The player panel and public pilot copy follow the three-locale policy. Free gameplay eligibility and grant expiry come from the API. Preserve the player's draft during balance recovery or queue interaction.
+
 ### Google and account capabilities
 
 Login/signup use email and omit username/full name. Signup confirms the password client-side. Fetch /api/user/auth/account for hasPassword/googleLinked. First-password creation requires a new linked-Google proof. Use PUBLIC_AUTH for anonymous Google operations. Authenticated Google proofs keep Bearer tokens but must not be automatically replayed after a 401. Load GIS only in the browser through GoogleAuthService and render its official button. Configure the public googleClientId for development or GOOGLE_CLIENT_ID for production builds.

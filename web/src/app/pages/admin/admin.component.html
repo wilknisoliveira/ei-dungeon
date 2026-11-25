@@ -17,6 +17,9 @@
             <a mat-list-item href="#roles" (click)="$event.preventDefault(); selectSection('roles')" [activated]="section() === 'roles'">
                 <mat-icon matListItemIcon>admin_panel_settings</mat-icon><span matListItemTitle>Permissions</span>
             </a>
+            <a mat-list-item href="#sparks" (click)="$event.preventDefault(); selectSection('sparks')" [activated]="section() === 'sparks'">
+                <mat-icon matListItemIcon>auto_awesome</mat-icon><span matListItemTitle>Sparks</span>
+            </a>
         </mat-nav-list>
     </mat-drawer>
     <mat-drawer-content>
@@ -36,16 +39,19 @@
                 @if (section() === 'users') {
                     <h1>Users</h1>
                     <p>Find accounts and manage their access.</p>
-                } @else {
+                } @else if (section() === 'roles') {
                     <h1>Permissions</h1>
                     <p>View the accounts assigned to each role.</p>
+                } @else {
+                    <h1>Sparks</h1>
+                    <p>Monitor and manage the Free pool.</p>
                 }
             </div>
-            @if (rolesLoading()) {
+            @if (section() !== 'sparks' && rolesLoading()) {
                 <mat-progress-bar mode="indeterminate" aria-label="Loading permissions" />
                 <p class="status" role="status">Loading permissions. Account actions will be available when this finishes.</p>
             }
-            @if (rolesError()) {
+            @if (section() !== 'sparks' && rolesError()) {
                 <div class="error-state" role="alert">
                     <p>Permissions could not be loaded. Account actions are unavailable.</p>
                     <button mat-button (click)="loadRoles()">Try again</button>
@@ -53,6 +59,7 @@
             }
             <app-admin-users [hidden]="section() !== 'users'" [roles]="roles()" [rolesReady]="rolesReady()" (changed)="loadRoles()" />
             @if (section() === 'roles' && rolesReady()) { <app-admin-roles [roles]="roles()" /> }
+            @if (section() === 'sparks') { <app-admin-sparks /> }
         </main>
     </mat-drawer-content>
 </mat-drawer-container>

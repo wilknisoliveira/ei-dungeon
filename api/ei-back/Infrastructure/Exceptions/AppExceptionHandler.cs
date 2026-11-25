@@ -31,6 +31,11 @@ namespace ei_back.Infrastructure.Exceptions
                 }, _localizer["AuthGoogleFailure"].Value),
                 ei_back.Core.Domain.DomainExceptions.EmailVerificationRequiredException => (StatusCodes.Status403Forbidden, "Email verification is required."),
                 ei_back.Core.Domain.DomainExceptions.RegistrationConflictException => (StatusCodes.Status400BadRequest, "Invalid registration data."),
+                SparkOperationException spark => (spark.Code switch
+                {
+                    "sparks_invalid_operation" => StatusCodes.Status400BadRequest,
+                    _ => StatusCodes.Status409Conflict
+                }, spark.Message),
                 BadGatewayException badGatewayException => (StatusCodes.Status502BadGateway, badGatewayException.Message),
                 BadRequestException badRequestException => (StatusCodes.Status400BadRequest, badRequestException.Message),
                 NotFoundException notFoundException => (StatusCodes.Status404NotFound, notFoundException.Message),
@@ -48,6 +53,7 @@ namespace ei_back.Infrastructure.Exceptions
             if (exception is ei_back.Core.Domain.DomainExceptions.EmailVerificationRequiredException)
                 exceptionResponse.Code = "email_verification_required";
             if (exception is GoogleAuthenticationException googleError) exceptionResponse.Code = googleError.Code;
+            if (exception is SparkOperationException sparkError) exceptionResponse.Code = sparkError.Code;
             httpContext.Response.StatusCode = statusCode;
             await httpContext.Response.WriteAsJsonAsync(exceptionResponse, cancellationToken);
 

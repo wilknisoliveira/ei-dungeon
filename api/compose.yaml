@@ -30,6 +30,15 @@ services:
       ASPNETCORE_HTTP_PORTS: ${BACKEND_PORT:-8080}
       PostgresConnection__PostgresConnectionString: Host=postgres;Port=5432;Database=${POSTGRES_DB:?Set POSTGRES_DB in .env};Username=${POSTGRES_USER:?Set POSTGRES_USER in .env};Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
       keys__OpenRouterApiKey: ${OPENROUTER_API_KEY:?Set OPENROUTER_API_KEY in .env}
+      Sparks__Capacity: ${SPARKS_CAPACITY:-820}
+      Sparks__InitialAmount: ${SPARKS_INITIAL_AMOUNT:-15}
+      Sparks__RefillAmount: ${SPARKS_REFILL_AMOUNT:-15}
+      Sparks__EstimatedUnitCost: ${SPARKS_ESTIMATED_UNIT_COST:-0.0061}
+      Sparks__ClosingDay: ${SPARKS_CLOSING_DAY:-10}
+      Sparks__RenewalLeadDays: ${SPARKS_RENEWAL_LEAD_DAYS:-3}
+      Sparks__QueueIntervalMinutes: ${SPARKS_QUEUE_INTERVAL_MINUTES:-60}
+      Sparks__OpenRouterManagementKey: ${SPARKS_OPENROUTER_MANAGEMENT_KEY:-}
+      Sparks__AdministrativeRecipientsCsv: ${SPARKS_ADMINISTRATIVE_RECIPIENTS:-}
       TokenConfigurations__Secret: ${JWT_SECRET:?Set JWT_SECRET in .env}
       Resend__ApiToken: ${RESEND_API_TOKEN:-}
       Resend__From: ${RESEND_FROM:-}

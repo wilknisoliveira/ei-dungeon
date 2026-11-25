@@ -315,6 +315,363 @@ namespace ei_back.Infrastructure.Migrations
                     b.ToTable("refresh_tokens", (string)null);
                 });
 
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.SparkCycle", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("BlockReason")
+                        .HasColumnType("text")
+                        .HasColumnName("block_reason");
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("integer")
+                        .HasColumnName("capacity");
+
+                    b.Property<DateTimeOffset>("EndsAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ends_at");
+
+                    b.Property<int>("InitialCapacity")
+                        .HasColumnType("integer")
+                        .HasColumnName("initial_capacity");
+
+                    b.Property<DateTimeOffset?>("LastQueueRunAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_queue_run_at");
+
+                    b.Property<decimal?>("ProviderDollars")
+                        .HasColumnType("numeric")
+                        .HasColumnName("provider_dollars");
+
+                    b.Property<DateTimeOffset?>("ProviderObservedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("provider_observed_at");
+
+                    b.Property<bool>("ProviderStale")
+                        .HasColumnType("boolean")
+                        .HasColumnName("provider_stale");
+
+                    b.Property<DateTimeOffset>("StartsAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("starts_at");
+
+                    b.Property<int>("State")
+                        .HasColumnType("integer")
+                        .HasColumnName("state");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StartsAt")
+                        .IsUnique();
+
+                    b.ToTable("spark_cycle", (string)null);
+                });
+
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.SparkCycleChange", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("AdminId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("admin_id");
+
+                    b.Property<DateTimeOffset>("ChangedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("changed_at");
+
+                    b.Property<Guid>("CycleId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("cycle_id");
+
+                    b.Property<int?>("NewCapacity")
+                        .HasColumnType("integer")
+                        .HasColumnName("new_capacity");
+
+                    b.Property<int?>("NewState")
+                        .HasColumnType("integer")
+                        .HasColumnName("new_state");
+
+                    b.Property<int?>("PreviousCapacity")
+                        .HasColumnType("integer")
+                        .HasColumnName("previous_capacity");
+
+                    b.Property<int?>("PreviousState")
+                        .HasColumnType("integer")
+                        .HasColumnName("previous_state");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CycleId", "ChangedAt");
+
+                    b.ToTable("spark_cycle_change", (string)null);
+                });
+
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.SparkDailySnapshot", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<int>("Available")
+                        .HasColumnType("integer")
+                        .HasColumnName("available");
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("integer")
+                        .HasColumnName("capacity");
+
+                    b.Property<decimal>("ControlLine")
+                        .HasColumnType("numeric")
+                        .HasColumnName("control_line");
+
+                    b.Property<Guid>("CycleId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("cycle_id");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date")
+                        .HasColumnName("date");
+
+                    b.Property<int>("Declined")
+                        .HasColumnType("integer")
+                        .HasColumnName("declined");
+
+                    b.Property<decimal?>("ProviderDollars")
+                        .HasColumnType("numeric")
+                        .HasColumnName("provider_dollars");
+
+                    b.Property<DateTimeOffset?>("ProviderObservedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("provider_observed_at");
+
+                    b.Property<long?>("ProviderSparks")
+                        .HasColumnType("bigint")
+                        .HasColumnName("provider_sparks");
+
+                    b.Property<bool>("ProviderStale")
+                        .HasColumnType("boolean")
+                        .HasColumnName("provider_stale");
+
+                    b.Property<string>("ReportBody")
+                        .HasColumnType("text")
+                        .HasColumnName("report_body");
+
+                    b.Property<string[]>("ReportRecipients")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("report_recipients");
+
+                    b.Property<DateTimeOffset?>("ReportSentAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("report_sent_at");
+
+                    b.Property<string>("ReportSubject")
+                        .HasColumnType("text")
+                        .HasColumnName("report_subject");
+
+                    b.Property<int>("WaitingInitial")
+                        .HasColumnType("integer")
+                        .HasColumnName("waiting_initial");
+
+                    b.Property<int>("WaitingRefill")
+                        .HasColumnType("integer")
+                        .HasColumnName("waiting_refill");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CycleId", "Date")
+                        .IsUnique();
+
+                    b.ToTable("spark_daily_snapshot", (string)null);
+                });
+
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.SparkGrant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer")
+                        .HasColumnName("amount");
+
+                    b.Property<int>("Consumed")
+                        .HasColumnType("integer")
+                        .HasColumnName("consumed");
+
+                    b.Property<Guid>("CycleId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("cycle_id");
+
+                    b.Property<DateTimeOffset>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("expires_at");
+
+                    b.Property<DateTimeOffset>("GrantedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("granted_at");
+
+                    b.Property<int>("Kind")
+                        .HasColumnType("integer")
+                        .HasColumnName("kind");
+
+                    b.Property<Guid?>("QueueRequestId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("queue_request_id");
+
+                    b.Property<string>("Receipts")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("receipts");
+
+                    b.Property<Guid?>("ReservationGameId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("reservation_game_id");
+
+                    b.Property<Guid?>("ReservationId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("reservation_id");
+
+                    b.Property<int?>("ReservationKind")
+                        .HasColumnType("integer")
+                        .HasColumnName("reservation_kind");
+
+                    b.Property<Guid?>("ReservationLeaseId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("reservation_lease_id");
+
+                    b.Property<int>("Reserved")
+                        .HasColumnType("integer")
+                        .HasColumnName("reserved");
+
+                    b.Property<DateTimeOffset?>("ReservedUntil")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("reserved_until");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CycleId");
+
+                    b.HasIndex("QueueRequestId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("kind = 0");
+
+                    b.HasIndex("UserId", "GrantedAt");
+
+                    b.ToTable("spark_grant", (string)null);
+                });
+
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.SparkQueueRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("CultureName")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("character varying(8)")
+                        .HasColumnName("culture_name");
+
+                    b.Property<DateTimeOffset?>("DecidedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("decided_at");
+
+                    b.Property<DateTimeOffset?>("EnteredAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("entered_at");
+
+                    b.Property<long?>("EntryOrder")
+                        .HasColumnType("bigint")
+                        .HasColumnName("entry_order");
+
+                    b.Property<int>("Kind")
+                        .HasColumnType("integer")
+                        .HasColumnName("kind");
+
+                    b.Property<DateTimeOffset?>("NoticeSentAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("notice_sent_at");
+
+                    b.Property<DateTimeOffset>("OfferedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("offered_at");
+
+                    b.Property<int>("State")
+                        .HasColumnType("integer")
+                        .HasColumnName("state");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntryOrder")
+                        .IsUnique();
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("state IN (0, 1)");
+
+                    b.HasIndex("State", "DecidedAt");
+
+                    b.HasIndex("State", "Kind", "EntryOrder");
+
+                    b.ToTable("spark_queue_request", (string)null);
+                });
+
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.SparkSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("integer")
+                        .HasColumnName("capacity");
+
+                    b.Property<int>("ClosingDay")
+                        .HasColumnType("integer")
+                        .HasColumnName("closing_day");
+
+                    b.Property<decimal>("EstimatedUnitCost")
+                        .HasColumnType("numeric")
+                        .HasColumnName("estimated_unit_cost");
+
+                    b.Property<int>("InitialAmount")
+                        .HasColumnType("integer")
+                        .HasColumnName("initial_amount");
+
+                    b.Property<int>("RefillAmount")
+                        .HasColumnType("integer")
+                        .HasColumnName("refill_amount");
+
+                    b.Property<int>("RenewalLeadDays")
+                        .HasColumnType("integer")
+                        .HasColumnName("renewal_lead_days");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("spark_settings", (string)null);
+                });
+
             modelBuilder.Entity("ei_back.Core.Domain.Entity.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -467,6 +824,38 @@ namespace ei_back.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.SparkCycleChange", b =>
+                {
+                    b.HasOne("ei_back.Core.Domain.Entity.SparkCycle", null)
+                        .WithMany()
+                        .HasForeignKey("CycleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.SparkDailySnapshot", b =>
+                {
+                    b.HasOne("ei_back.Core.Domain.Entity.SparkCycle", null)
+                        .WithMany()
+                        .HasForeignKey("CycleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.SparkGrant", b =>
+                {
+                    b.HasOne("ei_back.Core.Domain.Entity.SparkCycle", null)
+                        .WithMany()
+                        .HasForeignKey("CycleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ei_back.Core.Domain.Entity.SparkQueueRequest", null)
+                        .WithOne()
+                        .HasForeignKey("ei_back.Core.Domain.Entity.SparkGrant", "QueueRequestId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("ei_back.Core.Domain.Entity.VerificationCode", b =>

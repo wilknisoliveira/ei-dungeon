@@ -29,7 +29,7 @@ Tests use Jasmine/Karma and require Chrome. There is no npm lint command or enfo
 
 Administrators can open **Administration** from the Home profile menu or navigate directly to `/admin`. The existing frontend, build and deployment serve the page. Both route guards require the `Admin` role; API authorization remains enforced by the existing controllers. Administration content, dialogs and pagination are English-only, including under `/pt-BR/admin` and `/es/admin`. The page has no language selector and its content is excluded from translation catalogs; other pages retain their existing localization.
 
-The page exposes only these existing operations:
+The account administration sections expose these operations:
 
 | Operation | Endpoint | Behavior |
 |---|---|---|
@@ -41,6 +41,12 @@ The page exposes only these existing operations:
 The user directory returns only ID and email. There is no administrative user-detail endpoint, audit dashboard, privacy-request workflow or global game/AI metrics view in this feature. The UI prevents deleting or demoting the last Admin according to loaded memberships and disables writes if membership cannot be determined. This protection exists only in the frontend; it does not prevent direct API calls or concurrent changes. Role changes take effect on subsequent JWT renewal, without forcing immediate logout or revocation.
 
 Each page is loaded through its own route using `loadComponent`, without background preloading. `PagesModule` only organizes the routes. Visiting the landing page no longer loads Home, Settings and Admin implementations together; shared dependencies can still be shared. The landing remains prerendered, while authenticated routes render in the browser. Build size budgets are unchanged; code splitting is not a guarantee that every preexisting warning disappears.
+
+## Free Sparks
+
+The landing page offers a direct route through sign-in to the Home balance panel and reads the configured initial grant from the API. The panel shows grant balance, expiration and queue status. Adventure creation, first scene generation and turns use the existing gameplay surfaces. The server authorizes each Free operation, and the chat reconciles saved outcomes before treating a charge as complete.
+
+The English-only Sparks section in Administration shows a cycle history, provider credit observations and queue metrics. It also provides settings for future cycles, capacity increases for the current cycle and reset after a confirmed credit deficit.
 
 ## Internationalization
 

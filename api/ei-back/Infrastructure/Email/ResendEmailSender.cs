@@ -18,7 +18,11 @@ public class ResendEmailSender(IResend resend, IOptions<ResendEmailOptions> opti
             HtmlBody = email.HtmlBody
         };
         message.To.Add(email.Recipient);
-        var response = await resend.EmailSendAsync(message, cancellationToken);
+        if (email.BlindCopyRecipients.Count > 0)
+            message.Bcc = EmailAddressList.From(email.BlindCopyRecipients);
+        var response = email.IdempotencyKey is { } key
+            ? await resend.EmailSendAsync(key, message, cancellationToken)
+            : await resend.EmailSendAsync(message, cancellationToken);
         if (!response.Success)
         {
             // Do not expose provider error text or message content through logs or API responses.

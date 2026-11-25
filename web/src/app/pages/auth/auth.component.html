@@ -52,11 +52,11 @@
                 @if (error()) { <p class="login__error" role="alert">{{ error() }}</p> }
             </form>
             <app-google-signin-button (credential)="onGoogle($event)" [disabled]="loading()" [showSeparator]="true" />
-            @if (googleAction === 'signup') { <a routerLink="/signup" i18n="@@googleGoToSignup">Go to registration</a> }
+            @if (googleAction === 'signup') { <a routerLink="/signup" [queryParams]="sparksIntent" i18n="@@googleGoToSignup">Go to registration</a> }
             @if (googleAction === 'login') { <a routerLink="/login" i18n="@@googleGoToLogin">Sign in to your existing account</a> }
         </div>
         <div class="sign-up">
-            <span i18n="@@noAccountPrompt">Don't have an account?</span>&nbsp;<a [routerLink]="['/signup']" i18n="@@signUpLink">Sign Up Now</a>
+            <span i18n="@@noAccountPrompt">Don't have an account?</span>&nbsp;<a [routerLink]="['/signup']" [queryParams]="sparksIntent" i18n="@@signUpLink">Sign Up Now</a>
         </div>
     </div>
 </section>

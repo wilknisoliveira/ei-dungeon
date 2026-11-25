@@ -33,6 +33,7 @@ describe('AdminComponent', () => {
         expect(fixture.debugElement.injector.get(MatPaginatorIntl).itemsPerPageLabel).toBe('Items per page:');
         expect(fixture.nativeElement.getAttribute('lang')).toBe('en');
         expect(fixture.nativeElement.querySelector('app-language-selector')).toBeNull();
+        expect(fixture.nativeElement.querySelector('a[href="#sparks"]')?.textContent).toContain('Sparks');
         requests[0].next([{ name: 'Admin', users: ['admin@example.com'] }]); fixture.detectChanges();
         expect(component.rolesReady()).toBeTrue(); expect(component.rolesLoading()).toBeFalse();
     });

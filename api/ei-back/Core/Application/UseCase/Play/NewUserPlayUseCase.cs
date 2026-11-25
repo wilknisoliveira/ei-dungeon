@@ -2,9 +2,11 @@ using AutoMapper;
 using ei_back.Core.Application.Interfaces;
 using ei_back.Core.Application.Service.Play;
 using ei_back.Core.Application.Service.Play.Interfaces;
+using ei_back.Core.Application.Service.Sparks;
 using ei_back.Core.Application.UseCase.Play.Dtos;
 using ei_back.Core.Application.UseCase.Play.Interfaces;
 using ei_back.Core.Domain.Entity;
+using ei_back.Core.Domain.DomainExceptions;
 using ei_back.Core.Domain.Enums;
 using ei_back.Core.Application.Repository;
 using ei_back.Infrastructure.Exceptions.ExceptionTypes;
@@ -25,6 +27,7 @@ namespace ei_back.Core.Application.UseCase.Play
         private readonly IGenAi _genAi;
         private readonly IPlayAnalyzerService _playAnalyzerService;
         private readonly IInitialMasterPlayService _initialMasterPlayService;
+        private readonly SparkReservationService _sparkReservations;
 
         public NewUserPlayUseCase(
             IMapper mapper,
@@ -36,7 +39,8 @@ namespace ei_back.Core.Application.UseCase.Play
             IConfiguration configuration,
             IGenAi genAi,
             IPlayAnalyzerService playAnalyzerService,
-            IInitialMasterPlayService initialMasterPlayService)
+            IInitialMasterPlayService initialMasterPlayService,
+            SparkReservationService sparkReservations)
         {
             _mapper = mapper;
             _gameRepository = gameRepository;
@@ -47,6 +51,7 @@ namespace ei_back.Core.Application.UseCase.Play
             _genAi = genAi;
             _playAnalyzerService = playAnalyzerService;
             _initialMasterPlayService = initialMasterPlayService;
+            _sparkReservations = sparkReservations;
 
             var errorMessage = "Verify if all the string connections was registered properly in the appsettings.";
 
@@ -58,6 +63,63 @@ namespace ei_back.Core.Application.UseCase.Play
         public async IAsyncEnumerable<StreamPlayDtoResponse> Handler(
             PlayDtoRequest playDtoRequest,
             Guid userId,
+            [EnumeratorCancellation] CancellationToken cancellationToken)
+        {
+            var stream = playDtoRequest.UsesSparks
+                ? PlayWithSparksAsync(playDtoRequest, userId, cancellationToken)
+                : PlayAsync(playDtoRequest, userId, null, cancellationToken);
+
+            await foreach (var chunk in stream.WithCancellation(cancellationToken))
+                yield return chunk;
+        }
+
+        private async IAsyncEnumerable<StreamPlayDtoResponse> PlayWithSparksAsync(
+            PlayDtoRequest request, Guid userId, [EnumeratorCancellation] CancellationToken cancellationToken)
+        {
+            if (request.OperationId is not Guid operationId || operationId == Guid.Empty || request.Opening is not bool opening)
+            {
+                yield return SparkError(SparkGameplayErrors.InvalidRequest());
+                yield break;
+            }
+            if (!await _gameRepository.CheckIfExistGameByUser(request.GameId, userId, cancellationToken))
+            {
+                yield return new StreamPlayDtoResponse { EventType = EventType.Error, Content = "Game not found." };
+                yield break;
+            }
+
+            var kind = opening ? SparkOperationKind.OpenScene : SparkOperationKind.PlayTurn;
+            var reservation = await _sparkReservations.ReserveAsync(userId, operationId, kind, request.GameId, cancellationToken);
+            if (reservation is { State: SparkReservationState.Replayed, ResultId: Guid resultId })
+            {
+                yield return Committed(resultId);
+                yield break;
+            }
+            if (reservation.State != SparkReservationState.Reserved || reservation.LeaseId is not Guid leaseId)
+            {
+                yield return SparkError(SparkGameplayErrors.FromReservation(reservation.State));
+                yield break;
+            }
+
+            var committed = false;
+            try
+            {
+                await foreach (var chunk in PlayAsync(request, userId, (operationId, leaseId), cancellationToken))
+                {
+                    committed |= chunk.EventType == EventType.Committed;
+                    yield return chunk;
+                }
+            }
+            finally
+            {
+                if (!committed)
+                    await _sparkReservations.TryReleaseAsync(userId, operationId, leaseId);
+            }
+        }
+
+        private async IAsyncEnumerable<StreamPlayDtoResponse> PlayAsync(
+            PlayDtoRequest playDtoRequest,
+            Guid userId,
+            (Guid OperationId, Guid LeaseId)? lease,
             [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             List<Domain.Entity.Play> plays = [];
@@ -109,47 +171,57 @@ namespace ei_back.Core.Application.UseCase.Play
                 plays.AddRange(allGamePlays);
             }
 
+            if (lease.HasValue && playDtoRequest.Opening != (plays.Count == 0))
+            {
+                yield return SparkError(SparkGameplayErrors.Conflict());
+                yield break;
+            }
+
             yield return new StreamPlayDtoResponse
             {
                 EventType = EventType.Start,
             };
-            var changedItems = 0;
-
             if (plays.Count == 0)
             {
+                var hasOpeningContent = false;
                 await foreach (var chunk in _initialMasterPlayService
                     .ExecuteStreamingAsync(game, cancellationToken)
                     .WithCancellation(cancellationToken))
                 {
-                if (chunk.EventType == AIStreamEventType.Error)
-                {
-                    _logger.LogError("Initial master play streaming error: {Content}", chunk.Content);
+                    if (chunk.EventType == AIStreamEventType.Error)
+                    {
+                        _logger.LogError("Initial master play streaming error: {Content}", chunk.Content);
+                        yield return new StreamPlayDtoResponse
+                        {
+                            EventType = EventType.Error,
+                            Content = chunk.Content
+                        };
+                        yield break;
+                    }
+                    hasOpeningContent |= !string.IsNullOrWhiteSpace(chunk.Content);
                     yield return new StreamPlayDtoResponse
                     {
-                        EventType = EventType.Error,
-                        Content = chunk.Content
+                        EventType = EventType.Chunk,
+                        Content = chunk.Content,
                     };
+                }
+
+                if (lease.HasValue && !hasOpeningContent)
+                {
+                    yield return SparkError(SparkGameplayErrors.EmptyResponse());
                     yield break;
                 }
-                yield return new StreamPlayDtoResponse
-                {
-                    EventType = EventType.Chunk,
-                    Content = chunk.Content,
-                };
-            }
 
-            game.SetLastPlayedAt(DateTimeOffset.UtcNow);
+                game.SetLastPlayedAt(DateTimeOffset.UtcNow);
 
-                changedItems = await _unitOfWork.CommitAsync(cancellationToken);
-                if (changedItems == 0)
+                if (!await CommitPlayAsync(userId, lease, game.Id, cancellationToken))
                 {
-                    yield return new StreamPlayDtoResponse
-                    {
-                        EventType = EventType.Error,
-                        Content = "Something went wrong while attempting to create the user play."
-                    };
+                    yield return CommitError(lease.HasValue);
                     yield break;
                 }
+
+                if (lease.HasValue)
+                    yield return Committed(game.Id);
 
                 yield break;
             }
@@ -195,6 +267,12 @@ namespace ei_back.Core.Application.UseCase.Play
                 }
             }
 
+            if (lease.HasValue && string.IsNullOrWhiteSpace(completedMasterResponse))
+            {
+                yield return SparkError(SparkGameplayErrors.EmptyResponse());
+                yield break;
+            }
+
             var masterPlay = new Domain.Entity.Play(game, PlayType.GameMaster, completedMasterResponse);
 
             _ = await _playRepository.CreateAsync(masterPlay, cancellationToken) ??
@@ -203,17 +281,14 @@ namespace ei_back.Core.Application.UseCase.Play
 
             game.SetLastPlayedAt(DateTimeOffset.UtcNow);
 
-            changedItems = await _unitOfWork.CommitAsync(cancellationToken);
-            if (changedItems == 0)
+            if (!await CommitPlayAsync(userId, lease, masterPlay.Id, cancellationToken))
             {
-                yield return new StreamPlayDtoResponse
-                {
-                    EventType = EventType.Error,
-                    Content = "Something went wrong while attempting to create the user play."
-                };
-
+                yield return CommitError(lease.HasValue);
                 yield break;
             }
+
+            if (lease.HasValue)
+                yield return Committed(masterPlay.Id);
 
             int numberOfTokens = CountTokensFromPlays(plays);
 
@@ -233,6 +308,26 @@ namespace ei_back.Core.Application.UseCase.Play
                 }, cancellationTokenTask.Token);
             }
         }
+
+        private async Task<bool> CommitPlayAsync(
+            Guid userId, (Guid OperationId, Guid LeaseId)? lease, Guid resultId, CancellationToken cancellationToken)
+        {
+            if (lease is { } activeLease)
+                return await _sparkReservations.CompleteAsync(
+                    userId, activeLease.OperationId, activeLease.LeaseId, resultId, _ => Task.CompletedTask, cancellationToken);
+
+            return await _unitOfWork.CommitAsync(cancellationToken) != 0;
+        }
+
+        private static StreamPlayDtoResponse CommitError(bool usesSparks) => usesSparks
+            ? SparkError(SparkGameplayErrors.Conflict())
+            : new() { EventType = EventType.Error, Content = "Something went wrong while attempting to create the user play." };
+
+        private static StreamPlayDtoResponse Committed(Guid resultId) =>
+            new() { EventType = EventType.Committed, Content = resultId.ToString() };
+
+        private static StreamPlayDtoResponse SparkError(SparkOperationException error) =>
+            new() { EventType = EventType.Error, Code = error.Code, Content = error.Message };
 
         private async IAsyncEnumerable<StreamAIDtoResponse> StreamGenerateMasterPlay(
             List<Domain.Entity.Play> plays,

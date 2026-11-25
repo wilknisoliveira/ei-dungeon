@@ -29,7 +29,7 @@
                     @if (resendWait() > 0) { <p class="email-auth__text email-auth__hint" i18n="@@emailAuthResendWait">You can request another code in {{ resendWait() }} seconds.</p> }
                 </fieldset>
             </form>
-            <a class="email-auth__action email-auth__link" mat-button routerLink="/login" i18n="@@emailAuthBackToLogin">Back to login</a>
+            <a class="email-auth__action email-auth__link" mat-button routerLink="/login" [queryParams]="sparksIntent" i18n="@@emailAuthBackToLogin">Back to login</a>
         </div>
     </main>
 </section>

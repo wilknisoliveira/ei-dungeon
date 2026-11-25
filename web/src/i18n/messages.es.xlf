@@ -324,10 +324,6 @@
         <source>Game &apos;<x id="PH" equiv-text="newGame.name"/>&apos; created!</source>
         <target>¡Juego &apos;<x id="PH" equiv-text="newGame.name"/>&apos; creado!</target>
       </trans-unit>
-      <trans-unit id="3688639030371133915" datatype="html">
-        <source>Something went wrong while attempting to create the game. Verify with the admin if you have the permissions.</source>
-        <target>Algo salió mal al intentar crear el juego. Verifica con el administrador si tienes los permisos.</target>
-      </trans-unit>
       <trans-unit id="7752330587380687192" datatype="html">
         <source>Something went wrong while attempting to get the game list.</source>
         <target>Algo salió mal al intentar obtener la lista de juegos.</target>
@@ -427,18 +423,6 @@
       <trans-unit id="landingHeroSub" datatype="html">
         <source> A solo role-playing game run by AI. Build a character, step into the dark, and play whenever you want — no group to gather, no night to agree on, no one to talk into running it. </source>
         <target>Un juego de rol en solitario dirigido por I.A. Crea un personaje, adéntrate en la oscuridad y juega cuando quieras: sin grupo que reunir, sin noche que acordar, sin nadie a quien convencer para dirigir.</target>
-      </trans-unit>
-      <trans-unit id="landingHeroCta" datatype="html">
-        <source>Create your character</source>
-        <target>Crea tu personaje</target>
-      </trans-unit>
-      <trans-unit id="landingHeroSecondary" datatype="html">
-        <source>I already have an account</source>
-        <target>Ya tengo una cuenta</target>
-      </trans-unit>
-      <trans-unit id="landingHeroNote" datatype="html">
-        <source> Free to start · Play in Portuguese, English or Spanish </source>
-        <target>Gratis para empezar · Juega en portugués, inglés o español</target>
       </trans-unit>
       <trans-unit id="landingProblemEyebrow" datatype="html">
         <source> The real obstacle </source>
@@ -600,10 +584,6 @@
         <source>What does it cost?</source>
         <target>¿Cuánto cuesta?</target>
       </trans-unit>
-      <trans-unit id="landingFaqPriceA" datatype="html">
-        <source>It is free to start. A paid tier is planned for later, but nothing is behind a paywall today.</source>
-        <target>Es gratis para empezar. Hay un plan de pago previsto para más adelante, pero hoy no hay nada detrás de un muro de pago.</target>
-      </trans-unit>
       <trans-unit id="landingFaqLanguageQ" datatype="html">
         <source>What language is the story told in?</source>
         <target>¿En qué idioma se cuenta la historia?</target>
@@ -632,18 +612,6 @@
         <source> The dungeon doesn&apos;t need a calendar invite. </source>
         <target>La mazmorra no necesita una invitación de calendario.</target>
       </trans-unit>
-      <trans-unit id="landingCtaBody" datatype="html">
-        <source> Make a character and be in your first scene in a couple of minutes. </source>
-        <target>Crea un personaje y métete en tu primera escena en un par de minutos.</target>
-      </trans-unit>
-      <trans-unit id="landingCtaButton" datatype="html">
-        <source>Create your character</source>
-        <target>Crea tu personaje</target>
-      </trans-unit>
-      <trans-unit id="landingCtaLoginLink" datatype="html">
-        <source>Already playing? Sign in</source>
-        <target>¿Ya juegas? Inicia sesión</target>
-      </trans-unit>
       <trans-unit id="landingFooterTagline" datatype="html">
         <source>An A.I. driven RPG simulator</source>
         <target>Un simulador de rol impulsado por I.A.</target>
@@ -663,18 +631,6 @@
       <trans-unit id="landingGoToGames" datatype="html">
         <source>Go to my games</source>
         <target>Ir a mis partidas</target>
-      </trans-unit>
-      <trans-unit id="landingContinueAdventure" datatype="html">
-        <source>Continue your adventure</source>
-        <target>Continúa tu aventura</target>
-      </trans-unit>
-      <trans-unit id="landingCtaBodyLoggedIn" datatype="html">
-        <source> Your world is where you left it. </source>
-        <target>Tu mundo está donde lo dejaste.</target>
-      </trans-unit>
-      <trans-unit id="landingComingSoon" datatype="html">
-        <source> Coming soon </source>
-        <target>Próximamente</target>
       </trans-unit>
       <trans-unit id="sessionExpired" datatype="html">
         <source>Session expired. Please log in again.</source>
@@ -959,6 +915,122 @@
       <trans-unit id="adminMenuItem" datatype="html">
         <source>Administration</source>
         <target>Administración</target>
+      </trans-unit>
+      <trans-unit id="sparksOpenFromGame" datatype="html">
+        <source>View Sparks</source>
+        <target>Ver Chispas</target>
+      </trans-unit>
+      <trans-unit id="sparksOpeningCost" datatype="html">
+        <source>Starting the first scene costs 1 Spark.</source>
+        <target>Iniciar la primera escena cuesta 1 Chispa.</target>
+      </trans-unit>
+      <trans-unit id="sparksPlayFailed" datatype="html">
+        <source>The game could not confirm this turn. Try again to send the same turn.</source>
+        <target>El juego no pudo confirmar este turno. Intenta enviar el mismo turno otra vez.</target>
+      </trans-unit>
+      <trans-unit id="sparksCreateCost" datatype="html">
+        <source>Creating the game costs 1 Spark. Starting the first scene costs 1 more.</source>
+        <target>Crear la partida cuesta 1 Chispa. Iniciar la primera escena cuesta 1 más.</target>
+      </trans-unit>
+      <trans-unit id="sparksCreateFailed" datatype="html">
+        <source>The game could not be created. Please try again.</source>
+        <target>No se pudo crear la partida. Inténtalo de nuevo.</target>
+      </trans-unit>
+      <trans-unit id="sparksPanelTitle" datatype="html">
+        <source>Sparks</source>
+        <target>Chispas</target>
+      </trans-unit>
+      <trans-unit id="sparksPanelBalance" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ clock?.balance() ?? status.balance }}"/> available</source>
+        <target>Saldo de Chispas · <x id="INTERPOLATION" equiv-text="{{ clock?.balance() ?? status.balance }}"/></target>
+      </trans-unit>
+      <trans-unit id="sparksPanelRemaining" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ minutes }}"/> min left</source>
+        <target>Quedan <x id="INTERPOLATION" equiv-text="{{ minutes }}"/> min</target>
+      </trans-unit>
+      <trans-unit id="sparksPanelExpiry" datatype="html">
+        <source>Ends <x id="INTERPOLATION" equiv-text="{{ status.expiresAt | date: &apos;medium&apos; }}"/></source>
+        <target>Caduca el <x id="INTERPOLATION" equiv-text="{{ status.expiresAt | date: &apos;medium&apos; }}"/></target>
+      </trans-unit>
+      <trans-unit id="sparksQueueWaiting" datatype="html">
+        <source>You’re on the waitlist. We’ll email you when your Sparks are ready.</source>
+        <target>Estás en la lista de espera. Te enviaremos un correo cuando tus Chispas estén disponibles.</target>
+      </trans-unit>
+      <trans-unit id="sparksQueueOffer" datatype="html">
+        <source>Sparks aren’t available right now. Join the waitlist to get an email when your grant is issued.</source>
+        <target>Ahora mismo no hay Chispas disponibles. Apúntate a la lista de espera para recibir un correo cuando se te asignen.</target>
+      </trans-unit>
+      <trans-unit id="sparksJoinQueue" datatype="html">
+        <source>Join waitlist</source>
+        <target>Entrar en la lista de espera</target>
+      </trans-unit>
+      <trans-unit id="sparksDeclineQueue" datatype="html">
+        <source>No thanks</source>
+        <target>Ahora no</target>
+      </trans-unit>
+      <trans-unit id="sparksRequestRefill" datatype="html">
+        <source>Request a refill</source>
+        <target>Solicitar una recarga</target>
+      </trans-unit>
+      <trans-unit id="sparksRequestInitial" datatype="html">
+        <source>Request free Sparks</source>
+        <target>Solicitar Chispas gratis</target>
+      </trans-unit>
+      <trans-unit id="sparksNoSpendableBalance" datatype="html">
+        <source>You don’t have any Sparks available right now.</source>
+        <target>En este momento no tienes Chispas disponibles.</target>
+      </trans-unit>
+      <trans-unit id="sparksLoading" datatype="html">
+        <source>Loading your Sparks…</source>
+        <target>Cargando tus Chispas…</target>
+      </trans-unit>
+      <trans-unit id="sparksLoadError" datatype="html">
+        <source>Your Sparks could not be updated.</source>
+        <target>No se pudieron actualizar tus Chispas.</target>
+      </trans-unit>
+      <trans-unit id="sparksTryAgain" datatype="html">
+        <source>Try again</source>
+        <target>Intentar de nuevo</target>
+      </trans-unit>
+      <trans-unit id="sparksClosePanel" datatype="html">
+        <source>Close</source>
+        <target>Cerrar</target>
+      </trans-unit>
+      <trans-unit id="sparksOpenBalance" datatype="html">
+        <source>Open Sparks balance, <x id="PH" equiv-text="this.sparkBalance()"/> available</source>
+        <target>Abrir saldo de Chispas, <x id="PH" equiv-text="this.sparkBalance()"/> disponibles</target>
+      </trans-unit>
+      <trans-unit id="sparksToolbarBalance" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ sparkBalance() }}"/> Sparks</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ sparkBalance() }}"/> Chispas</target>
+      </trans-unit>
+      <trans-unit id="sparksMinutesRemaining" datatype="html">
+        <source><x id="PH" equiv-text="totalMinutes"/> min left</source>
+        <target>vence en <x id="PH" equiv-text="totalMinutes"/> min</target>
+      </trans-unit>
+      <trans-unit id="sparksHoursRemaining" datatype="html">
+        <source><x id="PH" equiv-text="hours"/> h left</source>
+        <target>vence en <x id="PH" equiv-text="hours"/> h</target>
+      </trans-unit>
+      <trans-unit id="sparksHoursAndMinutesRemaining" datatype="html">
+        <source><x id="PH" equiv-text="hours"/> h <x id="PH_1" equiv-text="minutes"/> min left</source>
+        <target>vence en <x id="PH" equiv-text="hours"/> h <x id="PH_1" equiv-text="minutes"/> min</target>
+      </trans-unit>
+      <trans-unit id="landingRequestSparks" datatype="html">
+        <source>Request free Sparks</source>
+        <target>Solicitar Chispas gratis</target>
+      </trans-unit>
+      <trans-unit id="landingFaqSparkPrice" datatype="html">
+        <source>On the Free plan, creating a game costs 1 Spark, starting the first scene costs 1 more, and each turn costs 1. Your Sparks last 24 hours from the time you receive them. If none are available, you can join the waitlist and receive an email when your grant is ready.</source>
+        <target>En el plan gratuito, crear una partida cuesta 1 Chispa, iniciar la primera escena cuesta 1 más y cada turno cuesta 1. Tus Chispas duran 24 horas desde que las recibes. Si no hay Chispas disponibles, puedes entrar en la lista de espera y recibir un correo cuando se te asignen.</target>
+      </trans-unit>
+      <trans-unit id="landingCreateSparkAccount" datatype="html">
+        <source>Create an account</source>
+        <target>Crear una cuenta</target>
+      </trans-unit>
+      <trans-unit id="landingSparksNote" datatype="html">
+        <source>Get up to <x id="INTERPOLATION" equiv-text="{{ initialGrant() }}"/> Sparks for your first adventure, subject to availability.</source>
+        <target>Recibe hasta <x id="INTERPOLATION" equiv-text="{{ initialGrant() }}"/> Chispas para tu primera aventura, según disponibilidad.</target>
       </trans-unit>
     </body>
   </file>

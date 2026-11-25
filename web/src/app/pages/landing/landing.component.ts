@@ -1,5 +1,6 @@
 import {
     Component,
+    DestroyRef,
     OnDestroy,
     OnInit,
     afterNextRender,
@@ -19,6 +20,7 @@ import { LandingFaqComponent } from './components/landing-faq/landing-faq.compon
 import { LandingCtaComponent } from './components/landing-cta/landing-cta.component';
 import { LandingFooterComponent } from './components/landing-footer/landing-footer.component';
 import { LandingSeoService } from 'src/app/core/seo/landing-seo.service';
+import { SparksService } from 'src/app/service/sparks/sparks.service';
 
 /**
  * Public marketing page at the application root. Open to everyone, including players who are
@@ -49,16 +51,20 @@ export class LandingComponent implements OnInit, OnDestroy {
     private themeService = inject(ThemeService);
     private authService = inject(AuthService);
     private landingSeo = inject(LandingSeoService);
+    private readonly sparks = inject(SparksService);
+    private readonly destroyRef = inject(DestroyRef);
 
     /** Resolved once on init. The sections are presentational and just read this. */
     readonly isLoggedIn = signal(false);
 
-    /** Temporary MVP gate for account and game actions on the public landing page. */
-    readonly isInDevelopment = true;
+    readonly initialGrant = signal(15);
 
     constructor() {
-        afterNextRender(() => {
+        afterNextRender(async () => {
             this.isLoggedIn.set(this.authService.isUserLoggedIn());
+            const initialGrant = await this.sparks.getInitialGrant();
+            if (this.destroyRef.destroyed) return;
+            this.initialGrant.set(initialGrant);
         });
     }
 

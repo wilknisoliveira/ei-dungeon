@@ -39,9 +39,17 @@ ei-back/
 ## Game Language
 Each game has a `GameLanguage` (enum: `Portuguese`, `English`, `Spanish`; default `English`) stored in the `game_language` column. The language is set at creation time via `GameDtoRequest.GameLanguage` and can be updated via `PATCH /api/game/{gameId}`. All GenAI system prompts are in English with a `<language>` instruction tag appended per game language, so the Game Master responds in the configured language. Changing the language affects only future responses — existing history is untouched.
 
+## Free Sparks
+
+CommonUser gameplay uses Spark grants. Creation, first scene and later turns are separate paid operations. Creation and streaming finalize in Application-owned transactions on the Free path. Each reserves before AI and commits the saved result with the debit. The reservation has a per-attempt lease and a client operation ID so a stale worker cannot commit after a retry and a lost response can be reconciled. Admin and Premium retain their existing gameplay transaction paths.
+
+Spark allocation, queue distribution and administrative changes share a PostgreSQL transaction lock. Cycle availability accounts for consumed Sparks, unexpired grants and active reservations on expired grants. A grant always charges its funding cycle, including after rollover. A hosted service handles renewal, periodic distribution and daily snapshots. It checks OpenRouter through a separate management client and sends email through Resend after persistence. The admin API exposes audited settings, cycle actions, snapshots and the latest observed credits.
+
+Rollover checks OpenRouter coverage against full cycle capacity plus outstanding commitments from earlier cycles. A manual reset of a deficit-blocked cycle uses the current control line rounded up to whole Sparks plus those commitments. Resetting the cycle preserves its capacity.
+
 ## Conventions
 - EF/I/O-bound service and repository methods use the `Async` suffix. Use-case entry methods retain the established `Handler` name for synchronous and asynchronous operations.
-- `IUnitOfWork.Commit()` / `CommitAsync()` called in controllers after use case handlers. **Exception**: `NewUserPlayUseCase` handles its own commit internally for both first-play and subsequent-play flows, since streaming requires atomic persistence before the stream finalizes.
+- Controllers normally call `IUnitOfWork.Commit()` or `CommitAsync()` after use case handlers. Gameplay streaming owns its commit in the application layer. Free adventure creation also owns its commit so the debit and adventure are saved together.
 - Enums serialized as strings (`JsonStringEnumConverter`).
 - All responses include `application/json` content type.
 

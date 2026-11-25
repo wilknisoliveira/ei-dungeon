@@ -2,14 +2,13 @@
     <!-- No reveal on the header: a transform on its host would break position: sticky. -->
     <app-landing-header
         [isLoggedIn]="isLoggedIn()"
-        [isInDevelopment]="isInDevelopment"
     ></app-landing-header>
 
     <main>
         <app-landing-hero
             appRevealOnScroll
             [isLoggedIn]="isLoggedIn()"
-            [isInDevelopment]="isInDevelopment"
+            [initialGrant]="initialGrant()"
         ></app-landing-hero>
         <app-landing-problem appRevealOnScroll></app-landing-problem>
         <app-landing-how-it-works appRevealOnScroll></app-landing-how-it-works>
@@ -19,7 +18,6 @@
         <app-landing-cta
             appRevealOnScroll
             [isLoggedIn]="isLoggedIn()"
-            [isInDevelopment]="isInDevelopment"
         ></app-landing-cta>
     </main>
 

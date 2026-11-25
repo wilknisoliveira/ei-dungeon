@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
+import { MatTooltip } from '@angular/material/tooltip';
 import { of, throwError } from 'rxjs';
 
 import { ChatComponent } from './chat.component';
@@ -191,7 +193,7 @@ describe('ChatComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('disables and ignores plays for a common user', async () => {
+    it('disables and ignores plays for a common user without Sparks', async () => {
         await openSession('a', makePage(1));
         authService.getRole.and.returnValue('CommonUser');
         component.newPlayFormGroup.get('newPlayControl')?.setValue('go north');
@@ -206,6 +208,69 @@ describe('ChatComponent', () => {
         await component.onSubmit();
 
         expect(playService.streamNewPlay).not.toHaveBeenCalled();
+    });
+
+    it('keeps the draft and reuses the same charged operation after interruption', async () => {
+        authService.getRole.and.returnValue('CommonUser');
+        fixture.componentRef.setInput('sparkBalance', 1);
+        await openSession('a', makePage(1));
+        component.newPlayFormGroup.get('newPlayControl')?.setValue('go north');
+        playService.streamNewPlay.and.callFake(async (_, receive) => {
+            receive({ eventType: 'Start', content: '' });
+            throw new Error('connection lost');
+        });
+        await component.onSubmit();
+        const first = playService.streamNewPlay.calls.mostRecent().args[0];
+        expect(first.operationId).toBeTruthy();
+        expect(first.opening).toBeFalse();
+        expect(component.newPlayFormGroup.get('newPlayControl')?.value).toBe('go north');
+        expect(component.plays().length).toBe(1);
+
+        fixture.componentRef.setInput('sparkBalance', 0);
+        playService.getPlays.and.resolveTo(makePage(3));
+        playService.streamNewPlay.and.callFake(async (_, receive) => {
+            receive({ eventType: 'Committed', content: 'saved-turn' });
+            receive({ eventType: 'End', content: '' });
+        });
+        await component.onSubmit();
+        expect(playService.streamNewPlay.calls.mostRecent().args[0].operationId).toBe(first.operationId);
+        expect(component.plays().length).toBe(3);
+        expect(component.newPlayFormGroup.get('newPlayControl')?.value).toBeNull();
+    });
+
+    it('moves the opening cost tooltip to a focusable trigger when Start is disabled', async () => {
+        authService.getRole.and.returnValue('CommonUser');
+        fixture.componentRef.setInput('sparkBalance', 1);
+        await openSession('a', makePage(0));
+
+        const button = fixture.debugElement.query(By.css('.game-ready button[type="submit"]'));
+        const trigger = button.parent!;
+        const buttonTooltip = button.injector.get(MatTooltip);
+        const triggerTooltip = trigger.injector.get(MatTooltip);
+        expect(buttonTooltip.message).toBe('Starting the first scene costs 1 Spark.');
+        expect(buttonTooltip.disabled).toBeFalse();
+        expect(triggerTooltip.disabled).toBeTrue();
+
+        fixture.componentRef.setInput('sparkBalance', 0);
+        fixture.detectChanges();
+        expect(button.nativeElement.disabled).toBeTrue();
+        expect(buttonTooltip.disabled).toBeTrue();
+        expect(triggerTooltip.disabled).toBeFalse();
+        expect(trigger.nativeElement.tabIndex).toBe(0);
+    });
+
+    it('sends explicit opening intent and leaves the draft when the server denies a charge', async () => {
+        authService.getRole.and.returnValue('CommonUser');
+        fixture.componentRef.setInput('sparkBalance', 1);
+        await openSession('a', makePage(0));
+        const openSparks = jasmine.createSpy('openSparks');
+        component.sparksRequested.subscribe(openSparks);
+        playService.streamNewPlay.and.callFake(async (_, receive) => {
+            receive({ eventType: 'Error', code: 'sparks_insufficient', content: '' });
+        });
+        await component.onSubmit(true);
+        expect(playService.streamNewPlay.calls.mostRecent().args[0].opening).toBeTrue();
+        expect(openSparks).toHaveBeenCalledTimes(1);
     });
 
     describe('opening a session', () => {

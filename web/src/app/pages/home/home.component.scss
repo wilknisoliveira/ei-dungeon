@@ -266,3 +266,11 @@
         }
     }
 }
+.spark-button {
+    color: var(--mat-sys-tertiary);
+    white-space: nowrap;
+
+    .spark-timer {
+        color: var(--mat-sys-on-surface-variant);
+    }
+}
