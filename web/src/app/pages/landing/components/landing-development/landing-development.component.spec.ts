@@ -20,24 +20,15 @@ describe('LandingDevelopmentComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should link both public repositories', () => {
+    it('should link to the project repository in a new tab', () => {
         const host: HTMLElement = fixture.nativeElement;
-        const hrefs = Array.from(
-            host.querySelectorAll<HTMLAnchorElement>('.dev-links a'),
-        ).map((anchor) => anchor.getAttribute('href'));
+        const links = host.querySelectorAll<HTMLAnchorElement>('a');
 
-        expect(hrefs).toContain(component.webRepo);
-        expect(hrefs).toContain(component.apiRepo);
-    });
-
-    it('should open repository links safely in a new tab', () => {
-        const host: HTMLElement = fixture.nativeElement;
-
-        host.querySelectorAll<HTMLAnchorElement>('.dev-links a').forEach(
-            (anchor) => {
-                expect(anchor.getAttribute('target')).toBe('_blank');
-                expect(anchor.getAttribute('rel')).toBe('noopener noreferrer');
-            },
+        expect(links.length).toBe(1);
+        expect(links[0]?.getAttribute('href')).toBe(
+            'https://github.com/wilknisoliveira/ei-dungeon',
         );
+        expect(links[0]?.target).toBe('_blank');
+        expect(links[0]?.rel).toBe('noopener noreferrer');
     });
 });

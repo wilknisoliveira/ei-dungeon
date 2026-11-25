@@ -536,25 +536,17 @@
         <source>Every game is saved to your account. Close the tab mid-sentence and the scene is still waiting when you come back.</source>
         <target>Todo jogo fica salvo na sua conta. Feche a aba no meio de uma frase e a cena continua esperando quando você voltar.</target>
       </trans-unit>
-      <trans-unit id="landingDevBadge" datatype="html">
-        <source>In development</source>
+      <trans-unit id="landingDevHeading" datatype="html">
+        <source> In development </source>
         <target>Em desenvolvimento</target>
       </trans-unit>
-      <trans-unit id="landingDevHeading" datatype="html">
-        <source> Built in the open, and still being built. </source>
-        <target>Feito às claras, e ainda em construção.</target>
-      </trans-unit>
       <trans-unit id="landingDevBody" datatype="html">
-        <source> EI-DUNGEON is an active project, not a finished product. Features land regularly and things will change under you. If you would rather see how it works than take our word for it, both repositories are public. </source>
-        <target>O EI-DUNGEON é um projeto ativo, não um produto pronto. Novidades chegam com frequência e as coisas vão mudar embaixo de você. Se preferir ver como funciona em vez de acreditar na nossa palavra, os dois repositórios são públicos.</target>
+        <source> The EI-DUNGEON source code is available on GitHub. </source>
+        <target>O código-fonte do EI-DUNGEON está disponível no GitHub.</target>
       </trans-unit>
-      <trans-unit id="landingDevWebRepo" datatype="html">
-        <source>Web repository</source>
-        <target>Repositório web</target>
-      </trans-unit>
-      <trans-unit id="landingDevApiRepo" datatype="html">
-        <source>API repository</source>
-        <target>Repositório da API</target>
+      <trans-unit id="landingDevSourceCode" datatype="html">
+        <source>View source code</source>
+        <target>Ver código-fonte</target>
       </trans-unit>
       <trans-unit id="landingFaqEyebrow" datatype="html">
         <source> Before you sign up </source>

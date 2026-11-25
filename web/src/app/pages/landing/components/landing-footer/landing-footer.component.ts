@@ -10,6 +10,4 @@ import { RouterModule } from '@angular/router';
 })
 export class LandingFooterComponent {
     readonly year = new Date().getFullYear();
-    readonly webRepo = 'https://github.com/wilknisoliveira/ei-dungeon-web';
-    readonly apiRepo = 'https://github.com/wilknisoliveira/ei-dungeon-back';
 }

@@ -27,14 +27,17 @@ describe('LandingFooterComponent', () => {
         );
     });
 
-    it('should link to signup and login', () => {
+    it('should link to signup, login, and the project repository in order', () => {
         const host: HTMLElement = fixture.nativeElement;
         const hrefs = Array.from(
             host.querySelectorAll<HTMLAnchorElement>('.footer-links a'),
         ).map((anchor) => anchor.getAttribute('href'));
 
-        expect(hrefs).toContain('/signup');
-        expect(hrefs).toContain('/login');
+        expect(hrefs).toEqual([
+            '/signup',
+            '/login',
+            'https://github.com/wilknisoliveira/ei-dungeon',
+        ]);
     });
 
     it('should expose crawlable links to every landing locale', () => {
