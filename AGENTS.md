@@ -1,5 +1,7 @@
 # Repository Guidelines
 
+This `AGENTS.md` is the source of repository guidance. If the user requests a change to `CLAUDE.md`, apply it here.
+
 ## Project Structure & Module Organization
 
 EI Dungeon is an RPG application with AI-generated game responses. This monorepo contains two independently built applications:
@@ -66,6 +68,12 @@ Require Conventional Commits with short, imperative descriptions, such as `feat(
 Keep credentials in ignored `.env` files or .NET User Secrets. Commit environment examples only. Preserve Compose project names and existing database volumes; avoid destructive resets.
 
 Production deploys published commit tags resolved to digests. Manual dispatch is the default, with automatic deployment enabled only by `DUNGEON_AUTO_DEPLOY=true`. Follow `../infra/docs/VM-SETUP.md` for the shared `deploy` account, `../infra/docs/ADD-PROJECT.md` for per-project VM and GitHub onboarding, and `../infra/apps/dungeon/DEPLOYMENT.md` for Dungeon settings, operation and recovery. Maintain deployment documentation in English. Configure `DUNGEON_SSH_USER=deploy` explicitly and keep each repository's SSH key separate. Keep Dungeon-specific infrastructure scripts under its application directory. Preserve production project `dungeon-production` and volume `dungeon-production_postgres_data`.
+
+Whenever application Compose configuration or environment variables change, update the corresponding production configuration in `../infra/apps/dungeon/` as part of the same work. Keep the production `compose.yaml`, `.env.example`, and `DEPLOYMENT.md` aligned with the application settings, and validate the updated production configuration with `docker compose config --quiet`.
+
+## Emails to users
+
+Always render user-facing emails with the shared EI Dungeon HTML email template. Provide a plain-text alternative with equivalent information and localize both versions in the recipient language supported by the flow. Keep delivery provider code separate from email wording and layout.
 
 ## Account identity
 
