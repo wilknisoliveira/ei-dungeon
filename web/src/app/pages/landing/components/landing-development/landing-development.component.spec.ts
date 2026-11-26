@@ -22,7 +22,7 @@ describe('LandingDevelopmentComponent', () => {
 
     it('should link to the project repository in a new tab', () => {
         const host: HTMLElement = fixture.nativeElement;
-        const links = host.querySelectorAll<HTMLAnchorElement>('a');
+        const links = host.querySelectorAll<HTMLAnchorElement>('.dev-link');
 
         expect(links.length).toBe(1);
         expect(links[0]?.getAttribute('href')).toBe(
@@ -30,5 +30,15 @@ describe('LandingDevelopmentComponent', () => {
         );
         expect(links[0]?.target).toBe('_blank');
         expect(links[0]?.rel).toBe('noopener noreferrer');
+    });
+
+    it('invites visitors to email the developer immediately after the development description', () => {
+        const host: HTMLElement = fixture.nativeElement;
+        const contact = host.querySelector('.landing-lede + .developer-contact');
+
+        expect(contact?.textContent).toBe('Have an idea for Dungeon or want to talk about the project? Contact the developer');
+        const link = contact?.querySelector<HTMLAnchorElement>('a');
+        expect(link?.getAttribute('href')).toBe('mailto:wilknis.pro@outlook.com');
+        expect(link?.textContent).toBe('Contact the developer');
     });
 });

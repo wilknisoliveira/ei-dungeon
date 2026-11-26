@@ -51,6 +51,26 @@ describe('AuthComponent', () => {
         ]);
     });
 
+    it('restores a Guild Mail link after email or Google sign-in', async () => {
+        const ticket = '3617ec15-fae5-4cfc-a613-ddc845970b80';
+        const route = TestBed.inject(ActivatedRoute);
+        spyOnProperty(route.snapshot, 'queryParamMap').and.returnValue(convertToParamMap({ ticket }));
+        const navigate = spyOn(TestBed.inject(Router), 'navigate').and.resolveTo(true);
+        spyOn(TestBed.inject(AuthService), 'login').and.resolveTo({
+            authenticated: true, created: '', expiration: '', accessToken: 'access', refreshToken: 'refresh',
+        });
+        spyOn(component.google, 'signin').and.resolveTo();
+        component.userLogin = { email: 'player@example.com', password: 'password' };
+
+        await component.onSubmit();
+        await component.onGoogle({ challengeId: 'challenge', credential: 'credential' });
+
+        expect(navigate.calls.allArgs()).toEqual([
+            [['/support-tickets'], { queryParams: { ticket } }],
+            [['/support-tickets'], { queryParams: { ticket } }],
+        ]);
+    });
+
     it('routes only the specific unverified response to verification without inferring email', async () => {
         const auth = TestBed.inject(AuthService);
         spyOn(auth, 'login').and.rejectWith(new HttpErrorResponse({ status: 403, error: { code: 'email_verification_required' } }));

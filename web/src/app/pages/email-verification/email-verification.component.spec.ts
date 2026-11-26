@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { provideRouter, Router } from '@angular/router';
+import { ActivatedRoute, convertToParamMap, provideRouter, Router } from '@angular/router';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { EmailVerificationComponent } from './email-verification.component';
@@ -45,6 +45,17 @@ describe('EmailVerificationComponent', () => {
         expect(router.navigate).toHaveBeenCalledWith(['/login']);
         await component.handleSubmit();
         expect(auth.confirmEmailVerification).toHaveBeenCalledTimes(1);
+    });
+
+    it('keeps a Guild Mail destination when verification returns to login', async () => {
+        const ticket = '3617ec15-fae5-4cfc-a613-ddc845970b80';
+        const route = TestBed.inject(ActivatedRoute);
+        spyOnProperty(route.snapshot, 'queryParamMap').and.returnValue(convertToParamMap({ ticket }));
+        component.form.setValue({ email: 'p@example.com', code: '000123' });
+
+        await component.handleSubmit();
+
+        expect(router.navigate).toHaveBeenCalledWith(['/login'], { queryParams: { ticket } });
     });
     it('clears the code on email edit without removing cooldown', () => {
         const flow = TestBed.inject(EmailAuthFlowService);

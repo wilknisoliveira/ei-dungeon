@@ -156,14 +156,14 @@
         <source>Invalid email or password.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/auth/auth.component.ts</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="emailAuthThrottled" datatype="html">
         <source>Too many requests. Please wait before trying again.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/auth/auth.component.ts</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">96</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/service/auth/email-auth-flow.service.ts</context>
@@ -295,7 +295,7 @@
         <source>Enter a valid email address.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.ts</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">30</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/forgot-password/forgot-password.component.ts</context>
@@ -314,7 +314,7 @@
         <source>Enter exactly six digits.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.ts</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/reset-password/reset-password.component.ts</context>
@@ -329,7 +329,7 @@
         <source>Email verified. You can now log in.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/email-verification/email-verification.component.ts</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="forgotPasswordTitle" datatype="html">
@@ -916,11 +916,18 @@
           <context context-type="linenumber">184,185</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="guildMailProfileLink" datatype="html">
+        <source>Talk to the team</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
+          <context context-type="linenumber">188,189</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="logoutMenuItem" datatype="html">
         <source>Logout</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
-          <context context-type="linenumber">188,189</context>
+          <context context-type="linenumber">192,193</context>
         </context-group>
       </trans-unit>
       <trans-unit id="sparksMinutesRemaining" datatype="html">
@@ -1025,11 +1032,18 @@
           <context context-type="linenumber">8,11</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="landingDevContact" datatype="html">
+        <source>Have an idea for Dungeon or want to talk about the project? <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;mailto:wilknis.pro@outlook.com&quot;&gt;"/>Contact the developer<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-development/landing-development.component.html</context>
+          <context context-type="linenumber">14,16</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="landingDevSourceCode" datatype="html">
         <source>View source code</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/landing/components/landing-development/landing-development.component.html</context>
-          <context context-type="linenumber">22,25</context>
+          <context context-type="linenumber">24,27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="landingFaqEyebrow" datatype="html">
@@ -1235,11 +1249,18 @@
           <context context-type="linenumber">12,14</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="landingFooterDeveloperContact" datatype="html">
+        <source>Contact the developer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/landing/components/landing-footer/landing-footer.component.html</context>
+          <context context-type="linenumber">19,22</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="landingLocaleLinksLabel" datatype="html">
         <source>Choose a language version</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/landing/components/landing-footer/landing-footer.component.html</context>
-          <context context-type="linenumber">21,22</context>
+          <context context-type="linenumber">22,23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="landingHeaderActionsLabel" datatype="html">
@@ -1829,6 +1850,348 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/signup/signup.component.ts</context>
           <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailReturnToGame" datatype="html">
+        <source>Back to the game</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">4,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailTitle" datatype="html">
+        <source>Guild Mail</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">10,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailDescription" datatype="html">
+        <source>Send a private message to the Dungeon team. You can ask for help, report a bug, resolve an issue, or make a suggestion. Replies stay here.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">11,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailNewMessage" datatype="html">
+        <source>New message</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">16,18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">107,108</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailType" datatype="html">
+        <source>Conversation type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailTypeRequired" datatype="html">
+        <source>Choose a conversation type.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailSubject" datatype="html">
+        <source>Subject</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailSubjectRequired" datatype="html">
+        <source>Enter a subject.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailMessage" datatype="html">
+        <source>Message</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailMessageRequired" datatype="html">
+        <source>Enter a message.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">42,43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailSendMessage" datatype="html">
+        <source>Send message</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailCancel" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">46,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailBackToHistory" datatype="html">
+        <source>Back to my conversations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailConversationLoading" datatype="html">
+        <source>Loading conversation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">54,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailConversationFailed" datatype="html">
+        <source>Could not load this conversation.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">56,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailRetry" datatype="html">
+        <source>Try again</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">57,58</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">128,129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailOpenedAt" datatype="html">
+        <source>Opened</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailUpdatedAt" datatype="html">
+        <source>Last updated</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">143</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailThread" datatype="html">
+        <source>Messages</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">70,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailTeam" datatype="html">
+        <source>Dungeon team</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">75,76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailYou" datatype="html">
+        <source>You</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">77,78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailConversationClosed" datatype="html">
+        <source>Conversation closed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">87,88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailRatingRecorded" datatype="html">
+        <source>Your rating: <x id="INTERPOLATION" equiv-text="{{ ticket.rating }}"/> out of 5 stars.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">89,90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailRatingQuestion" datatype="html">
+        <source>How was the support?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">93,94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailStarChoice" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ value }}"/> out of 5 stars</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">98,99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailSubmitRating" datatype="html">
+        <source>Submit rating</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">104,105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailYourReply" datatype="html">
+        <source>Your reply</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">112,113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailReplyRequired" datatype="html">
+        <source>Enter a reply.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">114,115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailReply" datatype="html">
+        <source>Reply</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">116,117</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailHistory" datatype="html">
+        <source>My conversations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">123,124</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailHistoryLoading" datatype="html">
+        <source>Loading conversations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">125,126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailHistoryFailed" datatype="html">
+        <source>Could not load your conversations.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">127,128</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailHistoryEmpty" datatype="html">
+        <source>You haven&apos;t started a conversation yet.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">131,133</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailPagination" datatype="html">
+        <source>Conversation pages</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">150,151</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailPreviousPage" datatype="html">
+        <source>Previous</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">151,152</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailPageNumber" datatype="html">
+        <source>Page <x id="INTERPOLATION" equiv-text="{{ result.currentPage }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">152,153</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailNextPage" datatype="html">
+        <source>Next</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.html</context>
+          <context context-type="linenumber">153,154</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailTypeHelp" datatype="html">
+        <source>Help request</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailTypeBug" datatype="html">
+        <source>Bug report</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailTypeProblem" datatype="html">
+        <source>Issue resolution</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailTypeSuggestion" datatype="html">
+        <source>Suggestion</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.ts</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailStatusOpen" datatype="html">
+        <source>Open</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailStatusInProgress" datatype="html">
+        <source>In progress</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.ts</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailStatusWaiting" datatype="html">
+        <source>Waiting for your reply</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.ts</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailStatusClosed" datatype="html">
+        <source>Closed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.ts</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guildMailSaveFailed" datatype="html">
+        <source>Could not save your update. Please try again.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/support-tickets/support-tickets.component.ts</context>
+          <context context-type="linenumber">221</context>
         </context-group>
       </trans-unit>
       <trans-unit id="verificationAcknowledgement" datatype="html">

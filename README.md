@@ -8,6 +8,7 @@ EI Dungeon is a role-playing game simulator with players and game responses cont
 
 - Email/password and Google registration/sign-in, explicit Google linking, email verification, and password recovery.
 - Game creation and management, a game list, and streaming chat plays.
+- Guild Mail for private player support conversations, with an administrative queue and email notifications.
 - English, Brazilian Portuguese, and Spanish interfaces and localized game responses.
 - Public landing pages with static prerendering and SEO output.
 - PostgreSQL persistence, migrations, health checks, and Docker support.

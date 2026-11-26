@@ -15,6 +15,7 @@ import { UserLogin } from 'src/app/types/auth/user-login';
 import { LoadingComponent } from 'src/app/shared/loading/loading.component';
 import { LanguageSelectorComponent } from 'src/app/shared/components/language-selector/language-selector.component';
 import { ThemeToggleComponent } from 'src/app/shared/theme-toggle/theme-toggle.component';
+import { getSupportTicketId } from 'src/app/types/support-tickets/support-ticket';
 @Component({
     standalone: true,
     imports: [
@@ -102,6 +103,10 @@ export class AuthComponent {
     }
 
     private continueTo(path: string): Promise<boolean> {
+        const ticket = getSupportTicketId(this.route.snapshot.queryParamMap.get('ticket'));
+        if (ticket) {
+            return this.router.navigate([path === '/home' ? '/support-tickets' : path], { queryParams: { ticket } });
+        }
         const queryParams = this.sparksIntent;
         return queryParams ? this.router.navigate([path], { queryParams }) : this.router.navigate([path]);
     }

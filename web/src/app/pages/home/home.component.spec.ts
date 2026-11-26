@@ -79,4 +79,16 @@ describe('HomeComponent', () => {
         component.navigateToAdmin();
         expect(navigate).toHaveBeenCalledTimes(1);
     });
+
+    it('opens Guild Mail in a new tab from the profile menu', async () => {
+        fixture.nativeElement.querySelector('.profile-button button').click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const overlay = TestBed.inject(OverlayContainer).getContainerElement();
+        const link = overlay.querySelector<HTMLAnchorElement>('[data-testid="support-navigation"]');
+        expect(link?.getAttribute('href')).toBe('/support-tickets');
+        expect(link?.target).toBe('_blank');
+        expect(link?.rel).toContain('noopener');
+    });
 });

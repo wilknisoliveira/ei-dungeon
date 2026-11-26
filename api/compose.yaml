@@ -39,6 +39,8 @@ services:
       Sparks__QueueIntervalMinutes: ${SPARKS_QUEUE_INTERVAL_MINUTES:-60}
       Sparks__OpenRouterManagementKey: ${SPARKS_OPENROUTER_MANAGEMENT_KEY:-}
       Sparks__AdministrativeRecipientsCsv: ${SPARKS_ADMINISTRATIVE_RECIPIENTS:-}
+      Notifications__AdministrativeRecipientsCsv: ${NOTIFICATIONS_ADMINISTRATIVE_RECIPIENTS:-}
+      Notifications__WebOrigin: ${NOTIFICATIONS_WEB_ORIGIN:-}
       TokenConfigurations__Secret: ${JWT_SECRET:?Set JWT_SECRET in .env}
       Resend__ApiToken: ${RESEND_API_TOKEN:-}
       Resend__From: ${RESEND_FROM:-}

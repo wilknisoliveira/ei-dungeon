@@ -1,4 +1,5 @@
 using ei_back.Core.Application.Repository;
+using ei_back.Core.Application.Service.Email;
 using ei_back.Core.Domain.Entity;
 using ei_back.Core.Domain.Enums;
 using Microsoft.Extensions.Options;
@@ -11,7 +12,7 @@ public sealed class SparkCycleOperations(
     SparkAllocationService allocation,
     ISparkCreditsClient credits,
     TimeProvider clock,
-    IOptions<SparkOptions> options)
+    IOptions<AdministrativeNotificationOptions> notifications)
 {
     public async Task RunAsync(CancellationToken cancellationToken)
     {
@@ -119,8 +120,7 @@ public sealed class SparkCycleOperations(
                 renewalDeficit |= credits < (long)cycle.Capacity + earlier;
             }
 
-            var recipients = options.Value.AdministrativeRecipients.Where(value => !string.IsNullOrWhiteSpace(value))
-                .Select(value => value.Trim()).Distinct(StringComparer.OrdinalIgnoreCase).ToArray();
+            var recipients = notifications.Value.AdministrativeRecipients;
             if (recipients.Length > 0 && SparkOperationalPolicy.ShouldReport(waiting.Count, declined, available, controlLine, confirmedEstimate, renewalDeficit))
                 snapshot.SetPendingReport(recipients, "EI Dungeon Free Sparks report", FormatReport(snapshot, cycle, renewalDeficit));
 

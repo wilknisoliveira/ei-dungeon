@@ -62,14 +62,30 @@ namespace ei_back.Infrastructure.Extensions
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddSingleton(TimeProvider.System);
-            services.AddOptions<SparkOptions>()
-                .BindConfiguration("Sparks")
+            services.AddOptions<SparkOptions>().BindConfiguration("Sparks");
+            services.AddOptions<AdministrativeNotificationOptions>()
+                .BindConfiguration(AdministrativeNotificationOptions.SectionName)
                 .PostConfigure<IConfiguration>((options, configuration) =>
                 {
-                    var recipients = configuration["Sparks:AdministrativeRecipientsCsv"];
-                    if (!string.IsNullOrWhiteSpace(recipients))
-                        options.AdministrativeRecipients = recipients.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                    var recipients = string.IsNullOrWhiteSpace(options.AdministrativeRecipientsCsv)
+                        ? configuration["Sparks:AdministrativeRecipientsCsv"]
+                        : options.AdministrativeRecipientsCsv;
+                    var separatorOptions = StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries;
+                    var configuredRecipients = string.IsNullOrWhiteSpace(recipients)
+                        ? configuration.GetSection("Sparks:AdministrativeRecipients").Get<string[]>() ?? []
+                        : recipients.Split(',', separatorOptions);
+                    options.AdministrativeRecipients = configuredRecipients.Select(value => value.Trim())
+                        .Where(value => value.Length > 0).Distinct(StringComparer.OrdinalIgnoreCase).ToArray();
+
+                    var origins = configuration["Cors:AllowedOrigins"]?.Split(',', separatorOptions) ?? [];
+                    options.WebOrigin = new[] { options.WebOrigin }.Concat(origins)
+                        .Select(value => Uri.TryCreate(value, UriKind.Absolute, out var origin) &&
+                            (origin.Scheme is "https" or "http") && origin.UserInfo.Length == 0 &&
+                            origin.AbsolutePath == "/" && origin.Query.Length == 0 && origin.Fragment.Length == 0
+                            ? origin.GetLeftPart(UriPartial.Authority) : null)
+                        .FirstOrDefault(origin => origin is not null) ?? "http://localhost:4200";
                 });
+            services.AddScoped<ISupportTicketNotificationService, SupportTicketNotificationService>();
             services.AddScoped<SparkAllocationService>();
             services.AddScoped<SparkReservationService>();
             services.AddSparkOperations();
@@ -139,6 +155,7 @@ namespace ei_back.Infrastructure.Extensions
             services.AddScoped<IGetGameByIdAndUserUseCase, GetGameByIdAndUserUseCase>();
             services.AddScoped<IDeleteGameUseCase, DeleteGameUseCase>();
             services.AddScoped<IUpdateGameUseCase, UpdateGameUseCase>();
+            services.AddSupportTickets();
 
             return services;
         }

@@ -175,6 +175,12 @@ Deploy a chosen published image through **Actions → Deploy production → Run 
 
 Manual deployment is the default. Set repository variable `DUNGEON_AUTO_DEPLOY=true` to call that workflow after successful web publication. Optional reviewers use environment `production`, subject to GitHub account features. The sibling `../../infra/apps/dungeon/DEPLOYMENT.md` documents production credentials, migration and recovery. Configure branch protection to require the applicable workflow checks before merging, accounting for path filters.
 
+## Guild Mail
+
+The profile menu opens Guild Mail in a separate tab. Players can open a private conversation, view the history, reply while it is open, and optionally rate the closed conversation. The English-only **Support tickets** section in administration handles cross-user search, filters, replies, and status changes. Ticket notification links open the relevant conversation, including after the player signs in.
+
+The public landing page exposes the developer's email in **In development** and in the footer. Those links open the visitor's email client.
+
 ## Google sign-in and simpler registration
 
 Login uses email/password or the official Google button. Signup asks for email, password and confirmation. New eligible Google users go directly to Home. Existing unlinked accounts must log in and explicitly link Google in Settings. Google-only accounts show Create password and require a new confirmation through the linked Google account. Account capabilities are fetched from the authenticated API rather than inferred from old token profile fields.

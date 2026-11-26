@@ -42,6 +42,14 @@ export const routes: Routes = [
         },
     },
     {
+        path: 'support-tickets',
+        loadComponent: () => import('./support-tickets/support-tickets.component').then(module => module.SupportTicketsComponent),
+        canActivate: [AuthGuard, HasRoleGuard],
+        data: {
+            roles: ['Admin', 'CommonUser', 'PremiumUser'],
+        },
+    },
+    {
         path: 'admin',
         loadComponent: () => import('./admin/admin.component').then(module => module.AdminComponent),
         canActivate: [AuthGuard, HasRoleGuard],

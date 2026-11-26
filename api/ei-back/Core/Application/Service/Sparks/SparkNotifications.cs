@@ -3,6 +3,7 @@ using System.Net;
 using ei_back.Core.Application.Repository;
 using ei_back.Core.Application.Service.Email;
 using ei_back.Core.Application.Service.Email.Interfaces;
+using ei_back.Core.Application.Service.Email.Templates;
 using ei_back.Core.Domain.Entity;
 
 namespace ei_back.Core.Application.Service.Sparks;
@@ -37,8 +38,12 @@ public sealed class SparkNotifications(
         if (user is null)
             return;
 
-        var (subject, body) = FormatNotice(item.CultureName, grant);
-        var message = CreateEmail(user.Email, subject, body, $"spark-grant/{item.Id:N}");
+        var (language, subject, body) = FormatNotice(item.CultureName, grant);
+        var message = new OutgoingEmail(user.Email, subject, body,
+            NotificationEmailTemplate.Render(language, subject, body, []))
+        {
+            IdempotencyKey = $"spark-grant/{item.Id:N}"
+        };
         if (!await TrySendAsync(message, cancellationToken))
             return;
 
@@ -88,16 +93,16 @@ public sealed class SparkNotifications(
     private static OutgoingEmail CreateEmail(string recipient, string subject, string body, string key) =>
         new(recipient, subject, body, $"<p>{WebUtility.HtmlEncode(body).Replace("\n", "<br>")}</p>") { IdempotencyKey = key };
 
-    private static (string Subject, string Body) FormatNotice(string cultureName, SparkGrant grant)
+    private static (string Language, string Subject, string Body) FormatNotice(string cultureName, SparkGrant grant)
     {
         var expiry = TimeZoneInfo.ConvertTime(grant.ExpiresAt, SparkCalendar.Zone);
         if (cultureName.StartsWith("pt", StringComparison.OrdinalIgnoreCase))
-            return ("Suas Centelhas estão disponíveis",
+            return ("pt-BR", "Suas Centelhas estão disponíveis",
                 $"Você recebeu {grant.Amount} Centelhas no EI Dungeon. Elas vencem em {expiry.ToString("dd/MM/yyyy 'às' HH:mm zzz", CultureInfo.InvariantCulture)} (America/Sao_Paulo).");
         if (cultureName.StartsWith("es", StringComparison.OrdinalIgnoreCase))
-            return ("Tus Chispas están disponibles",
+            return ("es", "Tus Chispas están disponibles",
                 $"Recibiste {grant.Amount} Chispas en EI Dungeon. Vencen el {expiry.ToString("dd/MM/yyyy 'a las' HH:mm zzz", CultureInfo.InvariantCulture)} (America/Sao_Paulo).");
-        return ("Your Sparks are available",
+        return ("en", "Your Sparks are available",
             $"You received {grant.Amount} Sparks in EI Dungeon. They expire on {expiry.ToString("yyyy-MM-dd 'at' HH:mm zzz", CultureInfo.InvariantCulture)} (America/Sao_Paulo).");
     }
 }

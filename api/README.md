@@ -156,11 +156,21 @@ The default seeded login is `admin@ei-dungeon.invalid` / `admin123`. Change the 
 
 ## Free Sparks
 
-The Sparks worker starts with the API. Configure `SPARKS_OPENROUTER_MANAGEMENT_KEY` with the OpenRouter management key and `SPARKS_ADMINISTRATIVE_RECIPIENTS` with a comma-separated list of operational email addresses. The inference key continues to use `OPENROUTER_API_KEY`. The `Sparks` section in [appsettings.json](ei-back/appsettings.json) and [appsettings.Development.json](ei-back/appsettings.Development.json) lists the defaults for direct ASP.NET Core runs. Override them with `Sparks__*` environment variables or .NET User Secrets.
+The Sparks worker starts with the API. Configure `SPARKS_OPENROUTER_MANAGEMENT_KEY` with the OpenRouter management key. The inference key continues to use `OPENROUTER_API_KEY`. Sparks reports use the shared administrative recipients described below. The `Sparks` section in [appsettings.json](ei-back/appsettings.json) and [appsettings.Development.json](ei-back/appsettings.Development.json) lists the defaults for direct ASP.NET Core runs. Override them with `Sparks__*` environment variables or .NET User Secrets.
 
 The environment provides initial defaults for cycle capacity, grant amounts, estimated unit cost, closing day and renewal lead. After initialization, use the Admin Sparks page to update those defaults for future cycles. The current-cycle capacity increase is a separate action. The queue interval stays in the environment. See [.env.example](.env.example) for the starter values.
 
 Renewal and reporting use `America/Sao_Paulo`. Rollover requires provider credits for the full new cycle capacity plus outstanding commitments from earlier cycles. A failed check pauses new grants until a successful automatic check. A confirmed deficit requires a manual reset, which checks coverage against the current control line rounded up to whole Sparks, plus commitments from earlier cycles. Previously issued grants retain their original expiration.
+
+## Support tickets and operational email
+
+Players open and follow private tickets from Guild Mail. Administrators use **Support tickets** to filter the queue, reply, and update status. Players can optionally rate a closed conversation.
+
+For local Compose, set `NOTIFICATIONS_ADMINISTRATIVE_RECIPIENTS` to the comma-separated list that receives Sparks reports and ticket alerts. Direct API hosts can set `Notifications__AdministrativeRecipientsCsv` or use .NET User Secrets. The existing production Compose mapping for `SPARKS_ADMINISTRATIVE_RECIPIENTS` still works through the legacy `Sparks:AdministrativeRecipientsCsv` fallback. The canonical value takes precedence when both are populated.
+
+Player emails use the existing Resend configuration and the shared EI Dungeon email layout. A notice identifies the response or status change and includes the conversation link and update time. It uses the interface language captured from `Accept-Language` when the player opened the conversation. The Sparks waitlist grant notice uses the same layout and the language captured when the player joined the queue.
+
+Set `NOTIFICATIONS_WEB_ORIGIN` in local Compose or `Notifications__WebOrigin` on direct hosts to override the first valid web origin from `Cors:AllowedOrigins`. Use the public frontend origin for deployments. Delivery is attempted after the ticket change is saved. A delivery failure is logged and the conversation remains available in the app.
 
 ## Tests
 

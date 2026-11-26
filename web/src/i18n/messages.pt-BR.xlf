@@ -1024,6 +1024,202 @@
         <source>Get up to <x id="INTERPOLATION" equiv-text="{{ initialGrant() }}"/> Sparks for your first adventure, subject to availability.</source>
         <target>Receba até <x id="INTERPOLATION" equiv-text="{{ initialGrant() }}"/> Centelhas para sua primeira aventura, conforme a disponibilidade.</target>
       </trans-unit>
+      <trans-unit id="guildMailProfileLink" datatype="html">
+        <source>Talk to the team</source>
+        <target>Fale com a equipe</target>
+      </trans-unit>
+      <trans-unit id="landingDevContact" datatype="html">
+        <source>Have an idea for Dungeon or want to talk about the project? <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;mailto:wilknis.pro@outlook.com&quot;&gt;"/>Contact the developer<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></source>
+        <target>Tem uma ideia para o Dungeon ou quer trocar uma ideia sobre o projeto? <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;mailto:wilknis.pro@outlook.com&quot;&gt;"/>Fale com o desenvolvedor<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="landingFooterDeveloperContact" datatype="html">
+        <source>Contact the developer</source>
+        <target>Fale com o desenvolvedor</target>
+      </trans-unit>
+      <trans-unit id="guildMailReturnToGame" datatype="html">
+        <source>Back to the game</source>
+        <target>Voltar ao jogo</target>
+      </trans-unit>
+      <trans-unit id="guildMailTitle" datatype="html">
+        <source>Guild Mail</source>
+        <target>Correio da Guilda</target>
+      </trans-unit>
+      <trans-unit id="guildMailDescription" datatype="html">
+        <source>Send a private message to the Dungeon team. You can ask for help, report a bug, resolve an issue, or make a suggestion. Replies stay here.</source>
+        <target>Envie uma mensagem privada à equipe do Dungeon. Você pode pedir ajuda, relatar um bug, resolver um problema ou enviar uma sugestão. As respostas ficam aqui.</target>
+      </trans-unit>
+      <trans-unit id="guildMailNewMessage" datatype="html">
+        <source>New message</source>
+        <target>Nova mensagem</target>
+      </trans-unit>
+      <trans-unit id="guildMailType" datatype="html">
+        <source>Conversation type</source>
+        <target>Tipo de conversa</target>
+      </trans-unit>
+      <trans-unit id="guildMailTypeRequired" datatype="html">
+        <source>Choose a conversation type.</source>
+        <target>Escolha um tipo de conversa.</target>
+      </trans-unit>
+      <trans-unit id="guildMailSubject" datatype="html">
+        <source>Subject</source>
+        <target>Assunto</target>
+      </trans-unit>
+      <trans-unit id="guildMailSubjectRequired" datatype="html">
+        <source>Enter a subject.</source>
+        <target>Informe um assunto.</target>
+      </trans-unit>
+      <trans-unit id="guildMailMessage" datatype="html">
+        <source>Message</source>
+        <target>Mensagem</target>
+      </trans-unit>
+      <trans-unit id="guildMailMessageRequired" datatype="html">
+        <source>Enter a message.</source>
+        <target>Escreva uma mensagem.</target>
+      </trans-unit>
+      <trans-unit id="guildMailSendMessage" datatype="html">
+        <source>Send message</source>
+        <target>Enviar mensagem</target>
+      </trans-unit>
+      <trans-unit id="guildMailCancel" datatype="html">
+        <source>Cancel</source>
+        <target>Cancelar</target>
+      </trans-unit>
+      <trans-unit id="guildMailBackToHistory" datatype="html">
+        <source>Back to my conversations</source>
+        <target>Voltar para minhas conversas</target>
+      </trans-unit>
+      <trans-unit id="guildMailConversationLoading" datatype="html">
+        <source>Loading conversation</source>
+        <target>Carregando conversa</target>
+      </trans-unit>
+      <trans-unit id="guildMailConversationFailed" datatype="html">
+        <source>Could not load this conversation.</source>
+        <target>Não foi possível carregar esta conversa.</target>
+      </trans-unit>
+      <trans-unit id="guildMailRetry" datatype="html">
+        <source>Try again</source>
+        <target>Tentar novamente</target>
+      </trans-unit>
+      <trans-unit id="guildMailOpenedAt" datatype="html">
+        <source>Opened</source>
+        <target>Aberto em</target>
+      </trans-unit>
+      <trans-unit id="guildMailUpdatedAt" datatype="html">
+        <source>Last updated</source>
+        <target>Última atualização</target>
+      </trans-unit>
+      <trans-unit id="guildMailThread" datatype="html">
+        <source>Messages</source>
+        <target>Mensagens</target>
+      </trans-unit>
+      <trans-unit id="guildMailTeam" datatype="html">
+        <source>Dungeon team</source>
+        <target>Equipe do Dungeon</target>
+      </trans-unit>
+      <trans-unit id="guildMailYou" datatype="html">
+        <source>You</source>
+        <target>Você</target>
+      </trans-unit>
+      <trans-unit id="guildMailConversationClosed" datatype="html">
+        <source>Conversation closed</source>
+        <target>Conversa encerrada</target>
+      </trans-unit>
+      <trans-unit id="guildMailRatingRecorded" datatype="html">
+        <source>Your rating: <x id="INTERPOLATION" equiv-text="{{ ticket.rating }}"/> out of 5 stars.</source>
+        <target>Sua avaliação: <x id="INTERPOLATION" equiv-text="{{ ticket.rating }}"/> de 5 estrelas.</target>
+      </trans-unit>
+      <trans-unit id="guildMailRatingQuestion" datatype="html">
+        <source>How was the support?</source>
+        <target>Como foi o atendimento?</target>
+      </trans-unit>
+      <trans-unit id="guildMailStarChoice" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ value }}"/> out of 5 stars</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ value }}"/> de 5 estrelas</target>
+      </trans-unit>
+      <trans-unit id="guildMailSubmitRating" datatype="html">
+        <source>Submit rating</source>
+        <target>Enviar avaliação</target>
+      </trans-unit>
+      <trans-unit id="guildMailYourReply" datatype="html">
+        <source>Your reply</source>
+        <target>Sua resposta</target>
+      </trans-unit>
+      <trans-unit id="guildMailReplyRequired" datatype="html">
+        <source>Enter a reply.</source>
+        <target>Escreva uma resposta.</target>
+      </trans-unit>
+      <trans-unit id="guildMailReply" datatype="html">
+        <source>Reply</source>
+        <target>Responder</target>
+      </trans-unit>
+      <trans-unit id="guildMailHistory" datatype="html">
+        <source>My conversations</source>
+        <target>Minhas conversas</target>
+      </trans-unit>
+      <trans-unit id="guildMailHistoryLoading" datatype="html">
+        <source>Loading conversations</source>
+        <target>Carregando conversas</target>
+      </trans-unit>
+      <trans-unit id="guildMailHistoryFailed" datatype="html">
+        <source>Could not load your conversations.</source>
+        <target>Não foi possível carregar suas conversas.</target>
+      </trans-unit>
+      <trans-unit id="guildMailHistoryEmpty" datatype="html">
+        <source>You haven&apos;t started a conversation yet.</source>
+        <target>Você ainda não iniciou nenhuma conversa.</target>
+      </trans-unit>
+      <trans-unit id="guildMailPagination" datatype="html">
+        <source>Conversation pages</source>
+        <target>Páginas de conversas</target>
+      </trans-unit>
+      <trans-unit id="guildMailPreviousPage" datatype="html">
+        <source>Previous</source>
+        <target>Anterior</target>
+      </trans-unit>
+      <trans-unit id="guildMailPageNumber" datatype="html">
+        <source>Page <x id="INTERPOLATION" equiv-text="{{ result.currentPage }}"/></source>
+        <target>Página <x id="INTERPOLATION" equiv-text="{{ result.currentPage }}"/></target>
+      </trans-unit>
+      <trans-unit id="guildMailNextPage" datatype="html">
+        <source>Next</source>
+        <target>Próxima</target>
+      </trans-unit>
+      <trans-unit id="guildMailTypeHelp" datatype="html">
+        <source>Help request</source>
+        <target>Pedido de ajuda</target>
+      </trans-unit>
+      <trans-unit id="guildMailTypeBug" datatype="html">
+        <source>Bug report</source>
+        <target>Relato de bug</target>
+      </trans-unit>
+      <trans-unit id="guildMailTypeProblem" datatype="html">
+        <source>Issue resolution</source>
+        <target>Resolução de problema</target>
+      </trans-unit>
+      <trans-unit id="guildMailTypeSuggestion" datatype="html">
+        <source>Suggestion</source>
+        <target>Sugestão</target>
+      </trans-unit>
+      <trans-unit id="guildMailStatusOpen" datatype="html">
+        <source>Open</source>
+        <target>Aberto</target>
+      </trans-unit>
+      <trans-unit id="guildMailStatusInProgress" datatype="html">
+        <source>In progress</source>
+        <target>Em atendimento</target>
+      </trans-unit>
+      <trans-unit id="guildMailStatusWaiting" datatype="html">
+        <source>Waiting for your reply</source>
+        <target>Aguardando sua resposta</target>
+      </trans-unit>
+      <trans-unit id="guildMailStatusClosed" datatype="html">
+        <source>Closed</source>
+        <target>Encerrado</target>
+      </trans-unit>
+      <trans-unit id="guildMailSaveFailed" datatype="html">
+        <source>Could not save your update. Please try again.</source>
+        <target>Não foi possível salvar sua atualização. Tente novamente.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

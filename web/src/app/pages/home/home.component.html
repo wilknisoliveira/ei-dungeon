@@ -183,6 +183,10 @@
                                 <mat-icon fontIcon="settings"></mat-icon>
                                 <span i18n="@@settingsMenuItem">Settings</span>
                             </button>
+                            <a mat-menu-item routerLink="/support-tickets" target="_blank" rel="noopener" data-testid="support-navigation">
+                                <mat-icon fontIcon="mail_outline"></mat-icon>
+                                <span i18n="@@guildMailProfileLink">Talk to the team</span>
+                            </a>
                             <button mat-menu-item (click)="logout()">
                                 <mat-icon fontIcon="logout"></mat-icon>
                                 <span i18n="@@logoutMenuItem">Logout</span>

@@ -672,6 +672,101 @@ namespace ei_back.Infrastructure.Migrations
                     b.ToTable("spark_settings", (string)null);
                 });
 
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.SupportTicket", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Locale")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("character varying(5)")
+                        .HasColumnName("locale");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("owner_id");
+
+                    b.Property<int?>("Rating")
+                        .HasColumnType("integer")
+                        .HasColumnName("rating");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("subject");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
+                        .HasColumnName("type");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UpdatedAt", "Id");
+
+                    b.HasIndex("OwnerId", "UpdatedAt", "Id");
+
+                    b.ToTable("support_tickets", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_support_tickets_rating", "rating IS NULL OR rating BETWEEN 1 AND 5");
+                        });
+                });
+
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.SupportTicketMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid?>("AuthorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("author_id");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)")
+                        .HasColumnName("body");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("IsFromTeam")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_from_team");
+
+                    b.Property<Guid>("TicketId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ticket_id");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("TicketId", "CreatedAt", "Id");
+
+                    b.ToTable("support_ticket_messages", (string)null);
+                });
+
             modelBuilder.Entity("ei_back.Core.Domain.Entity.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -858,6 +953,31 @@ namespace ei_back.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.SupportTicket", b =>
+                {
+                    b.HasOne("ei_back.Core.Domain.Entity.User", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.SupportTicketMessage", b =>
+                {
+                    b.HasOne("ei_back.Core.Domain.Entity.User", null)
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ei_back.Core.Domain.Entity.SupportTicket", null)
+                        .WithMany("Messages")
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ei_back.Core.Domain.Entity.VerificationCode", b =>
                 {
                     b.HasOne("ei_back.Core.Domain.Entity.User", null)
@@ -870,6 +990,11 @@ namespace ei_back.Infrastructure.Migrations
             modelBuilder.Entity("ei_back.Core.Domain.Entity.Game", b =>
                 {
                     b.Navigation("Plays");
+                });
+
+            modelBuilder.Entity("ei_back.Core.Domain.Entity.SupportTicket", b =>
+                {
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("ei_back.Core.Domain.Entity.User", b =>

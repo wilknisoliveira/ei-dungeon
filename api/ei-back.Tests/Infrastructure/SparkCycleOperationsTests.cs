@@ -1,4 +1,5 @@
 using ei_back.Core.Application.Repository;
+using ei_back.Core.Application.Service.Email;
 using ei_back.Core.Application.Service.Sparks;
 using ei_back.Core.Application.UseCase.Sparks;
 using ei_back.Core.Domain.Entity;
@@ -43,7 +44,8 @@ public class SparkCycleOperationsTests
         A.CallTo(() => repository.WaitingAsync(A<CancellationToken>._)).ReturnsLazily(() =>
             waiting.State == SparkQueueState.Waiting ? new List<SparkQueueRequest> { waiting } : []);
         var service = new SparkCycleOperations(repository, unitOfWork,
-            new SparkAllocationService(repository, unitOfWork, clock, options), credits, clock, options);
+            new SparkAllocationService(repository, unitOfWork, clock, options), credits, clock,
+            Options.Create(new AdministrativeNotificationOptions()));
 
         await service.RunAsync(default);
         var newId = current.Id;

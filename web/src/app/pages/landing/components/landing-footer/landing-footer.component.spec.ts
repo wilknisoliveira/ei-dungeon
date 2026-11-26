@@ -27,7 +27,7 @@ describe('LandingFooterComponent', () => {
         );
     });
 
-    it('should link to signup, login, and the project repository in order', () => {
+    it('should link to signup, login, the project repository, and developer contact in order', () => {
         const host: HTMLElement = fixture.nativeElement;
         const hrefs = Array.from(
             host.querySelectorAll<HTMLAnchorElement>('.footer-links a'),
@@ -37,6 +37,7 @@ describe('LandingFooterComponent', () => {
             '/signup',
             '/login',
             'https://github.com/wilknisoliveira/ei-dungeon',
+            'mailto:wilknis.pro@outlook.com',
         ]);
     });
 

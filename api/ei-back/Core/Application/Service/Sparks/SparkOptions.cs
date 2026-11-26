@@ -11,5 +11,4 @@ public sealed class SparkOptions
     public int QueueIntervalMinutes { get; set; } = 60;
     public int ReservationTimeoutMinutes { get; set; } = 10;
     public string? OpenRouterManagementKey { get; set; }
-    public string[] AdministrativeRecipients { get; set; } = [];
 }

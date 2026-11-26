@@ -23,6 +23,7 @@ namespace ei_back.Infrastructure.Context
         public DbSet<SparkSettings> SparkSettings { get; set; }
         public DbSet<SparkDailySnapshot> SparkDailySnapshots { get; set; }
         public DbSet<SparkCycleChange> SparkCycleChanges { get; set; }
+        public DbSet<SupportTicket> SupportTickets { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

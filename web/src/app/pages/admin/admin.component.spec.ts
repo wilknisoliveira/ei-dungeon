@@ -1,10 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { Subject, of } from 'rxjs';
 import { AdminComponent } from './admin.component';
 import { AdminService } from 'src/app/service/admin/admin.service';
+import { AdminSupportTicketService } from 'src/app/service/admin/admin-support-ticket.service';
 import { IsHandsetService } from 'src/app/shared/responsive/is-handset.service';
 import { RoleMembership } from 'src/app/types/admin/admin';
 import { signal } from '@angular/core';
@@ -12,18 +14,23 @@ import { signal } from '@angular/core';
 describe('AdminComponent', () => {
     const handset = signal(false);
     let service: jasmine.SpyObj<AdminService>;
+    let supportTickets: jasmine.SpyObj<AdminSupportTicketService>;
     let requests: Subject<RoleMembership[]>[];
 
     beforeEach(() => {
         handset.set(false);
         requests = [];
         service = jasmine.createSpyObj('AdminService', ['getRoles', 'listUsers']);
+        supportTickets = jasmine.createSpyObj('AdminSupportTicketService', ['list', 'get']);
         service.getRoles.and.callFake(() => {
             const request = new Subject<RoleMembership[]>(); requests.push(request); return request;
         });
         service.listUsers.and.returnValue(of({ currentPage: 1, pageSize: 10, totalResults: 0, sortDirection: 'desc', items: [] }));
-        TestBed.configureTestingModule({ imports: [AdminComponent], providers: [provideRouter([]), provideNoopAnimations(),
-            { provide: AdminService, useValue: service }, { provide: IsHandsetService, useValue: { isHandset: handset } }] });
+        supportTickets.list.and.returnValue(of({ currentPage: 1, pageSize: 10, totalResults: 0, sortDirection: 'desc', items: [] }));
+        TestBed.configureTestingModule({ imports: [AdminComponent], providers: [
+            provideRouter([{ path: 'admin', component: AdminComponent }]), provideNoopAnimations(),
+            { provide: AdminService, useValue: service }, { provide: IsHandsetService, useValue: { isHandset: handset } },
+            { provide: AdminSupportTicketService, useValue: supportTickets }] });
     });
 
     it('keeps mutations unavailable until memberships load and scopes English pagination', () => {
@@ -71,5 +78,30 @@ describe('AdminComponent', () => {
         fixture.destroy();
         requests[1].next([{ name: 'Admin', users: ['late@example.com'] }]);
         expect(component.roles()).toEqual([]);
+    });
+
+    it('opens the ticket queue independently of the account permissions request', () => {
+        const fixture = TestBed.createComponent(AdminComponent);
+        fixture.detectChanges();
+        const link = fixture.nativeElement.querySelector('a[href="#support-tickets"]') as HTMLAnchorElement;
+        expect(link.textContent).toContain('Support tickets');
+
+        link.click();
+        fixture.detectChanges();
+        expect(supportTickets.list).toHaveBeenCalledTimes(1);
+        expect(fixture.nativeElement.querySelector('h1').textContent).toBe('Support tickets');
+        expect(fixture.nativeElement.querySelector('[aria-label="Loading permissions"]')).toBeNull();
+    });
+
+    it('opens the ticket from a notification link in the admin support section', async () => {
+        const id = '353d03cc-3553-44d1-9b66-0687b24ae4a1';
+        supportTickets.get.and.returnValue(of({
+            id, subject: 'Reported issue', type: 'Bug', status: 'Open', ownerEmail: 'player@example.com',
+            createdAt: '2026-11-01T00:00:00Z', updatedAt: '2026-11-01T00:00:00Z', rating: null, messages: [],
+        }));
+        const harness = await RouterTestingHarness.create(`/admin?section=support-tickets&ticket=${id}`);
+
+        expect(supportTickets.get).toHaveBeenCalledOnceWith(id);
+        expect(harness.routeNativeElement?.querySelector('h2')?.textContent).toBe('Reported issue');
     });
 });

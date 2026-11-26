@@ -1,0 +1,159 @@
+<main class="guild-mail">
+    <a mat-button routerLink="/home" class="return-link">
+        <mat-icon fontIcon="arrow_back"></mat-icon>
+        <span i18n="@@guildMailReturnToGame">Back to the game</span>
+    </a>
+
+    <header class="mail-heading">
+        <div class="mail-seal" aria-hidden="true"><mat-icon fontIcon="mail_outline"></mat-icon></div>
+        <div>
+            <h1 i18n="@@guildMailTitle">Guild Mail</h1>
+            <p i18n="@@guildMailDescription">Send a private message to the Dungeon team. You can ask for help, report a bug, resolve an issue, or make a suggestion. Replies stay here.</p>
+        </div>
+        @if (!composing() && !selectedId()) {
+            <button mat-flat-button type="button" (click)="startMessage()">
+                <mat-icon fontIcon="edit"></mat-icon>
+                <span i18n="@@guildMailNewMessage">New message</span>
+            </button>
+        }
+    </header>
+
+    @if (composing()) {
+        <section class="mail-panel" aria-labelledby="compose-heading">
+            <h2 #composeHeading tabindex="-1" id="compose-heading" i18n="@@guildMailNewMessage">New message</h2>
+            <form class="mail-form" [formGroup]="createForm" (ngSubmit)="submitMessage()" [attr.aria-busy]="saving()">
+                <mat-form-field appearance="outline">
+                    <mat-label i18n="@@guildMailType">Conversation type</mat-label>
+                    <mat-select formControlName="type" required>
+                        @for (type of types; track type) {
+                            <mat-option [value]="type">{{ typeLabels[type] }}</mat-option>
+                        }
+                    </mat-select>
+                    <mat-error i18n="@@guildMailTypeRequired">Choose a conversation type.</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label i18n="@@guildMailSubject">Subject</mat-label>
+                    <input matInput formControlName="subject" [maxlength]="subjectLimit" required />
+                    <mat-error i18n="@@guildMailSubjectRequired">Enter a subject.</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label i18n="@@guildMailMessage">Message</mat-label>
+                    <textarea matInput formControlName="message" [maxlength]="messageLimit" rows="6" required></textarea>
+                    <mat-error i18n="@@guildMailMessageRequired">Enter a message.</mat-error>
+                </mat-form-field>
+                <div class="actions">
+                    <button mat-flat-button type="submit" [disabled]="saving()" i18n="@@guildMailSendMessage">Send message</button>
+                    <button mat-button type="button" [disabled]="saving()" (click)="cancelMessage()" i18n="@@guildMailCancel">Cancel</button>
+                </div>
+            </form>
+        </section>
+    } @else if (selectedId()) {
+        <section class="mail-panel" [attr.aria-labelledby]="detail() ? 'conversation-heading' : null">
+            <a mat-button routerLink="/support-tickets" class="return-link" i18n="@@guildMailBackToHistory">Back to my conversations</a>
+            @if (detailLoading()) {
+                <mat-progress-bar mode="indeterminate" i18n-aria-label="@@guildMailConversationLoading" aria-label="Loading conversation"></mat-progress-bar>
+            } @else if (detailError()) {
+                <p role="alert" i18n="@@guildMailConversationFailed">Could not load this conversation.</p>
+                <button mat-stroked-button type="button" (click)="retryDetail()" i18n="@@guildMailRetry">Try again</button>
+            } @else if (detail(); as ticket) {
+                <div class="conversation-heading">
+                    <span class="type-label">{{ typeLabels[ticket.type] }}</span>
+                    <div class="subject-line">
+                        <h2 #conversationHeading tabindex="-1" id="conversation-heading">{{ ticket.subject }}</h2>
+                        <span class="status" [attr.data-status]="ticket.status">{{ statusLabels[ticket.status] }}</span>
+                    </div>
+                    <dl class="activity-dates">
+                        <div><dt i18n="@@guildMailOpenedAt">Opened</dt><dd><time [attr.datetime]="ticket.createdAt">{{ ticket.createdAt | date:'medium' }}</time></dd></div>
+                        <div><dt i18n="@@guildMailUpdatedAt">Last updated</dt><dd><time [attr.datetime]="ticket.updatedAt">{{ ticket.updatedAt | date:'medium' }}</time></dd></div>
+                    </dl>
+                </div>
+                <ol class="thread" i18n-aria-label="@@guildMailThread" aria-label="Messages">
+                    @for (message of ticket.messages; track message.id) {
+                        <li class="thread-entry" [class.team]="message.isFromTeam">
+                            <div class="message-meta">
+                                @if (message.isFromTeam) {
+                                    <strong i18n="@@guildMailTeam">Dungeon team</strong>
+                                } @else {
+                                    <strong i18n="@@guildMailYou">You</strong>
+                                }
+                                <time [attr.datetime]="message.createdAt">{{ message.createdAt | date:'medium' }}</time>
+                            </div>
+                            <p>{{ message.body }}</p>
+                        </li>
+                    }
+                </ol>
+                @if (ticket.status === 'Closed') {
+                    <div class="closed-state">
+                        <h3 i18n="@@guildMailConversationClosed">Conversation closed</h3>
+                        @if (ticket.rating !== null) {
+                            <p role="status" i18n="@@guildMailRatingRecorded">Your rating: {{ ticket.rating }} out of 5 stars.</p>
+                        } @else {
+                            <form class="rating-form" (submit)="$event.preventDefault(); submitRating(ticket)">
+                                <fieldset [disabled]="saving()">
+                                    <legend i18n="@@guildMailRatingQuestion">How was the support?</legend>
+                                    <div class="stars">
+                                        @for (value of stars; track value) {
+                                            <label class="star-choice">
+                                                <input type="radio" name="guild-mail-rating" [formControl]="rating" [value]="value" />
+                                                <span class="star-choice-text" i18n="@@guildMailStarChoice">{{ value }} out of 5 stars</span>
+                                                <mat-icon aria-hidden="true" [fontIcon]="value <= (rating.value || 0) ? 'star' : 'star_outline'"></mat-icon>
+                                            </label>
+                                        }
+                                    </div>
+                                </fieldset>
+                                <button mat-stroked-button type="submit" [disabled]="!rating.value || saving()" i18n="@@guildMailSubmitRating">Submit rating</button>
+                            </form>
+                        }
+                        <button mat-flat-button type="button" [disabled]="saving()" (click)="startMessage()" i18n="@@guildMailNewMessage">New message</button>
+                    </div>
+                } @else {
+                    <form class="mail-form" [formGroup]="replyForm" (ngSubmit)="submitReply(ticket)" [attr.aria-busy]="saving()">
+                        <mat-form-field appearance="outline">
+                            <mat-label i18n="@@guildMailYourReply">Your reply</mat-label>
+                            <textarea matInput formControlName="message" [maxlength]="messageLimit" rows="4" required></textarea>
+                            <mat-error i18n="@@guildMailReplyRequired">Enter a reply.</mat-error>
+                        </mat-form-field>
+                        <button mat-flat-button type="submit" [disabled]="saving()" i18n="@@guildMailReply">Reply</button>
+                    </form>
+                }
+            }
+        </section>
+    } @else {
+        <section class="mail-panel" aria-labelledby="history-heading">
+            <h2 #historyHeading tabindex="-1" id="history-heading" i18n="@@guildMailHistory">My conversations</h2>
+            @if (listLoading()) {
+                <mat-progress-bar mode="indeterminate" i18n-aria-label="@@guildMailHistoryLoading" aria-label="Loading conversations"></mat-progress-bar>
+            } @else if (listError()) {
+                <p role="alert" i18n="@@guildMailHistoryFailed">Could not load your conversations.</p>
+                <button mat-stroked-button type="button" (click)="retryList()" i18n="@@guildMailRetry">Try again</button>
+            } @else if (page(); as result) {
+                @if (result.items.length === 0) {
+                    <p class="muted" i18n="@@guildMailHistoryEmpty">You haven't started a conversation yet.</p>
+                } @else {
+                    <ul class="history">
+                        @for (ticket of result.items; track ticket.id) {
+                            <li class="history-entry">
+                                <div class="subject-line">
+                                    <a routerLink="/support-tickets" [queryParams]="{ ticket: ticket.id }">{{ ticket.subject }}</a>
+                                    <span class="status" [attr.data-status]="ticket.status">{{ statusLabels[ticket.status] }}</span>
+                                </div>
+                                <span class="type-label">{{ typeLabels[ticket.type] }}</span>
+                                <dl class="activity-dates">
+                                    <div><dt i18n="@@guildMailOpenedAt">Opened</dt><dd><time [attr.datetime]="ticket.createdAt">{{ ticket.createdAt | date:'medium' }}</time></dd></div>
+                                    <div><dt i18n="@@guildMailUpdatedAt">Last updated</dt><dd><time [attr.datetime]="ticket.updatedAt">{{ ticket.updatedAt | date:'medium' }}</time></dd></div>
+                                </dl>
+                            </li>
+                        }
+                    </ul>
+                }
+                @if (result.currentPage > 1 || result.totalResults > result.pageSize) {
+                    <nav class="pagination" i18n-aria-label="@@guildMailPagination" aria-label="Conversation pages">
+                        <button mat-button type="button" [disabled]="result.currentPage <= 1" (click)="loadPage(result.currentPage - 1)" i18n="@@guildMailPreviousPage">Previous</button>
+                        <span i18n="@@guildMailPageNumber">Page {{ result.currentPage }}</span>
+                        <button mat-button type="button" [disabled]="result.currentPage * result.pageSize >= result.totalResults" (click)="loadPage(result.currentPage + 1)" i18n="@@guildMailNextPage">Next</button>
+                    </nav>
+                }
+            }
+        </section>
+    }
+</main>

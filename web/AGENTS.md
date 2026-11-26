@@ -29,7 +29,7 @@ Follow existing Angular 22 and Angular Material patterns. Use four-space indenta
 
 ### Authentication and Public Routes
 
-Preserve the route policy in `src/app/pages/routing.modules.ts`: the landing page, signup, email verification, forgot-password, and reset-password remain public. Login retains its existing `AuthGuard` behavior; home/settings use both `AuthGuard` and `HasRoleGuard` with their configured `Admin`/`CommonUser` role lists. Admin uses both guards with only `Admin` permitted. Apply role restrictions where specified without turning the public recovery or landing pages into authenticated routes.
+Preserve the route policy in `src/app/pages/routing.modules.ts`. The landing page, signup, email verification, forgot-password, and reset-password remain public. Login uses `AuthGuard`. Home/settings and Guild Mail use both `AuthGuard` and `HasRoleGuard` with their configured player role lists. Admin uses both guards with only `Admin` permitted. Preserve the Guild Mail ticket return link through sign-in and apply role restrictions where specified.
 
 Load each page with `loadComponent`. Keep `PagesModule` as a routing wrapper without static imports of page implementations or their feature components; do not introduce route preloading. Admin-specific imports remain within the Admin lazy dependency graph. Shared dependencies may be shared between chunks. Preserve the landing-only prerender and client rendering for authenticated routes.
 

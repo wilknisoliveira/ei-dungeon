@@ -36,6 +36,7 @@ Use four-space indentation and descriptive dependency names. Follow nearby const
 - Registration saves the user and initial verification code with one Application-owned `CommitAsync()`; do not add another controller commit.
 - Existing-account verification/recovery flows use `ExecuteInTransactionAsync` and acquire the email lock before querying challenge state. The transaction owns saving/committing; do not nest transactions or manually commit/rollback inside it.
 - Google registration, linking and first-password creation own a single Application transaction. Atomically consume the browser/user/purpose-bound challenge with the protected change. Use the normalized-email lock for first-password creation and reload after the lock. Do not add a controller commit.
+- Support ticket use cases own their writes. Serialize changes to an existing ticket in one transaction and send email after persistence. Keep the administrative recipient configuration shared with Sparks.
 - Send verification/recovery email after the database commit, outside locks. Follow `ARCHITECTURE.md` for concurrency, failure handling, and cancellation details.
 
 ### Naming, Errors, and API Contracts

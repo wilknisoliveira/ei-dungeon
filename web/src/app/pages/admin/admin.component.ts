@@ -1,6 +1,6 @@
 import { Component, OnInit, effect, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, ParamMap, RouterLink } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +9,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { AdminService } from 'src/app/service/admin/admin.service';
 import { RoleMembership } from 'src/app/types/admin/admin';
+import { getSupportTicketId } from 'src/app/types/support-tickets/support-ticket';
 import { IsHandsetService } from 'src/app/shared/responsive/is-handset.service';
 import { ThemeToggleComponent } from 'src/app/shared/theme-toggle/theme-toggle.component';
 import { AdminUsersComponent } from './users/admin-users.component';
@@ -16,13 +17,16 @@ import { AdminRolesComponent } from './roles/admin-roles.component';
 import { AdminPaginatorIntl } from './admin-paginator-intl';
 import { Subscription } from 'rxjs';
 import { AdminSparksComponent } from './sparks/admin-sparks.component';
+import { AdminSupportTicketsComponent } from './support-tickets/admin-support-tickets.component';
+
+type AdminSection = 'users' | 'roles' | 'sparks' | 'support-tickets';
 
 @Component({
     selector: 'app-admin',
     standalone: true,
     imports: [RouterLink, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule,
         MatProgressBarModule, ThemeToggleComponent,
-        AdminUsersComponent, AdminRolesComponent, AdminSparksComponent],
+        AdminUsersComponent, AdminRolesComponent, AdminSparksComponent, AdminSupportTicketsComponent],
     providers: [{ provide: MatPaginatorIntl, useClass: AdminPaginatorIntl }],
     host: { lang: 'en' },
     templateUrl: './admin.component.html',
@@ -30,11 +34,14 @@ import { AdminSparksComponent } from './sparks/admin-sparks.component';
 })
 export class AdminComponent implements OnInit {
     private readonly service = inject(AdminService);
+    private readonly route = inject(ActivatedRoute);
     private readonly untilDestroyed = takeUntilDestroyed<RoleMembership[]>();
+    private readonly paramsUntilDestroyed = takeUntilDestroyed<ParamMap>();
     private roleRequest?: Subscription;
     readonly isHandset = inject(IsHandsetService).isHandset;
     readonly drawerOpened = signal(true);
-    readonly section = signal<'users' | 'roles' | 'sparks'>('users');
+    readonly section = signal<AdminSection>('users');
+    readonly initialSupportTicket = signal<string | null>(null);
     readonly roles = signal<RoleMembership[]>([]);
     readonly rolesLoading = signal(false);
     readonly rolesError = signal(false);
@@ -46,9 +53,16 @@ export class AdminComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadRoles();
+        this.route.queryParamMap.pipe(this.paramsUntilDestroyed).subscribe(params => {
+            if (params.get('section') === 'support-tickets') {
+                this.section.set('support-tickets');
+                this.initialSupportTicket.set(getSupportTicketId(params.get('ticket')));
+            }
+        });
     }
 
-    selectSection(section: 'users' | 'roles' | 'sparks'): void {
+    selectSection(section: AdminSection): void {
+        this.initialSupportTicket.set(null);
         this.section.set(section);
         if (this.isHandset()) this.drawerOpened.set(false);
     }

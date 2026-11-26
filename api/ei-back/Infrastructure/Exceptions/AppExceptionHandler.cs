@@ -36,6 +36,12 @@ namespace ei_back.Infrastructure.Exceptions
                     "sparks_invalid_operation" => StatusCodes.Status400BadRequest,
                     _ => StatusCodes.Status409Conflict
                 }, spark.Message),
+                SupportTicketException ticket => (ticket.Code switch
+                {
+                    "support_ticket_not_found" => StatusCodes.Status404NotFound,
+                    "support_ticket_invalid" => StatusCodes.Status400BadRequest,
+                    _ => StatusCodes.Status409Conflict
+                }, ticket.Message),
                 BadGatewayException badGatewayException => (StatusCodes.Status502BadGateway, badGatewayException.Message),
                 BadRequestException badRequestException => (StatusCodes.Status400BadRequest, badRequestException.Message),
                 NotFoundException notFoundException => (StatusCodes.Status404NotFound, notFoundException.Message),
@@ -54,6 +60,7 @@ namespace ei_back.Infrastructure.Exceptions
                 exceptionResponse.Code = "email_verification_required";
             if (exception is GoogleAuthenticationException googleError) exceptionResponse.Code = googleError.Code;
             if (exception is SparkOperationException sparkError) exceptionResponse.Code = sparkError.Code;
+            if (exception is SupportTicketException ticketError) exceptionResponse.Code = ticketError.Code;
             httpContext.Response.StatusCode = statusCode;
             await httpContext.Response.WriteAsJsonAsync(exceptionResponse, cancellationToken);
 

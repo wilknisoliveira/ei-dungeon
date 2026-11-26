@@ -10,6 +10,7 @@ import { EmailAuthFlowService } from 'src/app/service/auth/email-auth-flow.servi
 import { SnackbarService } from 'src/app/service/snackbar/snackbar.service';
 import { LanguageSelectorComponent } from 'src/app/shared/components/language-selector/language-selector.component';
 import { ThemeToggleComponent } from 'src/app/shared/theme-toggle/theme-toggle.component';
+import { getSupportTicketId } from 'src/app/types/support-tickets/support-ticket';
 
 @Component({
     standalone: true,
@@ -94,7 +95,8 @@ export class EmailVerificationComponent {
             this.form.controls.code.reset();
             this.flow.complete('verification');
             this.snackbar.addSuccess($localize`:@@emailVerifiedSuccess:Email verified. You can now log in.`);
-            const queryParams = this.sparksIntent;
+            const ticket = getSupportTicketId(this.route.snapshot.queryParamMap.get('ticket'));
+            const queryParams = ticket ? { ticket } : this.sparksIntent;
             if (queryParams) await this.router.navigate(['/login'], { queryParams });
             else await this.router.navigate(['/login']);
         } catch (error) {

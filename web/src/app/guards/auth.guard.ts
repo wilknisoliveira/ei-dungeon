@@ -1,10 +1,20 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../service/auth/auth.service';
+import { getSupportTicketId } from 'src/app/types/support-tickets/support-ticket';
 
 export const AuthGuard: CanActivateFn = (route, state) => {
     const router: Router = inject(Router);
     const authService: AuthService = inject(AuthService);
+
+    const path = route.routeConfig?.path;
+    const ticket = getSupportTicketId(route.queryParamMap.get('ticket'));
+    if (ticket && path === 'support-tickets' && !authService.isUserLoggedIn()) {
+        return router.createUrlTree(['/login'], { queryParams: { ticket } });
+    }
+    if (ticket && path === 'login' && authService.isUserLoggedIn()) {
+        return router.createUrlTree(['/support-tickets'], { queryParams: { ticket } });
+    }
 
     if (authService.isUserLoggedIn() && route.url.toString() == 'login') {
         if (route.queryParams?.['sparks'] === '1') router.navigate(['home'], { queryParams: { sparks: '1' } });

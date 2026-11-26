@@ -1,0 +1,196 @@
+<section aria-label="Ticket queue" [hidden]="selectedId() !== null">
+    <form class="filters" [formGroup]="filters" (ngSubmit)="applyFilters()">
+        <div class="filter-fields">
+            <mat-form-field appearance="outline">
+                <mat-label>Player email</mat-label>
+                <input #playerEmailFilter matInput type="search" formControlName="userEmail" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="type">
+                    <mat-option value="">All types</mat-option>
+                    @for (type of types; track type) {
+                        <mat-option [value]="type">{{ typeLabels[type] }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option value="">All statuses</mat-option>
+                    @for (status of statuses; track status) {
+                        <mat-option [value]="status">{{ statusLabels[status] }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Rating</mat-label>
+                <mat-select formControlName="rating">
+                    <mat-option value="">All ratings</mat-option>
+                    <mat-option value="unrated">Unrated</mat-option>
+                    @for (rating of ratings; track rating) {
+                        <mat-option [value]="rating">{{ rating }} / 5</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Created from (UTC)</mat-label>
+                <input matInput type="date" formControlName="createdFrom" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Created through (UTC)</mat-label>
+                <input matInput type="date" formControlName="createdTo" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Updated from (UTC)</mat-label>
+                <input matInput type="date" formControlName="updatedFrom" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Updated through (UTC)</mat-label>
+                <input matInput type="date" formControlName="updatedTo" />
+            </mat-form-field>
+        </div>
+        @if (filterError()) {
+            <p class="error" role="alert">{{ filterError() }}</p>
+        }
+        <div class="filter-actions">
+            <button mat-flat-button type="submit">Apply filters</button>
+            <button mat-button type="button" (click)="clearFilters()">Clear filters</button>
+        </div>
+    </form>
+
+    <div class="queue-panel" [attr.aria-busy]="loading()">
+        @if (loading()) {
+            <mat-progress-bar mode="indeterminate" aria-label="Loading support tickets" />
+        }
+        @if (listError()) {
+            <div class="panel-message" role="alert">
+                <p class="error">Support tickets could not be loaded.</p>
+                <button mat-button type="button" (click)="load()">Try again</button>
+            </div>
+        } @else {
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Ticket results">
+                <table mat-table [dataSource]="tickets()" matSort
+                    [matSortActive]="query().sortBy" [matSortDirection]="query().sortDirection"
+                    [matSortDisableClear]="true" (matSortChange)="sort($event)" aria-label="Support tickets">
+                    <ng-container matColumnDef="subject">
+                        <th mat-header-cell *matHeaderCellDef>Subject</th>
+                        <td mat-cell *matCellDef="let row">
+                            <button mat-button class="ticket-link" type="button"
+                                (click)="open(row.id, $event.currentTarget)">{{ row.subject }}</button>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="user">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by player email">Player</th>
+                        <td mat-cell *matCellDef="let row">{{ row.ownerEmail }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by type">Type</th>
+                        <td mat-cell *matCellDef="let row">{{ typeLabel(row.type) }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by status">Status</th>
+                        <td mat-cell *matCellDef="let row">
+                            <span class="ticket-status" [class.closed]="row.status === 'Closed'">{{ statusLabel(row.status) }}</span>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="rating">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by rating">Rating</th>
+                        <td mat-cell *matCellDef="let row">
+                            @if (row.rating !== null && row.rating !== undefined) { {{ row.rating }} / 5 } @else { Unrated }
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="createdAt">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by creation date">Created (UTC)</th>
+                        <td mat-cell *matCellDef="let row"><time [attr.datetime]="row.createdAt">{{ row.createdAt | date:'medium':'UTC':'en' }}</time></td>
+                    </ng-container>
+                    <ng-container matColumnDef="updatedAt">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by last update">Updated (UTC)</th>
+                        <td mat-cell *matCellDef="let row"><time [attr.datetime]="row.updatedAt">{{ row.updatedAt | date:'medium':'UTC':'en' }}</time></td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columns"></tr>
+                </table>
+            </div>
+            @if (!loading() && tickets().length === 0) {
+                <p class="panel-message" role="status">No tickets found.</p>
+            }
+        }
+        <mat-paginator [length]="total()" [pageIndex]="query().page - 1" [pageSize]="query().pageSize"
+            [pageSizeOptions]="[10, 25, 50]" [showFirstLastButtons]="true" [disabled]="loading() || listError()"
+            (page)="paginate($event)" aria-label="Support ticket pages" />
+    </div>
+</section>
+
+@if (selectedId(); as id) {
+    <section class="ticket-detail" aria-label="Support ticket details" [attr.aria-busy]="detailLoading() || saving()">
+        <button #backButton mat-button type="button" [disabled]="saving()" (click)="back()">
+            <mat-icon aria-hidden="true">arrow_back</mat-icon>
+            Back to tickets
+        </button>
+        @if (detailLoading() || saving()) {
+            <mat-progress-bar mode="indeterminate" [attr.aria-label]="saving() ? 'Saving support ticket' : 'Loading support ticket'" />
+        }
+        @if (detailError()) {
+            <div class="panel-message" role="alert">
+                <p class="error">This ticket could not be loaded.</p>
+                <button mat-button type="button" (click)="open(id)">Try again</button>
+            </div>
+        }
+        @if (ticket(); as current) {
+            <div class="ticket-heading">
+                <div>
+                    <h2>{{ current.subject }}</h2>
+                    <p>{{ current.ownerEmail }}</p>
+                </div>
+                <span class="ticket-status" [class.closed]="current.status === 'Closed'">{{ statusLabels[current.status] }}</span>
+            </div>
+            <dl class="ticket-meta">
+                <div><dt>Created</dt><dd><time [attr.datetime]="current.createdAt">{{ current.createdAt | date:'medium':'UTC':'en' }} UTC</time></dd></div>
+                <div><dt>Updated</dt><dd><time [attr.datetime]="current.updatedAt">{{ current.updatedAt | date:'medium':'UTC':'en' }} UTC</time></dd></div>
+                <div><dt>Rating</dt><dd>{{ current.rating === null || current.rating === undefined ? 'Unrated' : current.rating + ' / 5' }}</dd></div>
+            </dl>
+            <ol class="messages" aria-label="Conversation history">
+                @for (message of current.messages; track message.id) {
+                    <li class="message" [class.team]="message.isFromTeam">
+                        <div class="message-meta">
+                            <strong>{{ message.isFromTeam ? 'Dungeon team' : 'Player' }}</strong>
+                            <time [attr.datetime]="message.createdAt">{{ message.createdAt | date:'medium':'UTC':'en' }} UTC</time>
+                        </div>
+                        <p>{{ message.body }}</p>
+                    </li>
+                }
+            </ol>
+            <form [formGroup]="editor" (ngSubmit)="save()" aria-label="Update support ticket">
+                <div class="editor-selects">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Type</mat-label>
+                        <mat-select formControlName="type">
+                            @for (type of types; track type) {
+                                <mat-option [value]="type">{{ typeLabels[type] }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Status</mat-label>
+                        <mat-select formControlName="status">
+                            @for (status of statuses; track status) {
+                                <mat-option [value]="status">{{ statusLabels[status] }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <mat-form-field appearance="outline" class="reply-field">
+                    <mat-label>Reply</mat-label>
+                    <textarea matInput rows="4" maxlength="8000" formControlName="message"></textarea>
+                    @if (editor.controls.message.hasError('maxlength')) {
+                        <mat-error>Keep the reply to 8,000 characters or fewer.</mat-error>
+                    }
+                </mat-form-field>
+                @if (saveError()) { <p class="error" role="alert">The update could not be saved. Your reply is still here.</p> }
+                @if (saved()) { <p role="status">Update saved.</p> }
+                <button mat-flat-button type="submit" [disabled]="saving() || editor.pristine || editor.invalid">Save update</button>
+            </form>
+        }
+    </section>
+}

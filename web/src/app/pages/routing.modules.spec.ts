@@ -1,7 +1,7 @@
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -41,13 +41,37 @@ describe('Page loading and access policy', () => {
     it('defines one lazy loader per page without direct component references', () => {
         expect(routes.map(route => route.path)).toEqual([
             'login', 'forgot-password', 'reset-password', 'email-verification',
-            'signup', 'settings', 'home', 'admin', '',
+            'signup', 'settings', 'home', 'support-tickets', 'admin', '',
         ]);
         for (const route of routes) {
             expect(route.component).toBeUndefined();
             expect(typeof route.loadComponent).toBe('function');
         }
         expect(routes.find(route => route.path === '')?.pathMatch).toBe('full');
+    });
+
+    it('guards the lazy Guild Mail page for signed-in player roles and administrators', () => {
+        const support = routes.find(route => route.path === 'support-tickets');
+        expect(support?.canActivate).toEqual([AuthGuard, HasRoleGuard]);
+        expect(support?.data?.['roles']).toEqual(['Admin', 'CommonUser', 'PremiumUser']);
+    });
+
+    it('keeps only the private conversation ID when a signed-out visitor opens its direct link', async () => {
+        const ticket = '3617ec15-fae5-4cfc-a613-ddc845970b80';
+        const auth = jasmine.createSpyObj<AuthService>('AuthService', ['isUserLoggedIn']);
+        auth.isUserLoggedIn.and.returnValue(false);
+        TestBed.configureTestingModule({ providers: [
+            provideRouter([
+                { path: 'support-tickets', component: RouteDestinationComponent, canActivate: [AuthGuard] },
+                { path: 'login', component: RouteDestinationComponent, canActivate: [AuthGuard] },
+            ]),
+            { provide: AuthService, useValue: auth },
+        ] });
+
+        const harness = await RouterTestingHarness.create();
+        await harness.navigateByUrl(`/support-tickets?ticket=${ticket}&other=data`);
+
+        expect(TestBed.inject(Router).url).toBe(`/login?ticket=${ticket}`);
     });
 
     it('preserves existing public routes and Home/Settings role policy', () => {
